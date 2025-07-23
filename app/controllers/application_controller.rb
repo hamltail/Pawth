@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     profile_path(resource.username)
   end
 
+  def after_sign_out_path_for(resource)
+    new_user_session_path
+  end
+
   protected
 
     def configure_permitted_parameters
