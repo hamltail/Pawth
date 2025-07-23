@@ -5,6 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          authentication_keys: [:login]
 
+  validates :email, presence: true
+  validates :username, presence: true, uniqueness: true
+
   attr_writer :login
 
   def login
