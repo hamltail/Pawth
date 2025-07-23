@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users, only: [:show]
+  get "/:username", to: "profiles#show", as: :profile
 end
