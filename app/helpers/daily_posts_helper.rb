@@ -1,0 +1,2 @@
+module DailyPostsHelper
+end

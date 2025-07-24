@@ -10,4 +10,5 @@
 
 <% if user_signed_in? && current_user == @user %>
   <p><strong>🌟🌟🌟 これはあなたのプロフィールです 🌟🌟🌟</strong></p>
+  <p><%= link_to "＋", new_daily_post_path %></p>
 <% end %>

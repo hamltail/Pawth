@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   end
 
   get "/:username", to: "profiles#show", as: :profile
+  resources :daily_posts, only: [:index, :new, :create, :show]
 end
