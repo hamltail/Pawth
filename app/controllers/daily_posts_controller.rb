@@ -1,5 +1,6 @@
 class DailyPostsController < ApplicationController
   def index
+    @daily_posts = current_user.daily_posts.order(posted_on: :desc)
   end
 
   def create

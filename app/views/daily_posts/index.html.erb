@@ -1,2 +1,11 @@
 <h1>DailyPosts#index</h1>
-<p>Find me in app/views/daily_posts/index.html.erb</p>
+
+<ul>
+  <% @daily_posts.each do |post| %>
+    <li>
+      <strong><%= post.posted_on %></strong>: 
+      <%= simple_format(post.content) %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to "＋", new_daily_post_path %>

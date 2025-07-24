@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
-  get "/:username", to: "profiles#show", as: :profile
   resources :daily_posts, only: [:index, :new, :create, :show]
+  get "/:username", to: "profiles#show", as: :profile
 end
