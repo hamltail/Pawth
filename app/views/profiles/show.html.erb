@@ -4,6 +4,15 @@
 
 <p>Username: <%= @user.username %></p>
 
+<% if @latest_daily_post %>
+  <div>
+    最新の投稿：<%= @latest_daily_post.posted_on %><br>
+    <%= simple_format(@latest_daily_post.content) %>
+  </div>
+<% else %>
+  <p>まだ投稿がありません。</p>
+<% end %>
+
 <% if user_signed_in? %>
   <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
 <% end %>
