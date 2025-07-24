@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_23_053640) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_24_004237) do
+  create_table "daily_posts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "posted_on", null: false
+    t.text "content", null: false
+    t.integer "edit_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "posted_on"], name: "index_daily_posts_on_user_id_and_posted_on", unique: true
+    t.index ["user_id"], name: "index_daily_posts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -24,4 +35,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_053640) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
+
+  add_foreign_key "daily_posts", "users"
 end
