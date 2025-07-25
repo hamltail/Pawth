@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 gem "bootsnap", require: false
 gem "devise"
+gem "haml-rails"
 gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
@@ -13,6 +14,7 @@ gem "solid_cache"
 gem "solid_queue"
 gem "sqlite3", ">= 2.1"
 gem "stimulus-rails"
+gem "tailwindcss-rails"
 gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -25,7 +27,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "haml-rails"
   gem "html2haml"
   gem "web-console"
 end
