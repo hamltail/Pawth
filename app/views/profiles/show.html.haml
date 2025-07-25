@@ -1,21 +1,26 @@
-%h1.text-2xl.font-bold Profiles#show
+%div.flex.items-center.justify-center.min-h-screen.bg-gray-50
+  %div.bg-white.shadow-md.rounded-lg.px-8.py-8.max-w-md.w-full
+    %h1.text-2xl.font-bold.mb-6.text-center Profiles#show
 
-%p Email: #{@user.email}
-%p Username: #{@user.username}
+    %p.mb-2.text-gray-700
+      Email: 
+      %span.font-mono= @user.email
+    %p.mb-4.text-gray-700
+      Username: 
+      %span.font-mono= @user.username
 
-- if @latest_daily_post
-  %div
-    最新の投稿：#{@latest_daily_post.posted_on}
-    %br
-    = simple_format(@latest_daily_post.content)
-- else
-  %p まだ投稿がありません。
+    - if @latest_daily_post
+      %div.mb-4.p-4.bg-gray-100.rounded
+        %p.font-semibold.mb-1 最新の投稿：#{@latest_daily_post.posted_on}
+        = simple_format(@latest_daily_post.content)
+    - else
+      %p.mb-4.text-gray-500 まだ投稿がありません。
 
-- if user_signed_in?
-  = button_to "ログアウト", destroy_user_session_path, method: :delete
+    - if user_signed_in?
+      = button_to "ログアウト", destroy_user_session_path, method: :delete, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full mb-4"
 
-- if user_signed_in? && current_user == @user
-  %p
-    %strong 🌟🌟🌟 これはあなたのプロフィールです 🌟🌟🌟
-  %p
-    = link_to "＋", new_daily_post_path
+    - if user_signed_in? && current_user == @user
+      %div.mb-4.text-center
+        %strong.text-yellow-600.text-lg 🌟🌟🌟 これはあなたのプロフィールです 🌟🌟🌟
+      %div.flex.justify-center
+        = link_to "＋", new_daily_post_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-xl"
