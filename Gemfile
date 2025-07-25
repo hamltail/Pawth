@@ -3,7 +3,6 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 gem "bootsnap", require: false
 gem "devise"
-gem "haml-rails"
 gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
@@ -26,5 +25,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "haml-rails"
+  gem "html2haml"
   gem "web-console"
 end
