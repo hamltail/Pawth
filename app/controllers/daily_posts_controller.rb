@@ -21,6 +21,12 @@ class DailyPostsController < ApplicationController
   def show
   end
 
+  def destroy
+    @daily_post = current_user.daily_posts.find(params[:id])
+    @daily_post.destroy
+    redirect_to daily_posts_path, status: :see_other
+  end
+
   private
     def daily_post_params
       params.require(:daily_post).permit(:content)
