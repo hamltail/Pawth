@@ -1,11 +1,16 @@
-%h1 DailyPosts#index
+%div.flex.items-center.justify-center.min-h-screen.bg-gray-50
+  %div.bg-white.shadow-md.rounded-lg.px-8.py-8.max-w-md.w-full
+    %h1.text-2xl.font-bold.mb-6.text-center DailyPosts#index
 
-%ul
-  - @daily_posts.each do |post|
-    %li
-      %strong #{post.posted_on}: 
-      = simple_format(post.content)
-      = link_to "削除", daily_post_path(post),  
-        data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" }
+    %ul.space-y-6
+      - @daily_posts.each do |post|
+        %li.p-4.bg-gray-100.rounded-md.shadow-sm
+          %div.flex.items-center.justify-between.mb-2
+            %span.font-bold.text-lg.text-gray-800= post.posted_on.strftime("%Y-%m-%d")
+            = link_to "削除", daily_post_path(post),
+                data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" },
+                class: "text-red-500 hover:underline font-semibold text-sm ml-4"
+          = simple_format(post.content)
 
-= link_to "＋", new_daily_post_path
+    .flex.justify-center.mt-8
+      = link_to "＋", new_daily_post_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-xl"
