@@ -1,0 +1,11 @@
+%h1 DailyPosts#new
+
+%h2 今日何をした？
+
+= link_to "← 戻る", (request.referer || profile_path(username: current_user.username))
+
+= form_with model: @daily_post, url: daily_posts_path do |f| 
+  %div
+    = f.text_area :content, rows: 6, placeholder: "今日何をした？"
+  %div
+    = f.submit "投稿"

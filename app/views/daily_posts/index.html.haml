@@ -1,0 +1,11 @@
+%h1 DailyPosts#index
+
+%ul
+  - @daily_posts.each do |post|
+    %li
+      %strong #{post.posted_on}: 
+      = simple_format(post.content)
+      = link_to "削除", daily_post_path(post),  
+        data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" }
+
+= link_to "＋", new_daily_post_path
