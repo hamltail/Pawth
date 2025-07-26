@@ -1,7 +1,7 @@
-- if user_signed_in?
-  %header.bg-white.shadow-md.px-6.py-3.flex.items-center.justify-between
-    %div.text-lg.font-bold.text-blue-600
-      = link_to "Pawth", root_path, class: "hover:underline"
+%header.bg-white.shadow-md.px-6.py-3.flex.items-center.justify-between
+  %div.text-lg.font-bold.text-blue-600
+    = link_to "Pawth", root_path, class: "hover:underline"
+  - if user_signed_in?
     %nav.flex.space-x-6
       = link_to "Home", root_path, class: "text-gray-700 hover:text-blue-500 font-medium"
       = link_to "Posts", daily_posts_path, class: "text-gray-700 hover:text-blue-500 font-medium"
