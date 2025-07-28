@@ -1,8 +1,7 @@
 %div.flex.items-center.justify-center.min-h-screen.bg-gray-50
   %div.bg-white.shadow-md.rounded-lg.px-8.py-8.max-w-md.w-full
-    %h1.text-2xl.font-bold.mb-6.text-center Activities#show
-    %p.mb-2.text-center
-      %span.font-mono.font-extrabold.text-2xl.text-gray-700= @user.username
+    - page_title = "#{@user.username}'s Activity"
+    %h1.text-2xl.font-bold.mb-6.text-center= page_title
     %div.mb-6
       - month_label = @calendar_days.first.strftime("%B %Y")
       - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
