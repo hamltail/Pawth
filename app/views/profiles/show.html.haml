@@ -21,14 +21,15 @@
 
   %div.mb-6
     - month_label = @calendar_days.first.strftime("%B %Y")
-    - week_days = %w[Sun Mon Tue Wed Thu Fri Sat]
+    - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
     - first_wday = @calendar_days.first.wday
+    - empty_cells = (first_wday - 1) % 7
     %h2.text-lg.font-bold.mb-2.text-center= month_label
     %div.grid.grid-cols-7.gap-2.justify-center.mb-2
       - week_days.each do |wd|
         %div.text-xs.font-bold.text-center= wd
     %div.grid.grid-cols-7.gap-2.justify-center
-      - first_wday.times do
+      - empty_cells.times do
         %div
       - @calendar_days.each do |date|
         - post = @daily_posts_by_date[date]&.first
