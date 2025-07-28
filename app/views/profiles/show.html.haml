@@ -36,7 +36,13 @@
         %div
       - @calendar_days.each do |date|
         - post = @daily_posts_by_date[date]&.first
-        %div.flex.flex-col.items-center
+        - is_today = date == Date.current
+        - wday = date.wday
+        - cell_classes = "flex flex-col items-center"
+        - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
+        - cell_classes += " text-blue-500" if wday == 6
+        - cell_classes += " text-red-500" if wday == 0
+        %div{ class: cell_classes }
           %span.text-xs= date.day
           - if post
             %span.text-pink-500.text-2xl{ data: { date: date, content: post&.content } } 🐾
