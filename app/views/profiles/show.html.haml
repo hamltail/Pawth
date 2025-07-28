@@ -1,12 +1,42 @@
 %div.flex.items-center.justify-center.min-h-screen.bg-gray-50
   %div.bg-white.shadow-md.rounded-lg.px-8.py-8.max-w-md.w-full
     %h1.text-2xl.font-bold.mb-6.text-center Profiles#show
-    %p.mb-2.text-gray-700
-      Email: 
-      %span.font-mono= @user.email
-    %p.mb-4.text-gray-700
-      Username: 
+    %p.font-semibold.mb-2.text-gray-700
       %span.font-mono= @user.username
+    %div.mb-6
+      - month_label = @calendar_days.first.strftime("%B %Y")
+      - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
+      - first_wday = @calendar_days.first.wday
+      - empty_cells = (first_wday - 1) % 7
+      - total_cells = 42
+      - filled_cells = empty_cells + @calendar_days.size
+      - trailing_empty_cells = total_cells - filled_cells
+      %div.flex.items-center.justify-center.mb-2
+        = link_to "◀", profile_path(username: @user.username, year: @prev_month.year, month: @prev_month.month), class: "mx-2 text-xl font-bold"
+        %h2.text-lg.font-bold.mx-4= @month_label
+        = link_to "▶", profile_path(username: @user.username, year: @next_month.year, month: @next_month.month), class: "mx-2 text-xl font-bold"
+      %div.grid.grid-cols-7.gap-2.justify-center.mb-2
+        - week_days.each do |wd|
+          %div.text-xs.font-bold.text-center= wd
+      %div.grid.grid-cols-7.gap-2.justify-center.h-96
+        - empty_cells.times do
+          %div
+        - @calendar_days.each do |date|
+          - post = @daily_posts_by_date[date]&.first
+          - is_today = date == Date.current
+          - wday = date.wday
+          - cell_classes = "flex flex-col items-center"
+          - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
+          - cell_classes += " text-blue-500" if wday == 6
+          - cell_classes += " text-red-500" if wday == 0
+          %div{ class: cell_classes }
+            %span.text-xs= date.day
+            - if post
+              %span.text-pink-500.text-2xl{ data: { date: date, content: post&.content } } 🐾
+            - else
+              %span.text-gray-300.text-2xl 🈚️
+        - trailing_empty_cells.times do
+          %div
     - if @latest_daily_post
       %div.mb-4.p-4.bg-gray-100.rounded
         %p.font-semibold.mb-1#daily-post-date= @latest_daily_post.posted_on
@@ -15,36 +45,6 @@
       %p.mb-4.text-gray-500 まだ投稿がありません。
     - if user_signed_in? && current_user == @user
       %div.mb-4.text-center
-        %strong.text-yellow-600.text-lg 🌟🌟🌟 これはあなたのプロフィールです 🌟🌟🌟
+        %strong.text-yellow-600.text-lg 🌟 これはあなたのプロフィールです 🌟
       %div.flex.justify-center
         = link_to "＋", new_daily_post_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-xl"
-
-  %div.mb-6
-    - month_label = @calendar_days.first.strftime("%B %Y")
-    - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
-    - first_wday = @calendar_days.first.wday
-    - empty_cells = (first_wday - 1) % 7
-    %div.flex.items-center.justify-center.mb-2
-      = link_to "◀", profile_path(username: @user.username, year: @prev_month.year, month: @prev_month.month), class: "mx-2 text-xl font-bold"
-      %h2.text-lg.font-bold.mx-4= @month_label
-      = link_to "▶", profile_path(username: @user.username, year: @next_month.year, month: @next_month.month), class: "mx-2 text-xl font-bold"
-    %div.grid.grid-cols-7.gap-2.justify-center.mb-2
-      - week_days.each do |wd|
-        %div.text-xs.font-bold.text-center= wd
-    %div.grid.grid-cols-7.gap-2.justify-center
-      - empty_cells.times do
-        %div
-      - @calendar_days.each do |date|
-        - post = @daily_posts_by_date[date]&.first
-        - is_today = date == Date.current
-        - wday = date.wday
-        - cell_classes = "flex flex-col items-center"
-        - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
-        - cell_classes += " text-blue-500" if wday == 6
-        - cell_classes += " text-red-500" if wday == 0
-        %div{ class: cell_classes }
-          %span.text-xs= date.day
-          - if post
-            %span.text-pink-500.text-2xl{ data: { date: date, content: post&.content } } 🐾
-          - else
-            %span.text-gray-300.text-2xl 🈚️
