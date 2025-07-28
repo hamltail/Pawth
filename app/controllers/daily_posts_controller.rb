@@ -8,7 +8,7 @@ class DailyPostsController < ApplicationController
     @daily_post.posted_on = Date.today
 
     if @daily_post.save
-      redirect_to profile_path(current_user.username), notice: "投稿したよ。"
+      redirect_to activity_path(current_user.username), notice: "投稿したよ。"
     else
       render :new, status: :unprocessable_entity
     end

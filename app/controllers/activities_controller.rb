@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class ActivitiesController < ApplicationController
   def show
     @user = User.find_by(username: params[:username])
     unless @user

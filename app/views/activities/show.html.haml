@@ -1,6 +1,6 @@
 %div.flex.items-center.justify-center.min-h-screen.bg-gray-50
   %div.bg-white.shadow-md.rounded-lg.px-8.py-8.max-w-md.w-full
-    %h1.text-2xl.font-bold.mb-6.text-center Profiles#show
+    %h1.text-2xl.font-bold.mb-6.text-center Activities#show
     %p.mb-2.text-center
       %span.font-mono.font-extrabold.text-2xl.text-gray-700= @user.username
     %div.mb-6
@@ -12,9 +12,9 @@
       - filled_cells = empty_cells + @calendar_days.size
       - trailing_empty_cells = total_cells - filled_cells
       %div.flex.items-center.justify-center.mb-2
-        = link_to "◀", profile_path(username: @user.username, year: @prev_month.year, month: @prev_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+        = link_to "◀", activity_path(username: @user.username, year: @prev_month.year, month: @prev_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
         %h2.text-lg.font-bold.mx-4.flex-1.text-center= @month_label
-        = link_to "▶", profile_path(username: @user.username, year: @next_month.year, month: @next_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+        = link_to "▶", activity_path(username: @user.username, year: @next_month.year, month: @next_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
       %div.grid.grid-cols-7.gap-2.justify-center.mb-2
         - week_days.each do |wd|
           %div.text-xs.font-bold.text-center= wd

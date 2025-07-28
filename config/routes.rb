@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   end
 
   resources :daily_posts, only: [ :index, :new, :create, :show, :destroy ]
-  get "/:username", to: "profiles#show", as: :profile
+  get "/:username", to: "activities#show", as: :activity
 end

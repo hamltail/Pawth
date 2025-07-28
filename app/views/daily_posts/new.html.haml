@@ -4,7 +4,7 @@
     %h2.text-xl.font-semibold.mb-6.text-center 今日何をした？
 
     .mb-4
-      = link_to "← 戻る", (request.referer || profile_path(username: current_user.username)),
+      = link_to "← 戻る", (request.referer || activity_path(username: current_user.username)),
           class: "text-blue-500 hover:underline text-sm"
 
     = form_with model: @daily_post, url: daily_posts_path, class: "space-y-6" do |f| 
