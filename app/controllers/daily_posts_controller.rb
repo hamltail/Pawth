@@ -21,6 +21,19 @@ class DailyPostsController < ApplicationController
   def show
   end
 
+  def edit
+    @daily_post = current_user.daily_posts.find(params[:id])
+  end
+
+  def update
+    @daily_post = current_user.daily_posts.find(params[:id])
+    if @daily_post.update(daily_post_params)
+      redirect_to daily_posts_path, notice: "編集したよ。"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @daily_post = current_user.daily_posts.find(params[:id])
     @daily_post.destroy
