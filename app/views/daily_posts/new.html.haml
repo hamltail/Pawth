@@ -7,6 +7,13 @@
       = link_to "← 戻る", (request.referer || activity_path(username: current_user.username)),
           class: "text-blue-500 hover:underline text-sm"
 
+    - if @daily_post.errors.any?
+      .mb-4
+        %div.bg-red-100.border-l-4.border-red-500.text-red-700.p-4.rounded
+          %ul
+            - @daily_post.errors.full_messages.each do |msg|
+              %li= msg
+
     = form_with model: @daily_post, url: daily_posts_path, class: "space-y-6" do |f| 
       %div
         = f.text_area :content,
