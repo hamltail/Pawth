@@ -3,6 +3,10 @@ class DailyPostsController < ApplicationController
     @daily_posts = current_user.daily_posts.order(posted_on: :desc)
   end
 
+  def new
+    @daily_post = DailyPost.new
+  end
+
   def create
     @daily_post = current_user.daily_posts.build(daily_post_params)
     @daily_post.posted_on = Date.today
@@ -12,13 +16,6 @@ class DailyPostsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def new
-    @daily_post = DailyPost.new
-  end
-
-  def show
   end
 
   def edit

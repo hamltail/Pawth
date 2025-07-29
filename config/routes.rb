@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
-  resources :daily_posts, only: [ :index, :new, :create, :show, :edit, :update, :destroy ]
+  resources :daily_posts, only: [ :index, :new, :create, :edit, :update, :destroy ]
   get "/:username", to: "activities#show", as: :activity
 end
