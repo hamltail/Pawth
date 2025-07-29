@@ -1,4 +1,6 @@
 class DailyPost < ApplicationRecord
+  EDIT_COUNT_LIMIT = 2
+
   belongs_to :user
   validates :posted_on, presence: true
   validates :content, presence: true, length: { maximum: 365 }
@@ -13,8 +15,8 @@ class DailyPost < ApplicationRecord
     end
 
     def edit_count_within_limit
-      if edit_count > 2
-        errors.add(:base, "編集は2回までだよ。")
+      if edit_count > EDIT_COUNT_LIMIT
+        errors.add(:base, "編集は#{EDIT_COUNT_LIMIT}回までだよ。")
       end
     end
 end
