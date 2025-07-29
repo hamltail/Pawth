@@ -15,6 +15,7 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
   %body
-    = render "layouts/header"
-    = yield
-    = render "layouts/footer"
+    %div.flex.min-h-screen
+      = render "layouts/sidebar"
+      %main.flex-1.ml-64
+        = yield
