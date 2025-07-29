@@ -27,6 +27,9 @@ class DailyPostsController < ApplicationController
 
   def update
     @daily_post = current_user.daily_posts.find(params[:id])
+    @daily_post.edit_count ||= 0
+    @daily_post.edit_count += 1
+
     if @daily_post.update(daily_post_params)
       redirect_to daily_posts_path, notice: "編集したよ。"
     else
