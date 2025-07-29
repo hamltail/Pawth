@@ -6,6 +6,7 @@ class DailyPost < ApplicationRecord
   validates :content, presence: true, length: { maximum: 365 }
   validate :only_one_post_per_day, on: :create
   validate :edit_count_within_limit, on: :update
+  validate :only_today_can_be_edited, on: :update
 
   private
     def only_one_post_per_day
@@ -17,6 +18,12 @@ class DailyPost < ApplicationRecord
     def edit_count_within_limit
       if edit_count > EDIT_COUNT_LIMIT
         errors.add(:base, "編集は#{EDIT_COUNT_LIMIT}回までだよ。")
+      end
+    end
+
+    def only_today_can_be_edited
+      if posted_on != Date.today
+        errors.add(:base, "編集できるのは当日（#{posted_on.strftime('%Y-%m-%d')}）だけだよ。")
       end
     end
 end
