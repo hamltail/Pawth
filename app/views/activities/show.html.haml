@@ -45,6 +45,6 @@
       %p.mb-4.text-gray-500 まだ投稿がありません。
     - if user_signed_in? && current_user == @user
       %div.mb-4.text-center
-        %strong.text-yellow-600.text-lg 🌟 これはあなたのプロフィールです 🌟
+        %strong.text-yellow-600.text-lg ようこそ、#{current_user.username}さん！
       %div.flex.justify-center
         = link_to "＋", new_daily_post_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-xl"
