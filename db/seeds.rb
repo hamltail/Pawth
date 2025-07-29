@@ -15,7 +15,7 @@ other_users = FactoryBot.create_list(:user, 5)
   )
 end
 
-target_users = [rin, len] + other_users
+target_users = [ rin, len ] + other_users
 target_users.each do |user|
   dates = (0..29).to_a.sample(10)
   dates.each do |days_ago|
