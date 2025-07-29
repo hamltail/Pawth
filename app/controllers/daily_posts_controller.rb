@@ -1,6 +1,11 @@
 class DailyPostsController < ApplicationController
+  include Pagy::Backend
+
   def index
-    @daily_posts = current_user.daily_posts.order(posted_on: :desc)
+    @pagy, @daily_posts = pagy(
+      current_user.daily_posts.order(posted_on: :desc),
+      limit: 10
+    )
   end
 
   def new

@@ -7,6 +7,7 @@ gem "haml-rails"
 gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
+gem "pagy"
 gem "propshaft"
 gem "puma", ">= 5.0"
 gem "solid_cable"
