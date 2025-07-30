@@ -8,6 +8,10 @@ class DailyPost < ApplicationRecord
   validate :edit_count_within_limit, on: :update
   validate :only_today_can_be_edited, on: :update
 
+  def edit_remaining_count
+    [ EDIT_COUNT_LIMIT - edit_count, 0 ].max
+  end
+
   private
     def only_one_post_per_day
       if user && user.daily_posts.where(posted_on: posted_on).exists?

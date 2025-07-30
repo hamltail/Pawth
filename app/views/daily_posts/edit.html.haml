@@ -12,5 +12,9 @@
     = form_with model: @daily_post, url: daily_post_path(@daily_post), method: :patch, class: "space-y-6" do |f|
       %div
         = f.text_area :content, rows: 6, class: "border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none"
+        %div.text-sm.text-gray-500.text-right
+          あと
+          = @daily_post.edit_remaining_count
+          回編集できます。
       %div.flex.justify-end
         = f.submit "保存", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded shadow"
