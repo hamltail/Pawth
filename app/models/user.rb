@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one_attached :avatar
   has_many :daily_posts, dependent: :destroy
 
   # Include default devise modules. Others available are:
@@ -9,6 +10,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :username, presence: true, uniqueness: true
+  validates :display_name, length: { maximum: 20 }, allow_blank: true
+  validates :profile_message, length: { maximum: 200 }, allow_blank: true
 
   attr_writer :login
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_24_004237) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_01_052836) do
   create_table "daily_posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "posted_on", null: false
@@ -31,6 +31,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_004237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.string "display_name", default: "", null: false
+    t.text "profile_message", default: "", null: false
+    t.boolean "public_profile", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
