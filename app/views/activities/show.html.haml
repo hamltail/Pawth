@@ -28,13 +28,12 @@
           - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
           - cell_classes += " text-blue-500" if wday == 6
           - cell_classes += " text-red-500" if wday == 0
-          - cell_classes += " hover:bg-blue-100 cursor-pointer"
           %div{ class: cell_classes }
             %span.text-xs= date.day
             - if post
-              %div.paw-box.gsap-box.bg-pink-300.w-6.h-6.rounded-md{ data: { date: date, content: post&.content } }
+              %div.paw-box.gsap-box.bg-pink-300.w-6.h-6.rounded-md.cursor-pointer{ data: { date: date, content: post&.content } }
             - else
-              %div.none-box.gsap-box.bg-gray-300.w-6.h-6.rounded-md
+              %div.none-box.bg-gray-300.w-6.h-6.rounded-md
         - trailing_empty_cells.times do
           %div
     - if @latest_daily_post
