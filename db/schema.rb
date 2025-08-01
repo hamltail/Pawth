@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_01_052836) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_01_060729) do
   create_table "daily_posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "posted_on", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_01_052836) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "username"
+    t.string "username", null: false
     t.string "display_name", default: "", null: false
     t.text "profile_message", default: "", null: false
     t.boolean "public_profile", default: false, null: false
