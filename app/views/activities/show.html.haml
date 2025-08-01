@@ -32,9 +32,9 @@
           %div{ class: cell_classes }
             %span.text-xs= date.day
             - if post
-              %span.text-pink-500.text-2xl{ data: { date: date, content: post&.content } } 🐾
+              %div.paw-box.gsap-box.bg-pink-300.w-6.h-6.rounded-md{ data: { date: date, content: post&.content } }
             - else
-              %span.text-gray-300.text-2xl 🈚️
+              %div.none-box.gsap-box.bg-gray-300.w-6.h-6.rounded-md
         - trailing_empty_cells.times do
           %div
     - if @latest_daily_post
@@ -42,7 +42,7 @@
         %p.font-semibold.mb-1#daily-post-date= @latest_daily_post.posted_on
         %div#daily-post-content= simple_format(@latest_daily_post.content)
     - else
-      %p.mb-4.text-gray-500 まだ投稿がありません。
+      %p.mb-4.text-gray-500 投稿がありません。
     - if user_signed_in? && current_user == @user
       %div.mb-4.text-center
         %strong.text-yellow-600.text-lg ようこそ、#{current_user.username}さん！

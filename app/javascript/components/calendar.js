@@ -1,12 +1,12 @@
 import gsap from "gsap";
 
 document.addEventListener("turbo:load", function() {
-  document.querySelectorAll('span[data-date]').forEach(el => {
+  document.querySelectorAll('.gsap-box').forEach(el => {
     el.addEventListener('click', function() {
       const date = this.dataset.date;
       const content = this.dataset.content;
       document.getElementById('daily-post-date').textContent = date;
-      document.getElementById('daily-post-content').textContent = content || "まだ投稿がありません。";
+      document.getElementById('daily-post-content').textContent = content || "投稿がありません。";
 
       gsap.fromTo("#daily-post-content", 
         { y: -10, opacity: 0 },
