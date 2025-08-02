@@ -3,7 +3,7 @@
   %h1.text-2xl.font-bold.mb-8.text-center= page_title
   %div.flex.flex-col.items-center
     - if @user.avatar.attached?
-      = image_tag current_user.avatar, class: "w-20 h-20 rounded-full mb-4 object-cover"
+      = image_tag @user.avatar, class: "w-20 h-20 rounded-full mb-4 object-cover"
   %div.mb-8
     - if user_signed_in? && current_user == @user
       %div.text-center
