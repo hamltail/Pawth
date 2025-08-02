@@ -8,7 +8,7 @@
       %div.flex.items-center.gap-2
         = f.check_box :public_profile, { class: "sr-only", id: "toggle-public-profile" }
         %label{ for: "toggle-public-profile", class: "relative" }
-          %span.block.w-16.h-8.bg-gray-300.rounded-full
+          %span#toggle-bar.block.w-16.h-8.bg-gray-300.rounded-full
           %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md
         %span#public-profile-label= resource.public_profile? ? "公開" : "非公開"
 
