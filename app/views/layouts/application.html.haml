@@ -16,7 +16,9 @@
     = javascript_importmap_tags
   %body
     %div.flex.min-h-screen.bg-gray-50
-      = render 'layouts/sidebar'
-      %main.ml-64.flex-1
+      - if user_signed_in?
+        = render 'layouts/sidebar'
+      - main_class = user_signed_in? ? "ml-64 flex-1" : "flex-1"
+      %main{ class: main_class }
         %div.max-w-screen-md.mx-auto.p-4
           = yield
