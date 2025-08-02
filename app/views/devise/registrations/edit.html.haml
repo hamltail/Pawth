@@ -10,7 +10,7 @@
         %label{ for: "toggle-public-profile", class: "relative" }
           %span.block.w-16.h-8.bg-gray-300.rounded-full
           %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md
-        %span= resource.public_profile? ? "公開" : "非公開"
+        %span#public-profile-label= resource.public_profile? ? "公開" : "非公開"
 
     .mb-4
       = f.label :avatar, "Profile Image", class: "block text-gray-700 mb-2"
