@@ -20,5 +20,5 @@
         = render 'layouts/sidebar'
       - main_class = user_signed_in? ? "ml-64 flex-1" : "flex-1"
       %main{ class: main_class }
-        %div.max-w-screen-md.mx-auto.p-4
+        %div.max-w-screen-md.mx-auto
           = yield
