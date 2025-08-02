@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+.toggle-dot {
+  transition: transform 0.2s;
+}
+input:checked + label .toggle-dot {
+  transform: translateX(100%);
+}
