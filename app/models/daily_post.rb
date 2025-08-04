@@ -8,6 +8,7 @@ class DailyPost < ApplicationRecord
   validate :edit_count_within_limit, on: :update
   validate :only_today_can_be_edited, on: :update
 
+  scope :recent_first, -> { order(posted_on: :desc) }
   scope :search_text, ->(query) {
     where("content LIKE ?", "%#{sanitize_sql_like(query)}%") if query.present?
   }

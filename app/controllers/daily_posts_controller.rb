@@ -6,7 +6,7 @@ class DailyPostsController < ApplicationController
     posts = posts.search_text(params[:q])
     posts = posts.by_year(params[:year])
     posts = posts.by_month(params[:month], params[:year])
-    posts = posts.order(posted_on: :desc)
+    posts = posts.recent_first
 
     @pagy, @daily_posts = pagy(posts, limit: 10)
   end
