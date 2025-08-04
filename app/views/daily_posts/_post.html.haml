@@ -1,9 +1,9 @@
-%li.p-4.bg-gray-100.rounded-md.shadow-sm
+%li{ id: "post_#{post.id}", class: "p-4 bg-gray-100 rounded-md shadow-sm" }
   %div.flex.items-center.justify-between.mb-2
     %span.font-bold.text-lg.text-gray-800= post.posted_on.strftime("%Y-%m-%d")
     - if post.posted_on == Date.today
       - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
-        = link_to "編集", edit_daily_post_path(post), class: "text-blue-500 hover:underline font-semibold text-sm ml-2"
+        = link_to "編集", edit_daily_post_path(post), data: { turbo_frame: "modal" }, class: "text-blue-500 hover:underline font-semibold text-sm ml-2"
       - else
         %button.text-gray-400.font-semibold.text-sm.ml-2.cursor-not-allowed{ type: "button",
           onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')" }

@@ -44,7 +44,15 @@ class DailyPostsController < ApplicationController
     @daily_post.edit_count += 1
 
     if @daily_post.update(daily_post_params)
-      redirect_to daily_posts_path, notice: "編集したよ。"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("post_#{@daily_post.id}", partial: "daily_posts/post", locals: { post: @daily_post }),
+            turbo_stream.update("modal", "")
+          ]
+        end
+        format.html { redirect_to daily_posts_path, notice: "編集したよ。" }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
