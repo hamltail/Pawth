@@ -1,0 +1,6 @@
+- if daily_post.errors.any?
+  .mb-4
+    %div.bg-red-100.border-l-4.border-red-500.text-red-700.p-4.rounded
+      %ul
+        - daily_post.errors.full_messages.each do |msg|
+          %li= msg

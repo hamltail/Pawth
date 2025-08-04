@@ -30,7 +30,13 @@ class DailyPostsController < ApplicationController
         format.html { redirect_to activity_path(current_user.username), notice: "投稿したよ。" }
       end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("form_errors",
+            partial: "daily_posts/form_errors", locals: { daily_post: @daily_post })
+        end
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -54,7 +60,13 @@ class DailyPostsController < ApplicationController
         format.html { redirect_to daily_posts_path, notice: "編集したよ。" }
       end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("form_errors",
+            partial: "daily_posts/form_errors", locals: { daily_post: @daily_post })
+        end
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 
