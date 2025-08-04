@@ -17,7 +17,7 @@ class DailyPost < ApplicationRecord
   }
   scope :by_month, ->(month, year = nil) {
     if month.present? && year.present?
-      where("strftime('%m', posted_on) = ?", format('%02d', month))
+      where("strftime('%m', posted_on) = ?", format("%02d", month))
     end
   }
 
