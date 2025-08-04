@@ -4,6 +4,8 @@ class DailyPostsController < ApplicationController
   def index
     posts = current_user.daily_posts
     posts = posts.search_text(params[:q])
+    posts = posts.by_year(params[:year])
+    posts = posts.by_month(params[:month], params[:year])
     posts = posts.order(posted_on: :desc)
 
     @pagy, @daily_posts = pagy(posts, limit: 10)

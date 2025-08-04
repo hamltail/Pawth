@@ -11,6 +11,14 @@ class DailyPost < ApplicationRecord
   scope :search_text, ->(query) {
     where("content LIKE ?", "%#{sanitize_sql_like(query)}%") if query.present?
   }
+  scope :by_year, ->(year) {
+    where("strftime('%Y', posted_on) = ?", year.to_s) if year.present?
+  }
+  scope :by_month, ->(month, year = nil) {
+    if month.present? && year.present?
+      where("strftime('%m', posted_on) = ?", format('%02d', month))
+    end
+  }
 
   def edit_remaining_count
     [ EDIT_COUNT_LIMIT - edit_count, 0 ].max
