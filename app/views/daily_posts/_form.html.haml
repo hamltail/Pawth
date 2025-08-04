@@ -1,0 +1,9 @@
+= form_with model: @daily_post, url: daily_posts_path, class: "space-y-6" do |f| 
+  %div
+    = f.text_area :content,
+        rows: 10,
+        placeholder: "今日何をした？",
+        class: "border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none"
+  %div.flex.justify-end
+    = f.submit "投稿",
+        class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded shadow"
