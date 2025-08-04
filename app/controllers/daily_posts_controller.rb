@@ -20,7 +20,15 @@ class DailyPostsController < ApplicationController
     @daily_post.posted_on = Date.today
 
     if @daily_post.save
-      redirect_to activity_path(current_user.username), notice: "投稿したよ。"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.prepend("posts", partial: "daily_posts/post", locals: { post: @daily_post }),
+            turbo_stream.update("modal", "")
+          ]
+        end
+        format.html { redirect_to activity_path(current_user.username), notice: "投稿したよ。" }
+      end
     else
       render :new, status: :unprocessable_entity
     end

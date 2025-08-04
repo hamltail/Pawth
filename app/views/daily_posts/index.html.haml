@@ -10,7 +10,7 @@
     = f.select :month, options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]), { prompt: "月" }, class: "px-2 py-2 border border-gray-300 rounded-md"
     = f.submit "検索", class: "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
   = pagy_nav(@pagy).html_safe
-  %ul.space-y-6
+  %ul#posts.space-y-6
     - @daily_posts.each do |post|
       = render "post", post: post
   = pagy_nav(@pagy).html_safe
