@@ -8,6 +8,10 @@ class DailyPost < ApplicationRecord
   validate :edit_count_within_limit, on: :update
   validate :only_today_can_be_edited, on: :update
 
+  scope :search_text, ->(query) {
+    where("content LIKE ?", "%#{sanitize_sql_like(query)}%") if query.present?
+  }
+
   def edit_remaining_count
     [ EDIT_COUNT_LIMIT - edit_count, 0 ].max
   end
