@@ -56,6 +56,10 @@ ja:
       signed_in: "ログインしました"
       signed_out: "ログアウトしました"
       already_signed_out: "ログアウトしました"
+    shared:
+      forgot_your_password: "パスワードをお忘れですか？"
+      sign_in: "ログイン"
+      sign_up: "新規登録"
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
