@@ -33,5 +33,6 @@ end
 
 group :development do
   gem "html2haml"
+  gem "letter_opener"
   gem "web-console"
 end
