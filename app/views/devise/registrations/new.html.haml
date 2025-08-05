@@ -9,7 +9,6 @@
           - resource.errors.full_messages.each do |msg|
             %li= msg
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-      = render "devise/shared/error_messages", resource: resource
       .mb-4
         = f.label :username, t("attributes.username"), class: "block text-gray-700 mb-2"
         = f.text_field :username, autocomplete: "username", class: "border rounded w-full px-3 py-2"
