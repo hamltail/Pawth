@@ -31,7 +31,7 @@ ja:
     passwords:
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
       send_button: "パスワード再設定メールを送信"
-      send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
+      send_instructions: "数分以内に、パスワード再設定の手順を記載したメールが届きます"
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
@@ -63,7 +63,7 @@ ja:
       already_confirmed: "was already confirmed, please try signing in"
       confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
       expired: "has expired, please request a new one"
-      not_found: "not found"
+      not_found: "が見つかりません"
       not_locked: "was not locked"
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
