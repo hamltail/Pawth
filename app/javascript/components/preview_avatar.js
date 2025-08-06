@@ -7,6 +7,8 @@ document.addEventListener('turbo:load', () => {
       const [file] = e.target.files;
       if (file) {
         preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+        preview.style.display = "";
       }
     });
   }
