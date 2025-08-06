@@ -2,7 +2,16 @@ ja:
   activerecord:
     attributes:
       user:
-        username: "ユーザー名"
+        avatar: "プロフィール画像"
+        current_password: "現在のパスワード"
+        display_name: "表示名"
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認用）"
+        profile_message: "プロフィールメッセージ"
+        username: "ユーザー名"
+  users:
+    edit:
+      title: "ユーザー情報の編集"
+      update: "更新"
+      back: "戻る"
