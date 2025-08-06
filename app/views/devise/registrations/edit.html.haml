@@ -11,7 +11,7 @@
             - messages.each do |msg|
               %li= resource.class.human_attribute_name(attribute) + msg
     .mb-4
-      = f.label :public_profile, "公開設定", class: "block mb-2"
+      = f.label :public_profile, "公開設定", class: "block text-gray-700 mb-2"
       %div.flex.items-center.gap-2
         = f.check_box :public_profile, { class: "sr-only", id: "toggle-public-profile" }
         %label{ for: "toggle-public-profile", class: "relative" }
@@ -20,7 +20,8 @@
         %span#public-profile-label= resource.public_profile? ? "公開" : "非公開"
     .mb-4
       = f.label :avatar, t("activerecord.attributes.user.avatar"), class: "block text-gray-700 mb-2"
-      = f.file_field :avatar
+      %img#avatar-preview.mt-2.mb-2.rounded.w-24.h-24.object-cover{ src: resource.avatar.attached? ? url_for(resource.avatar) : "", alt: "preview" }
+      = f.file_field :avatar, id: "avatar-input", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
       - if resource.errors[:avatar].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:avatar).first
     .mb-4
