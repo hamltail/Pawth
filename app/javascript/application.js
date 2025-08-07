@@ -2,5 +2,6 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "components/calendar"
+import "components/menu"
 import "components/preview_avatar"
 import "components/toggle_label"
