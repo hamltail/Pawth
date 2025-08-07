@@ -10,7 +10,7 @@ window.toggleSidebar = () => {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('turbo:load', () => {
   const sidebar = document.getElementById('sidebar');
   const menuButton = document.getElementById('menu-button');
 
@@ -27,10 +27,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('#sidebar nav a').forEach(link => {
     if (!link.classList.contains('sidebar-no-close')) {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', () => {
         sidebar.classList.add('-translate-x-full');
         menuButton.classList.remove('hidden');
-        e.stopPropagation();
       });
     }
   });
