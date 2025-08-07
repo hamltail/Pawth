@@ -2,7 +2,12 @@ window.toggleSidebar = () => {
   const sidebar = document.getElementById("sidebar");
   const menuButton = document.getElementById("menu-button");
   sidebar.classList.toggle("-translate-x-full");
-  menuButton.classList.toggle("hidden");
+  
+  if (sidebar.classList.contains("-translate-x-full")) {
+    menuButton.classList.remove("hidden");
+  } else {
+    menuButton.classList.add("hidden");
+  }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -16,7 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (sidebarVisible && !clickedSidebar && !clickedMenuButton) {
       sidebar.classList.add("-translate-x-full");
-      menuButton.classList.toggle("hidden");
+      menuButton.classList.remove("hidden");
     }
   });
 });
