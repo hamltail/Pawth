@@ -78,4 +78,34 @@ RSpec.describe DailyPost, type: :model do
       expect(post).to be_valid
     end
   end
+
+  describe 'scope' do
+    it 'recent_firstは最新の投稿から順に並べる' do
+      post1 = DailyPost.create!(content: 'post 1', user: user, posted_on: 3.day.ago)
+      post2 = DailyPost.create!(content: 'post 2', user: user, posted_on: 2.days.ago)
+      post3 = DailyPost.create!(content: 'post 3', user: user, posted_on: 1.days.ago)
+      expect(DailyPost.recent_first).to eq([post3, post2, post1])
+    end
+
+    it 'search_textは内容に一致する投稿を取得する' do
+      post1 = DailyPost.create!(content: 'search me', user: user, posted_on: date_yesterday)
+      post2 = DailyPost.create!(content: 'search not', user: user, posted_on: date_today)
+      expect(DailyPost.search_text('search')).to include(post1)
+      expect(DailyPost.search_text('me')).not_to include(post2)
+    end
+
+    it 'by_yearは特定の年の投稿を取得する' do
+      post1 = DailyPost.create!(content: 'post 2025', user: user, posted_on: '2025-08-07')
+      post2 = DailyPost.create!(content: 'post 2024', user: user, posted_on: '2024-03-15')
+      expect(DailyPost.by_year(2025)).to include(post1)
+      expect(DailyPost.by_year(2025)).not_to include(post2)
+    end
+
+    it 'by_monthは特定の月と年の投稿を取得する' do
+      post1 = DailyPost.create!(content: 'post May 2025', user: user, posted_on: '2025-05-15')
+      post2 = DailyPost.create!(content: 'post March 2025', user: user, posted_on: '2025-03-15')
+      expect(DailyPost.by_month(5, 2025)).to include(post1)
+      expect(DailyPost.by_month(5, 2025)).not_to include(post2)
+    end
+  end
 end
