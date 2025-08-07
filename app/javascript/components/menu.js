@@ -26,10 +26,12 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('#sidebar nav a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      sidebar.classList.add('-translate-x-full');
-      menuButton.classList.remove('hidden');
-      e.stopPropagation();
-    });
+    if (!link.classList.contains('sidebar-no-close')) {
+      link.addEventListener('click', (e) => {
+        sidebar.classList.add('-translate-x-full');
+        menuButton.classList.remove('hidden');
+        e.stopPropagation();
+      });
+    }
   });
 });
