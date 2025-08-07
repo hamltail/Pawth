@@ -9,13 +9,13 @@ gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
 gem "pagy"
+gem "pg"
 gem "propshaft"
 gem "puma", ">= 5.0"
 gem "rails-i18n"
 gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
-gem "sqlite3", ">= 2.1"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "thruster", require: false
@@ -25,6 +25,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 group :development, :test do
   gem "brakeman", require: false
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
