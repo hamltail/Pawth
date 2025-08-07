@@ -84,7 +84,7 @@ RSpec.describe DailyPost, type: :model do
       post1 = DailyPost.create!(content: 'post 1', user: user, posted_on: 3.day.ago)
       post2 = DailyPost.create!(content: 'post 2', user: user, posted_on: 2.days.ago)
       post3 = DailyPost.create!(content: 'post 3', user: user, posted_on: 1.days.ago)
-      expect(DailyPost.recent_first).to eq([post3, post2, post1])
+      expect(DailyPost.recent_first).to eq([ post3, post2, post1 ])
     end
 
     it 'search_textは内容に一致する投稿を取得する' do
