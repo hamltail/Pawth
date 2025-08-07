@@ -1,4 +1,5 @@
 require "faker"
+Faker::Config.locale = 'en'
 
 miku = FactoryBot.create(:user, username: "miku", email: "miku@example.com")
 rin = FactoryBot.create(:user, username: "rin", email: "rin@example.com")
