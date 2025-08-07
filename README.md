@@ -7,15 +7,36 @@ Pawth は、日々の足あとを記録するためのアプリです。
 
 ## 主な機能 (WIP)
 
-- ユーザー登録／ログイン
-- 毎日1つの足あと投稿
-- 芝状のカレンダー表示（年次切り替え可能）
-- 投稿の一覧／編集／削除
-- モバイル対応のUI
+- ユーザー登録・ログイン
+- プロフィール編集（画像・表示名・メッセージ・公開/非公開設定）
+- 1日1つの足あと投稿（編集・削除・文字数制限あり）
+- カレンダー
+- 投稿の一覧
+- 投稿の検索・絞り込み
+- モバイル/PC両対応のUI
+- 各種バリデーション・ガード実装
 
 ## 開発環境 (WIP)
 
 - Ruby: 3.4.4
 - Rails: 8.0.2
-- DB: SQLite3（開発用）
-- Auth: Devise
+- DB: PostgreSQL 14.18
+- 認証: Devise
+- フロント: Haml, Tailwind CSS, Turbo, GSAP
+- テスト: RSpec, Capybara, FactoryBot, Selenium
+
+## セットアップ
+
+```
+git clone https://github.com/hamltail/pawth.git
+cd pawth
+bundle install
+rails db:setup
+rails server
+```
+
+## テストの実行
+
+```
+bundle exec rspec
+```
