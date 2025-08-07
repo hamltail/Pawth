@@ -13,11 +13,11 @@ class DailyPost < ApplicationRecord
     where("content LIKE ?", "%#{sanitize_sql_like(query)}%") if query.present?
   }
   scope :by_year, ->(year) {
-    where("strftime('%Y', posted_on) = ?", year.to_s) if year.present?
+    where("EXTRACT(YEAR FROM posted_on) = ?", year.to_i) if year.present?
   }
   scope :by_month, ->(month, year = nil) {
     if month.present? && year.present?
-      where("strftime('%m', posted_on) = ?", format("%02d", month))
+      where("EXTRACT(MONTH FROM posted_on) = ? AND EXTRACT(YEAR FROM posted_on) = ?", month.to_i, year.to_i)
     end
   }
 
