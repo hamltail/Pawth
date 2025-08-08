@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  RESERVED_USERNAMES = %w[
+    admin settings login logout signup register users
+    daily_posts activity activities
+  ].freeze
+
   has_one_attached :avatar
   has_many :daily_posts, dependent: :destroy
 
@@ -10,6 +15,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :profile_message, length: { maximum: 200 }, allow_blank: true
+  validate :username_is_not_reserved
 
   attr_writer :login
 
@@ -27,4 +33,11 @@ class User < ApplicationRecord
       where(conditions).first
     end
   end
+
+  private
+    def username_is_not_reserved
+      if RESERVED_USERNAMES.include?(username.downcase)
+        errors.add(:username, "は使用できません")
+      end
+    end
 end
