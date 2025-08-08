@@ -1,0 +1,34 @@
+%div.mb-8
+  - month_label = calendar_days.first.strftime("%B %Y")
+  - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
+  - first_wday = calendar_days.first.wday
+  - empty_cells = (first_wday - 1) % 7
+  - total_cells = 42
+  - filled_cells = empty_cells + calendar_days.size
+  - trailing_empty_cells = total_cells - filled_cells
+  %div.flex.items-center.justify-center.mb-8
+    = link_to "◀", activity_path(username: user.username, year: prev_month.year, month: prev_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+    %h2.text-lg.font-bold.mx-4.flex-1.text-center= month_label
+    = link_to "▶", activity_path(username: user.username, year: next_month.year, month: next_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+  %div.grid.grid-cols-7.gap-2.justify-center.mb-8
+    - week_days.each do |wd|
+      %div.text-xs.font-bold.text-center= wd
+  %div.grid.grid-cols-7.gap-2.justify-center.h-120
+    - empty_cells.times do
+      %div
+    - calendar_days.each do |date|
+      - post = daily_posts_by_date[date]&.first
+      - is_today = date == Date.current
+      - wday = date.wday
+      - cell_classes = "flex flex-col items-center"
+      - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
+      - cell_classes += " text-blue-500" if wday == 6
+      - cell_classes += " text-red-500" if wday == 0
+      %div{ class: cell_classes }
+        %span.text-xs= date.day
+        - if post
+          %div.paw-box.gsap-box.bg-pink-300.w-12.h-12.rounded-md.cursor-pointer{ data: { date: date, content: post&.content } }
+        - else
+          %div.none-box.bg-gray-300.w-12.h-12.rounded-md
+    - trailing_empty_cells.times do
+      %div
