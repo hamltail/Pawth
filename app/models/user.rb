@@ -1,8 +1,7 @@
 class User < ApplicationRecord
-  RESERVED_USERNAMES = %w[
-    admin settings login logout signup register users
-    daily_posts activity activities
-  ].freeze
+  RESERVED_USERNAMES = YAML.load_file(
+    Rails.root.join("config/reserved_usernames.yml")
+  )["reserved"].map(&:downcase).freeze
 
   has_one_attached :avatar
   has_many :daily_posts, dependent: :destroy

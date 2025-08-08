@@ -1,0 +1,12 @@
+reserved:
+  - admin
+  - settings
+  - login
+  - logout
+  - signup
+  - register
+  - users
+  - daily_posts
+  - activity
+  - activities
+  
