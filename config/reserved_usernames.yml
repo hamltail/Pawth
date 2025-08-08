@@ -1,12 +1,116 @@
 reserved:
+  # 管理・認証系
+  - account
   - admin
-  - settings
+  - auth
   - login
   - logout
-  - signup
+  - me
+  - profile
   - register
+  - root
+  - settings
+  - signin
+  - signout
+  - signup
+
+  # ユーザー・組織
+  - group
+  - groups
+  - org
+  - organizations
+  - teams
+  - user
   - users
-  - daily_posts
-  - activity
+
+  # 投稿・コンテンツ
   - activities
-  
+  - activity
+  - achievements
+  - badges
+  - comment
+  - comments
+  - daily_posts
+  - discover
+  - explore
+  - feed
+  - post
+  - posts
+  - reactions
+  - replies
+  - reply
+  - search
+  - seen
+  - share
+  - shared
+  - status
+  - statuses
+  - tags
+  - timeline
+  - topics
+  - trending
+  - viewed
+
+  # 開発・管理機能
+  - adminpanel
+  - config
+  - console
+  - dashboard
+  - manage
+
+  # サポート系
+  - about
+  - api
+  - contact
+  - faq
+  - help
+  - privacy
+  - security
+  - support
+  - terms
+
+  # 静的ファイル・技術系
+  - assets
+  - css
+  - images
+  - js
+
+  # プロジェクト固有・AI関連
+  - ai
+  - assistant
+  - bot
+  - bots
+  - chat
+  - chats
+  - pawth
+
+  # メディア関連
+  - gallery
+  - media
+  - photo
+  - photos
+  - picture
+  - pictures
+  - upload
+  - uploads
+
+  # API・連携関連
+  - callback
+  - webhooks
+
+  # SNSや通知機能
+  - follow
+  - followers
+  - following
+  - forks
+  - invite
+  - invites
+  - likes
+  - log
+  - logs
+  - messages
+  - notifications
+  - starred
+  - stars
+  - watch
+  - watched
