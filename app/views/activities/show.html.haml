@@ -13,13 +13,14 @@
           = link_to "＋", new_daily_post_path, data: { turbo_frame: "modal" }, 
               class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-xl"
           = turbo_frame_tag "modal"
-    = render "calendar",
-      user: @user,
-      calendar_days: @calendar_days,
-      daily_posts_by_date: @daily_posts_by_date,
-      prev_month: @prev_month,
-      next_month: @next_month,
-      month_label: @month_label
+    = turbo_frame_tag "calendar", data: { turbo_cache: "false" } do
+      = render "calendar",
+        user: @user,
+        calendar_days: @calendar_days,
+        daily_posts_by_date: @daily_posts_by_date,
+        prev_month: @prev_month,
+        next_month: @next_month,
+        month_label: @month_label
     %div
       - if @latest_daily_post
         %div.mb-4.p-4.bg-gray-100.rounded

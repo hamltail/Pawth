@@ -6,3 +6,7 @@
 input:checked + label .toggle-dot {
   transform: translateX(100%);
 }
+svg.paw.paw--posted {
+  opacity: 0;
+  transform: translateY(-10px);
+}
