@@ -1,7 +1,7 @@
 import gsap from "gsap";
 
-document.addEventListener("turbo:load", function() {
-  document.querySelectorAll('.gsap-box').forEach(el => {
+document.addEventListener("turbo:load", () => {
+  document.querySelectorAll('.paw').forEach(el => {
     el.addEventListener('mouseenter', () => {
       gsap.fromTo(el,
         { scale: 1 },
@@ -9,9 +9,10 @@ document.addEventListener("turbo:load", function() {
       );
     });
 
-    el.addEventListener('click', function() {
-      const date = this.dataset.date;
-      const content = this.dataset.content;
+    el.addEventListener('click', (e) => {
+      const target = e.currentTarget;
+      const date = target.dataset.date;
+      const content = target.dataset.content;
       document.getElementById('daily-post-date').textContent = date;
       document.getElementById('daily-post-content').textContent = content || "投稿がありません。";
 

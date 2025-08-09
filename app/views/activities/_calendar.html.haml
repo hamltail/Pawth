@@ -27,14 +27,11 @@
       %div{ class: cell_classes }
         %span.text-xs= date.day
         - if post
-          -# -# %div.paw-box.gsap-box.bg-pink-300.w-12.h-12.rounded-md.cursor-pointer{ data: { date: date, content: post&.content } }
-          -# = render "shared/paw", klass: "text-pink-400"
-          %div.paw-box.gsap-box.bg-pink-300.w-12.h-12.rounded-md.cursor-pointer.flex.items-center.justify-center{ data: { date: date, content: post&.content } }
-          = render "shared/paw", klass: "text-pink-400"
+          = render "shared/paw",
+            klass: "text-pink-300 cursor-pointer",
+            dataset: { date: date, content: post&.content }
         - else
-          -# -# %div.none-box.bg-gray-300.w-12.h-12.rounded-md
-          -# = render "shared/paw", klass: "text-gray-300"
-          %div.none-box.bg-gray-300.w-12.h-12.rounded-md.flex.items-center.justify-center
-          = render "shared/paw", klass: "text-gray-200"
+          = render "shared/paw",
+            klass: "text-gray-300 opacity-50"
     - trailing_empty_cells.times do
       %div
