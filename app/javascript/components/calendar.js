@@ -1,7 +1,7 @@
 import gsap from "gsap";
 
 document.addEventListener("turbo:load", () => {
-  document.querySelectorAll('.paw').forEach(el => {
+  document.querySelectorAll('.paw.paw--posted').forEach(el => {
     el.addEventListener('mouseenter', () => {
       gsap.fromTo(el,
         { scale: 1 },

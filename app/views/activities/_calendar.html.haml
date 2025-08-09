@@ -28,7 +28,7 @@
         %span.text-xs= date.day
         - if post
           = render "shared/paw",
-            klass: "text-pink-300 cursor-pointer",
+            klass: "text-pink-300 cursor-pointer paw--posted",
             dataset: { date: date, content: post&.content }
         - else
           = render "shared/paw",
