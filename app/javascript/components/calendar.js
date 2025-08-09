@@ -1,7 +1,6 @@
 import gsap from "gsap";
 
 function squish(el, { scale = 1.5, duration = 0.15 } = {}) {
-  gsap.killTweensOf(el);
   gsap.fromTo(
     el,
     { scale: 1 },
