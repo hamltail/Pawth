@@ -1,6 +1,6 @@
 import gsap from "gsap";
 
-document.addEventListener("turbo:load", function() {
+document.addEventListener("turbo:load", function () {
   const checkbox = document.getElementById("toggle-public-profile");
   const label = document.getElementById("public-profile-label");
   const bar = document.getElementById("toggle-bar");
