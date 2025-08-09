@@ -7,9 +7,11 @@
   - filled_cells = empty_cells + calendar_days.size
   - trailing_empty_cells = total_cells - filled_cells
   %div.flex.items-center.justify-center.mb-8
-    = link_to "◀", activity_path(username: user.username, year: prev_month.year, month: prev_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+    = link_to activity_path(username: user.username, year: prev_month.year, month: prev_month.month), class: "mx-2" do
+      = render "shared/icon_arrow", direction: "left", klass: "text-gray-400 hover:text-gray-700"
     %h2.text-lg.font-bold.mx-4.flex-1.text-center= month_label
-    = link_to "▶", activity_path(username: user.username, year: next_month.year, month: next_month.month), class: "mx-2 text-xl font-bold w-8 text-center"
+    = link_to activity_path(username: user.username, year: next_month.year, month: next_month.month), class: "mx-2" do
+      = render "shared/icon_arrow", direction: "right", klass: "text-gray-400 hover:text-gray-700"
   %div.grid.grid-cols-7.gap-2.justify-center.mb-8
     - week_days.each do |wd|
       %div.text-xs.font-bold.text-center= wd
