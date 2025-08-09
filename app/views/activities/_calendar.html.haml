@@ -31,9 +31,11 @@
         - if post
           = render "shared/paw",
             klass: "text-pink-300 cursor-pointer paw--posted",
-            dataset: { date: date, content: post&.content }
+            dataset: { date: date, content: post&.content },
+            grad: true
         - else
           = render "shared/paw",
-            klass: "text-gray-300 opacity-50"
+            klass: "text-gray-300 opacity-50",
+            grad: false
     - trailing_empty_cells.times do
       %div
