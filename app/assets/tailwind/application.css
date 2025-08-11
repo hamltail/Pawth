@@ -10,3 +10,22 @@ svg.paw.paw--posted {
   opacity: 0;
   transform: translateY(-10px);
 }
+.today-badge .today-char {
+  display: inline-block;
+}
+.today-badge {
+  color: #ffe66d;
+  text-shadow:
+    -1px -1px 0 #d97706,
+    1px -1px 0 #d97706,
+    -1px 1px 0 #d97706,
+    1px 1px 0 #d97706;
+}
+/* .today-badge {
+  color: #a7f3d0;
+  text-shadow:
+    -1px -1px 0 #047857,
+     1px -1px 0 #047857,
+    -1px  1px 0 #047857,
+     1px  1px 0 #047857;
+} */

@@ -45,9 +45,26 @@ function fadeInPaws() {
   );
 }
 
+function animateTodayBadge() {
+  const chars = document.querySelectorAll(".today-badge .today-char");
+  if (!chars.length) return;
+
+  const tl = gsap.timeline({
+    delay: 0.3,
+    repeat: -1,
+    repeatDelay: 0.8,
+  });
+  tl.to(chars, { y: -6, duration: 0.22, ease: "power1.out", stagger: 0.06 }).to(
+    chars,
+    { y: 0, duration: 0.22, ease: "power1.in", stagger: 0.06 },
+    0.1,
+  );
+}
+
 const onLoad = () => {
   bindPawEvents();
   fadeInPaws();
+  animateTodayBadge();
 };
 
 document.addEventListener("turbo:load", onLoad);

@@ -22,8 +22,7 @@
       - post = daily_posts_by_date[date]&.first
       - is_today = date == Date.current
       - wday = date.wday
-      - cell_classes = "flex flex-col items-center"
-      - cell_classes += " bg-yellow-100 border-2 border-yellow-500 rounded-xl" if is_today
+      - cell_classes = "relative flex flex-col items-center"
       - cell_classes += " text-blue-500" if wday == 6
       - cell_classes += " text-red-500" if wday == 0
       %div{ class: cell_classes }
@@ -37,5 +36,9 @@
           = render "shared/paw",
             klass: "text-gray-300 opacity-50",
             grad: false
+        - if is_today
+          %div{ class: "today-badge pointer-events-none select-none absolute top-11 left-1/2 -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]" }
+            - "TODAY".chars.each_with_index do |ch, i|
+              %span.today-char{ data: { idx: i } }= ch
     - trailing_empty_cells.times do
       %div
