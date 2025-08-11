@@ -34,8 +34,8 @@ class DailyPostsController < ApplicationController
 
           render turbo_stream: [
             turbo_stream.prepend(
-              "posts", 
-              partial: "daily_posts/post", 
+              "posts",
+              partial: "daily_posts/post",
               locals: { post: @daily_post }
             ),
             turbo_stream.replace(
