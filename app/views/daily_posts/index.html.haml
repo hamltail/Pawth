@@ -9,8 +9,11 @@
     = f.select :year, options_for_select((2024..Date.today.year).to_a.reverse, params[:year]), { prompt: "年" }, class: "px-2 py-2 border border-gray-300 rounded-md"
     = f.select :month, options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]), { prompt: "月" }, class: "px-2 py-2 border border-gray-300 rounded-md"
     = f.submit "検索", class: "px-4 py-2 bg-teal-400 text-white rounded-md hover:bg-teal-500"
-  = pagy_nav(@pagy).html_safe
-  %ul#posts.space-y-6
+  %ul#posts.space-y-6.mt-8
     - @daily_posts.each do |post|
       = render "post", post: post
-  = pagy_nav(@pagy).html_safe
+  %div{ class: "mt-6 flex flex-col items-center gap-2" }
+    %div{ class: "flex gap-2 [&_a]:px-3 [&_a]:py-1 [&_a]:rounded-full [&_a]:ring-1 [&_a]:ring-gray-300 [&_a]:text-gray-700 [&_a]:transition [&_a:hover]:bg-gray-100 [&_span]:px-3 [&_span]:py-1 [&_span]:rounded-full [&_span]:ring-1 [&_span]:ring-teal-400 [&_span]:bg-teal-400 [&_span]:text-white" }
+      = pagy_nav(@pagy).html_safe
+    %div.text-xs.text-gray-500
+      = "Page #{@pagy.page} / #{@pagy.pages}"
