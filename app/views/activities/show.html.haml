@@ -22,12 +22,8 @@
         next_month: @next_month,
         month_label: @month_label
     %div
-      - if @latest_daily_post
-        %div.mb-4.p-4.bg-gray-100.rounded
-          %p.font-semibold.mb-1#daily-post-date= @latest_daily_post.posted_on
-          %div#daily-post-content= simple_format(@latest_daily_post.content)
-      - else
-        %p.mb-4.text-gray-500 投稿がありません。
+      = turbo_frame_tag "latest_post" do
+        = render "activities/latest_post", post: @latest_daily_post
   - else
     %div.flex.flex-col.items-center.justify-center.h-80.bg-gray-50.rounded-lg.shadow-inner
       %span.text-5xl.mb-4 🐾

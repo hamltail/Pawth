@@ -1,0 +1,6 @@
+- if post.present?
+  %div.mb-4.p-4.bg-gray-100.rounded
+    %p.font-semibold.mb-1#daily-post-date= post.posted_on
+    %div#daily-post-content= simple_format(post.content)
+- else
+  %p.mb-4.text-gray-500 投稿がありません。

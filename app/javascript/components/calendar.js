@@ -52,3 +52,15 @@ const onLoad = () => {
 
 document.addEventListener("turbo:load", onLoad);
 document.addEventListener("turbo:frame-load", onLoad);
+document.addEventListener("turbo:before-stream-render", (e) => {
+  const streamEl = e.target;
+  const action = streamEl.getAttribute("action");
+  const target = streamEl.getAttribute("target");
+  const hit =
+    (target === "calendar" || target === "latest_post") &&
+    (action === "update" || action === "replace");
+
+  if (hit) {
+    requestAnimationFrame(() => setTimeout(onLoad, 0));
+  }
+});

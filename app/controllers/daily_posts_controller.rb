@@ -22,8 +22,38 @@ class DailyPostsController < ApplicationController
     if @daily_post.save
       respond_to do |format|
         format.turbo_stream do
+          today = Date.current
+          month_from = today.beginning_of_month
+          month_to = today.end_of_month
+          calendar_days = (month_from..month_to).to_a
+          daily_posts_by_date = current_user.daily_posts
+                                  .where(posted_on: month_from..month_to)
+                                  .group_by(&:posted_on)
+          prev_month = today.prev_month
+          next_month = today.next_month
+
           render turbo_stream: [
-            turbo_stream.prepend("posts", partial: "daily_posts/post", locals: { post: @daily_post }),
+            turbo_stream.prepend(
+              "posts", 
+              partial: "daily_posts/post", 
+              locals: { post: @daily_post }
+            ),
+            turbo_stream.replace(
+              "calendar",
+              partial: "activities/calendar",
+              locals: {
+                user: current_user,
+                calendar_days: calendar_days,
+                daily_posts_by_date: daily_posts_by_date,
+                prev_month: today.prev_month,
+                next_month: today.next_month
+              }
+            ),
+            turbo_stream.replace(
+              "latest_post",
+              partial: "activities/latest_post",
+              locals: { post: @daily_post }
+            ),
             turbo_stream.update("modal", "")
           ]
         end
