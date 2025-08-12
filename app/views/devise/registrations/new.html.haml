@@ -14,12 +14,12 @@
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       .mb-4
         = f.label :username, class: "block text-gray-700 mb-2"
-        = f.text_field :username, autocomplete: "username", class: "border rounded w-full px-3 py-2"
+        = f.text_field :username, autofocus: true, autocomplete: "username", class: "border rounded w-full px-3 py-2"
         - if resource.errors[:username].any?
           %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:username).first
       .mb-4
         = f.label :email, class: "block text-gray-700 mb-2"
-        = f.email_field :email, autofocus: true, autocomplete: "email", class: "border rounded w-full px-3 py-2"
+        = f.email_field :email, autocomplete: "email", class: "border rounded w-full px-3 py-2"
         - if resource.errors[:email].any?
           %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:email).first
       .mb-4
