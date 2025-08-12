@@ -1,32 +1,29 @@
+- page_title = "#{@user.username}'s Activity"
 %div.bg-white.shadow-md.rounded-lg.px-8.py-8.relative
-  - page_title = "#{@user.username}'s Activity"
   %h1.text-2xl.font-bold.mb-8.text-center= page_title
   %div.flex.flex-col.items-center
     - if @user.avatar.attached?
       = image_tag @user.avatar, class: "w-20 h-20 rounded-full mb-4 object-cover"
-  - if @user.public_profile? || (user_signed_in? && current_user == @user)
-    %div.mb-8
-      - if user_signed_in? && current_user == @user
-        %div.text-center
-          %strong.text-yellow-600.text-lg ようこそ、#{current_user.username}さん！
-        %div.absolute.top-8.right-8
-          = link_to "＋", new_daily_post_path, data: { turbo_frame: "modal" }, 
-              class: "inline-block bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full text-xl"
-          = turbo_frame_tag "modal"
-    = turbo_frame_tag "calendar", data: { turbo_cache: "false" } do
-      = render "calendar",
-        user: @user,
-        calendar_days: @calendar_days,
-        daily_posts_by_date: @daily_posts_by_date,
-        prev_month: @prev_month,
-        next_month: @next_month,
-        month_label: @month_label
-    %div
-      = turbo_frame_tag "latest_post" do
-        = render "activities/latest_post", post: @latest_daily_post
-  - else
-    %div.flex.flex-col.items-center.justify-center.h-80.bg-gray-50.rounded-lg.shadow-inner
-      %span.text-5xl.mb-4 🐾
-      %span.text-gray-400.text-xl.font-semibold 非公開です。
-      %span.text-sm.text-gray-400.mt-2 こっそり積み上げ中...
+  - if user_signed_in? && current_user == @user
+    %div.mb-8.text-center
+      %strong.text-yellow-600.text-lg ようこそ、#{current_user.username}さん！
+    %div.absolute.top-8.right-8
+      = link_to "＋", new_daily_post_path, data: { turbo_frame: "modal" },
+          class: "inline-block bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full text-xl"
+      = turbo_frame_tag "modal"
+  = turbo_frame_tag "calendar", data: { turbo_cache: "false" } do
+    = render "calendar",
+      user: @user,
+      calendar_days: @calendar_days,
+      daily_posts_by_date: @daily_posts_by_date,
+      prev_month: @prev_month,
+      next_month: @next_month,
+      month_label: @month_label
+  - can_view_posts = @user.public_profile? || (user_signed_in? && current_user == @user)
+  = turbo_frame_tag "latest_post" do
+    - if can_view_posts
+      = render "activities/latest_post", post: @latest_daily_post
+    - else
+      %div.flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
+        %span.text-gray-400 投稿内容は非公開です
   %div.text-xs.text-gray-400.text-center.mt-8 Pawth © 2025
