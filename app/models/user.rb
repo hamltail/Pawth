@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\z/
   RESERVED_USERNAMES = YAML.load_file(
     Rails.root.join("config/reserved_usernames.yml")
   )["reserved"].map(&:downcase).freeze
@@ -10,11 +11,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable,
          authentication_keys: [ :login ]
 
+  before_validation :normalize_username
+
   validates :email, presence: true
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :profile_message, length: { maximum: 200 }, allow_blank: true
+
   validate :username_is_not_reserved
+  validate :username_is_valid_format_github_like
 
   attr_writer :login
 
@@ -34,9 +39,23 @@ class User < ApplicationRecord
   end
 
   private
+    def normalize_username
+      self.username = username.to_s.downcase.strip.presence
+    end
+
     def username_is_not_reserved
       if RESERVED_USERNAMES.include?(username.downcase)
         errors.add(:username, "は使用できません")
       end
+    end
+
+    def username_is_valid_format_github_like
+      return if username.blank?
+      return if username.match?(USERNAME_REGEX)
+
+      errors.add(
+        :username,
+        "は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください"
+      )
     end
 end
