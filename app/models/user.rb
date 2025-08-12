@@ -18,6 +18,8 @@ class User < ApplicationRecord
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :profile_message, length: { maximum: 200 }, allow_blank: true
 
+  validate :avatar_size_within_limit
+  validate :avatar_type_allowed
   validate :username_is_not_reserved
   validate :username_is_valid_format_github_like
 
@@ -39,13 +41,27 @@ class User < ApplicationRecord
   end
 
   private
+    def avatar_size_within_limit
+      return unless avatar.attached?
+      if avatar.blob.byte_size > 1.megabyte
+        errors.add(:avatar, "は1MB以下のファイルをアップロードしてください")
+      end
+    end
+
+    def avatar_type_allowed
+      return unless avatar.attached?
+      allowed = %w[image/png image/jpeg image/gif image/webp]
+      unless allowed.include?(avatar.blob.content_type)
+        errors.add(:avatar, "はPNG、JPEG、GIF、またはWebP形式でアップロードしてください")
+      end
+    end
+
     def normalize_username
       self.username = username.to_s.downcase.strip.presence
     end
 
     def username_is_not_reserved
       return if username.blank?
-
       if RESERVED_USERNAMES.include?(username.downcase)
         errors.add(:username, "は使用できません")
       end
@@ -54,7 +70,6 @@ class User < ApplicationRecord
     def username_is_valid_format_github_like
       return if username.blank?
       return if username.match?(USERNAME_REGEX)
-
       errors.add(
         :username,
         "は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください"
