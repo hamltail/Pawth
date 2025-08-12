@@ -41,7 +41,7 @@
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:profile_message).first
     .mb-4
       = f.label :email, class: "block text-gray-700 mb-2"
-      = f.email_field :email, autofocus: true, autocomplete: "email", class: "border rounded w-full px-3 py-2"
+      = f.email_field :email, autocomplete: "email", class: "border rounded w-full px-3 py-2"
       - if resource.errors[:email].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:email).first
     -# - if devise_mapping.confirmable? && resource.pending_reconfirmation?
@@ -68,5 +68,3 @@
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
     .mb-6.text-center
       = f.submit t("users.edit.update"), class: "bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-8 rounded"
-  .mt-4
-    = link_to t("users.edit.back"), :back, class: "text-teal-500 hover:underline font-semibold"
