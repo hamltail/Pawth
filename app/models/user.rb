@@ -44,6 +44,8 @@ class User < ApplicationRecord
     end
 
     def username_is_not_reserved
+      return if username.blank?
+
       if RESERVED_USERNAMES.include?(username.downcase)
         errors.add(:username, "は使用できません")
       end
