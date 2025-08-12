@@ -1,10 +1,7 @@
 class ActivitiesController < ApplicationController
-  def show
-    @user = User.find_by(username: params[:username])
-    unless @user
-      render file: "#{Rails.root}/public/404.html", status: 404
-    end
+  before_action :set_user
 
+  def show
     @latest_daily_post = @user.daily_posts.order(posted_on: :desc).first
 
     today = if params[:year].present? && params[:month].present?
@@ -21,4 +18,9 @@ class ActivitiesController < ApplicationController
     @next_month = today.next_month
     @month_label = today.strftime("%B %Y")
   end
+
+  private
+    def set_user
+      @user = User.find_by!(username: params[:username])
+    end
 end
