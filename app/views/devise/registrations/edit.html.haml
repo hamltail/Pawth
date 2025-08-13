@@ -11,14 +11,6 @@
             - messages.each do |msg|
               %li= resource.class.human_attribute_name(attribute) + msg
     .mb-4
-      = f.label :public_posts, "投稿内容の公開設定", class: "block text-gray-700 mb-2"
-      %div.flex.items-center.gap-2
-        = f.check_box :public_posts, { class: "sr-only", id: "toggle-public-profile" }
-        %label{ for: "toggle-public-profile", class: "relative" }
-          %span#toggle-bar.block.w-16.h-8.bg-gray-300.rounded-full
-          %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md
-        %span#public-profile-label= resource.public_posts? ? "公開" : "非公開"
-    .mb-4
       = f.label :avatar, t("activerecord.attributes.user.avatar"), class: "block text-gray-700 mb-2"
       - has_avatar = resource.avatar.attached? && resource.avatar.blob&.persisted?
       %img#avatar-preview.mt-2.mb-2.rounded.w-24.h-24.object-cover{ 
@@ -39,6 +31,14 @@
       = f.text_area :profile_message, rows: 3, class: "border rounded w-full px-3 py-2"
       - if resource.errors[:profile_message].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:profile_message).first
+    .mb-4
+      = f.label :public_posts, "投稿内容の公開設定", class: "block text-gray-700 mb-2"
+      %div.flex.items-center.gap-2
+        = f.check_box :public_posts, { class: "sr-only", id: "toggle-public-profile" }
+        %label{ for: "toggle-public-profile", class: "relative" }
+          %span#toggle-bar.block.w-16.h-8.bg-gray-300.rounded-full
+          %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md
+        %span#public-profile-label= resource.public_posts? ? "公開" : "非公開"
     .mb-4
       = f.label :email, class: "block text-gray-700 mb-2"
       = f.email_field :email, autocomplete: "email", class: "border rounded w-full px-3 py-2"
