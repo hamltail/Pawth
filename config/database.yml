@@ -15,7 +15,7 @@ test:
   database: pawth_test
 
 production:
-  <<: *default
-  database: pawth_production
-  username: pawth
-  password: <%= ENV['PAWTH_DATABASE_PASSWORD'] %>
+  primary:
+    url: <%= ENV["DATABASE_URL"] %>
+  queue:
+    url: <%= ENV["DATABASE_URL"] %>
