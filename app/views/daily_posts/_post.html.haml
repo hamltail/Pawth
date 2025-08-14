@@ -12,7 +12,7 @@
         %button.text-gray-400.font-semibold.text-sm.cursor-not-allowed{ type: "button",
           onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')" } 編集
       %button.text-gray-300.font-semibold.text-sm.ml-3.cursor-not-allowed{ type: "button",
-        onclick: "alert('今日の投稿は削除できません。')" } 削除
+        onclick: "alert('今日の日記は削除できません。')" } 削除
     - else
       = link_to "削除",
         daily_post_path(post),

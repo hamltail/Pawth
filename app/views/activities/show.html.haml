@@ -1,6 +1,6 @@
-- page_title = "#{@user.username}'s Activity"
+- page_title = "#{@user.username}さんの日記"
 %div.bg-white.shadow-md.rounded-lg.px-8.py-8.relative
-  %h1.text-2xl.font-bold.mb-8.text-center= page_title
+  %h1.text-2xl.font-bold.text-gray-700.mb-8.text-center= page_title
   %div.flex.flex-col.items-center
     - if @user.avatar.attached?
       = image_tag @user.avatar, class: "w-20 h-20 rounded-full mb-4 object-cover"
@@ -25,5 +25,5 @@
       = render "activities/latest_post", post: @latest_daily_post
     - else
       %div.flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
-        %span.text-gray-400 投稿内容は非公開です
+        %span.text-gray-400 日記は非公開です
   %div.text-xs.text-gray-400.text-center.mt-8 Pawth © 2025

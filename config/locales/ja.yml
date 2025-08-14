@@ -2,10 +2,10 @@ ja:
   activerecord:
     attributes:
       daily_post:
-        content: "投稿内容"
-        posted_on: "投稿日"
+        content: "日記本文"
+        posted_on: "記録日"
       user:
-        avatar: "アバター画像"
+        avatar: "プロフィール画像"
         current_password: "現在のパスワード"
         display_name: "表示名"
         email: "メールアドレス"
@@ -15,6 +15,6 @@ ja:
         username: "ユーザー名"
   users:
     edit:
-      title: "ユーザー情報の編集"
+      title: "ユーザー設定"
       update: "更新"
       back: "戻る"
