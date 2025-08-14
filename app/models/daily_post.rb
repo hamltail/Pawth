@@ -5,7 +5,7 @@ class DailyPost < ApplicationRecord
 
   validates :posted_on, presence: true
   validates :content, presence: true, length: { maximum: 365 }
-  
+
   validate :only_one_post_per_day, on: :create
   validate :edit_count_within_limit, on: :update
   validate :only_today_can_be_edited, on: :update

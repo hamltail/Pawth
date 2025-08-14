@@ -1,10 +1,22 @@
 require "faker"
 Faker::Config.locale = 'en'
 
-miku = FactoryBot.create(:user, username: "miku", email: "miku@example.com")
-rin = FactoryBot.create(:user, username: "rin", email: "rin@example.com")
-len = FactoryBot.create(:user, username: "len", email: "len@example.com")
-other_users = FactoryBot.create_list(:user, 5)
+miku = FactoryBot.create(:user,
+                          username: "miku",
+                          email: "miku@example.com",
+                          confirmed_at: Time.current
+                        )
+rin = FactoryBot.create(:user,
+                          username: "rin",
+                          email: "rin@example.com",
+                          confirmed_at: Time.current
+                        )
+len = FactoryBot.create(:user,
+                          username: "len",
+                          email: "len@example.com",
+                          confirmed_at: Time.current
+                        )
+other_users = FactoryBot.create_list(:user, 30)
 
 (1..90).each do |n|
   FactoryBot.create(
@@ -18,7 +30,7 @@ end
 
 target_users = [ rin, len ] + other_users
 target_users.each do |user|
-  dates = (0..29).to_a.sample(10)
+  dates = (1..180).to_a.sample(170)
   dates.each do |days_ago|
     FactoryBot.create(
       :daily_post,
