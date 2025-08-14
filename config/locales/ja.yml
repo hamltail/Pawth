@@ -1,6 +1,9 @@
 ja:
   activerecord:
     attributes:
+      daily_post:
+        content: "投稿内容"
+        posted_on: "投稿日"
       user:
         avatar: "アバター画像"
         current_password: "現在のパスワード"
