@@ -1,10 +1,11 @@
 class DailyPost < ApplicationRecord
   EDIT_COUNT_LIMIT = 2
+  CONTENT_MAX_LENGTH = 365
 
   belongs_to :user
 
   validates :posted_on, presence: true
-  validates :content, presence: true, length: { maximum: 365 }
+  validates :content, presence: true, length: { maximum: CONTENT_MAX_LENGTH }
 
   validate :only_one_post_per_day, on: :create
   validate :edit_count_within_limit, on: :update
