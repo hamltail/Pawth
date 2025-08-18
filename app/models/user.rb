@@ -44,6 +44,10 @@ class User < ApplicationRecord
     daily_posts.exists?(posted_on: Time.zone.today)
   end
 
+  def display_name_or_username
+    display_name.presence || username
+  end
+
   private
     def avatar_size_within_limit
       return unless avatar.attached?
