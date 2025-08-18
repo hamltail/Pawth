@@ -4,6 +4,8 @@ class DailyPost < ApplicationRecord
 
   belongs_to :user
 
+  before_validation :set_posted_on_today, on: :create
+
   validates :posted_on, presence: true
   validates :content, presence: true, length: { maximum: CONTENT_MAX_LENGTH }
 
@@ -29,6 +31,10 @@ class DailyPost < ApplicationRecord
   end
 
   private
+    def set_posted_on_today
+      self.posted_on = Time.zone.today
+    end
+
     def only_one_post_per_day
       if user && user.daily_posts.where(posted_on: posted_on).exists?
         errors.add(:base, "今日はすでに投稿済みです")
