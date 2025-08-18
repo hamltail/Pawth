@@ -57,7 +57,7 @@ class DailyPostsController < ApplicationController
             turbo_stream.update("modal", "")
           ]
         end
-        format.html { redirect_to activity_path(current_user.username), notice: "投稿したよ。" }
+        format.html { redirect_to activity_path(current_user.username), notice: "日記をかきました" }
       end
     else
       respond_to do |format|

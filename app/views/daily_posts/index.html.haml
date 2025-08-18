@@ -5,7 +5,7 @@
           controller: "new-post-button",
           action: "click->new-post-button#handle",
           new_post_button_posted_today_value: current_user.posted_today?,
-          new_post_button_message_value: "今日はすでに日記を書いています" },
+          new_post_button_message_value: "今日はすでに日記をかいています" },
         class: "inline-block bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full text-xl"
   = turbo_frame_tag "modal"
   = form_with url: daily_posts_path, method: :get, local: true, class: "mb-4 flex justify-center space-x-2" do |f|

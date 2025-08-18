@@ -37,7 +37,7 @@ class DailyPost < ApplicationRecord
 
     def only_one_post_per_day
       if user && user.daily_posts.where(posted_on: posted_on).exists?
-        errors.add(:base, "今日はすでに投稿済みです")
+        errors.add(:base, "今日はすでに日記をかいています")
       end
     end
 
