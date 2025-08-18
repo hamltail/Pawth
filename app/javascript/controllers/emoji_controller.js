@@ -36,7 +36,9 @@ export default class extends Controller {
     document.addEventListener("click", this.onDocClick);
 
     // Escで閉じる
-    this.onKeydown = (e) => { if (e.key === "Escape") this.close(); };
+    this.onKeydown = (e) => {
+      if (e.key === "Escape") this.close();
+    };
     document.addEventListener("keydown", this.onKeydown);
 
     this._bound = true;
@@ -64,7 +66,7 @@ export default class extends Controller {
       padding: "0",
       border: "0",
       background: "transparent",
-      zIndex: 60
+      zIndex: 60,
     });
 
     this.buttonTarget.ariaExpanded = "true";
@@ -87,9 +89,9 @@ export default class extends Controller {
 
   insertAtCursor(el, text) {
     const start = el.selectionStart ?? el.value.length;
-    const end   = el.selectionEnd ?? el.value.length;
+    const end = el.selectionEnd ?? el.value.length;
     const before = el.value.slice(0, start);
-    const after  = el.value.slice(end);
+    const after = el.value.slice(end);
     el.value = before + text + after;
     const pos = start + text.length;
     el.setSelectionRange(pos, pos);
