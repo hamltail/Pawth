@@ -2,8 +2,7 @@
   %div.daily-post-card.relative.mb-6.rounded-2xl.p-5.bg-white.shadow-sm.ring-1.ring-gray-300
     %div.inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-gray-700.bg-gray-100.ring-1.ring-gray-200{ class: "text-[12px] shadow-[inset_0_-1px_0_rgba(255,255,255,.6)]" }
       %span#daily-post-date= post.posted_on
-    %div.mt-3#daily-post-content.leading-relaxed.text-gray-800
-      = simple_format(post.content)
+    %div.mt-3#daily-post-content.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
     %div.absolute.-bottom-2.-right-2.opacity-70.select-none
       🐾
 - else

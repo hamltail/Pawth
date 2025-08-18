@@ -18,5 +18,4 @@
         daily_post_path(post),
         data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" },
         class: "text-red-500 hover:underline font-semibold text-sm"
-  %div.mt-3.leading-relaxed.text-gray-800
-    = simple_format(post.content)
+  %div.mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
