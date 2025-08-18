@@ -1,16 +1,27 @@
-= form_with model: @daily_post, class: "space-y-6" do |f|
-  %div{ data: { 
-    controller: "character-counter", 
-    character_counter_max_value: DailyPost::CONTENT_MAX_LENGTH 
-  } }
+= form_with model: @daily_post, class: "space-y-6", data: { controller: "emoji" } do |f|
+  %div{ data: { controller: "character-counter",
+                character_counter_max_value: DailyPost::CONTENT_MAX_LENGTH } }
+    .flex.items-center.gap-2.mb-2
+      %button#emojiButton{ type: "button",
+                           data: { emoji_target: "button", action: "emoji#open" },
+                           class: "bg-teal-400 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200",
+                           aria: { expanded: "false", controls: "emojiDialog" } }
+        😊 絵文字
+    %dialog#emojiDialog{ data: { emoji_target: "dialog" },
+                         class: "p-0 border-0 bg-transparent" }
+      .rounded-2xl.shadow-xl.bg-white.p-2.overflow-hidden
+        %emoji-picker{ data: { emoji_target: "picker" },
+                       style: "width: 360px; height: 380px; display:block;" }
     = f.text_area :content,
-        rows: 10,
-        placeholder: "今日何をした？",
-        maxlength: DailyPost::CONTENT_MAX_LENGTH,
-        class: "border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none",
-        data: { character_counter_target: "input", action: "input->character-counter#update" }
+      rows: 10,
+      placeholder: "今日何をした？",
+      maxlength: DailyPost::CONTENT_MAX_LENGTH,
+      class: "border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none",
+      data: { character_counter_target: "input",
+              action: "input->character-counter#update",
+              emoji_target: "textarea" }
     %div.text-right.text-sm.text-gray-500{ data: { character_counter_target: "counter" } }
       残り#{DailyPost::CONTENT_MAX_LENGTH}文字
   %div.flex.justify-end
     = f.submit "日記をかく",
-        class: "bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow"
+      class: "bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow"
