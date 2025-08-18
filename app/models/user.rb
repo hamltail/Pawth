@@ -40,6 +40,10 @@ class User < ApplicationRecord
     end
   end
 
+  def posted_today?
+    daily_posts.exists?(posted_on: Time.zone.today)
+  end
+
   private
     def avatar_size_within_limit
       return unless avatar.attached?
