@@ -15,10 +15,9 @@
     = f.text_area :content,
       rows: 12,
       placeholder: "今日何をした？",
-      maxlength: DailyPost::CONTENT_MAX_LENGTH,
       class: "border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none",
       data: { character_counter_target: "input",
-              action: "input->character-counter#update",
+              action: "input->character-counter#update paste->character-counter#paste",
               emoji_target: "textarea" }
     %div.text-right.text-sm.text-gray-500{ data: { character_counter_target: "counter" } }
       残り#{DailyPost::CONTENT_MAX_LENGTH}文字
