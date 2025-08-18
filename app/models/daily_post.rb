@@ -7,8 +7,9 @@ class DailyPost < ApplicationRecord
   before_validation :set_posted_on_today, on: :create
 
   validates :posted_on, presence: true
-  validates :content, presence: true, length: { maximum: CONTENT_MAX_LENGTH }
+  validates :content, presence: true
 
+  validate :content_length_within_limit
   validate :only_one_post_per_day, on: :create
   validate :edit_count_within_limit, on: :update
   validate :only_today_can_be_edited, on: :update
@@ -31,6 +32,14 @@ class DailyPost < ApplicationRecord
   end
 
   private
+    def content_length_within_limit
+      max = CONTENT_MAX_LENGTH
+      length = content.to_s.scan(/\X/).length
+      if length > max
+        errors.add(:base, "日記本文は#{max}文字以内で入力してください")
+      end
+    end
+
     def set_posted_on_today
       self.posted_on ||= Time.zone.today
     end

@@ -22,15 +22,30 @@ RSpec.describe DailyPost, type: :model do
     expect(post).not_to be_valid
   end
 
-  describe 'contentの文字数制限' do
-    it '365文字はOK' do
-      post = DailyPost.new(content: 'a' * 365, user: user, posted_on: date_today)
-      expect(post).to be_valid
+  describe 'contentの文字数制限（グラフェム基準）' do
+    let(:max) { DailyPost::CONTENT_MAX_LENGTH }
+
+    it 'ASCII: max はOK / max+1 はNG' do
+      expect(DailyPost.new(content: 'a' * max, user: user, posted_on: date_today)).to be_valid
+      expect(DailyPost.new(content: 'a' * (max+1), user: user, posted_on: date_today)).not_to be_valid
     end
 
-    it '366文字はNG' do
-      post = DailyPost.new(content: 'a' * 366, user: user, posted_on: date_today)
-      expect(post).not_to be_valid
+    it '肌色付き絵文字(👍🏽): max はOK / max+1 はNG' do
+      g = '👍🏽'
+      expect(DailyPost.new(content: g * max, user: user, posted_on: date_today)).to be_valid
+      expect(DailyPost.new(content: g * (max+1), user: user, posted_on: date_today)).not_to be_valid
+    end
+
+    it 'ZWJ連結(👨‍👩‍👧‍👦): max はOK / max+1 はNG' do
+      g = '👨‍👩‍👧‍👦'
+      expect(DailyPost.new(content: g * max, user: user, posted_on: date_today)).to be_valid
+      expect(DailyPost.new(content: g * (max+1), user: user, posted_on: date_today)).not_to be_valid
+    end
+
+    it '合成かな(が): max はOK / max+1 はNG' do
+      g = "か\u3099"
+      expect(DailyPost.new(content: g * max, user: user, posted_on: date_today)).to be_valid
+      expect(DailyPost.new(content: g * (max+1), user: user, posted_on: date_today)).not_to be_valid
     end
   end
 
