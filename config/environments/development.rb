@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # 変更を即反映s
+  # 変更を即反映
   config.enable_reloading = true
   # 起動を軽くするため遅延ロード
   config.eager_load = false
