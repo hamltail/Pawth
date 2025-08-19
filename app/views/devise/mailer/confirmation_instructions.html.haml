@@ -1,5 +1,4 @@
-- username = @resource.try(:name).presence || "Pawthユーザー"
-%p= "#{username} さん、ようこそ！"
+%p= "#{@resource.username} さん、ようこそ！"
 %p 以下のボタンからメールアドレスを確認してください。
 %p
   %a{

@@ -16,15 +16,15 @@ ja:
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "【Pawth】メールアドレスの確認"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "【Pawth】パスワード再設定のご案内"
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:
-        subject: "Email Changed"
+        subject: "【Pawth】メールアドレスが変更されました"
       password_change:
-        subject: "Password Changed"
+        subject: "【Pawth】パスワードが変更されました"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
       success: "Successfully authenticated from %{kind} account."

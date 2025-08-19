@@ -22,6 +22,6 @@ class UserMailerPreview < ActionMailer::Preview
 
   private
     def sample_user
-      User.first || User.new(email: "preview@example.com", name: "プレビュー用ユーザー")
+      User.first || User.new(email: "preview@example.com", username: "preview-user")
     end
 end
