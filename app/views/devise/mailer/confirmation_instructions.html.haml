@@ -1,4 +1,12 @@
+- username = @resource.try(:name).presence || "Pawthユーザー"
+%p= "#{username} さん、ようこそ！"
+%p 以下のボタンからメールアドレスを確認してください。
 %p
-  Welcome #{@email}!
-%p You can confirm your account email through the link below:
-%p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+  %a{
+    href: confirmation_url(@resource, confirmation_token: @token),
+    style: "display:inline-block;padding:10px 16px;border-radius:8px;background:#111;color:#fff;text-decoration:none"
+  } アカウントを確認する
+%p{style:"font-size:12px;color:#666"}
+  ボタンが開けない場合:
+  %br/
+  = confirmation_url(@resource, confirmation_token: @token)
