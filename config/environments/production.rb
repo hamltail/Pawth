@@ -1,90 +1,67 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # Code is not reloaded between requests.
+  # 本番はコードのホットリロードしない＝速くて安定
   config.enable_reloading = false
-
-  # Eager load code on boot for better performance and memory savings (ignored by Rake tasks).
+  # 起動時にまとめて読み込む＝スループット＆メモリ効率↑
   config.eager_load = true
 
-  # Full error reports are disabled.
+  # エラー画面は本番用（スタックトレース非表示）
   config.consider_all_requests_local = false
 
-  # Turn on fragment caching in view templates.
+  # コントローラ/ビューのキャッシュ有効
   config.action_controller.perform_caching = true
-
-  # Cache assets for far-future expiry since they are all digest stamped.
+  # 指紋付きアセットを1年キャッシュ。Rails標準の安全設定
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
+  # CDNを使うなら有効化：config.asset_host = "https://cdn.example.com"
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = "http://assets.example.com"
-
-  # Store uploaded files on the local file system (see config/storage.yml for options).
+  # Active Storageをローカル保存。S3に出すときはここを:amazonに
   config.active_storage.service = :local
 
-  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
+  # NginxなどでSSL終端してる前提でX-Forwarded-Protoを信頼。リダイレクトの無限ループ防止に効く
   config.assume_ssl = true
-
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # 常時HTTPS強制＋HSTS＋secure cookie
   config.force_ssl = true
 
-  # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
-
-  # Log to STDOUT with the current request id as a default log tag.
+  # リクエストIDをログに付けてSTDOUTへ。systemd/journaldで扱いやすい
   config.log_tags = [ :request_id ]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
-
-  # Change to "debug" to log everything (including potentially personally-identifiable information!)
+  # 既定はinfo。トラブル時だけdebugに
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
-
-  # Prevent health checks from clogging up the logs.
-  config.silence_healthcheck_path = "/up"
-
-  # Don't log any deprecations.
+  # 非推奨警告をログに出さない
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
+  # Solid Cacheを使う指定。gemを入れてる前提。未導入ならmemory_storeやredis_cache_storeに変える
   config.cache_store = :solid_cache_store
-
-  # Replace the default in-process and non-durable queuing backend for Active Job.
+  # Solid Queue（DBキュー）を使う。キュー用DB/接続を切ってるならこのまま。単一DBならconnects_toは省略可
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # メール
+  config.action_mailer.default_url_options = { host: "pawth.hamltail.dev", protocol: "https" }
+  # メール送信（SES / SMTP）
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              "email-smtp.ap-northeast-1.amazonaws.com",
+    port:                 587,
+    user_name:            ENV["SES_SMTP_USERNAME"],
+    password:             ENV["SES_SMTP_PASSWORD"],
+    authentication:       :login,
+    enable_starttls_auto: true
+  }
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
-
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
-
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
+  # 訳が無いときは既定ロケールへフォールバック
   config.i18n.fallbacks = true
 
-  # Do not dump schema after migrations.
+  # マイグレーション後にschemaを自動ダンプしない。CIで管理してるならこれでOK
   config.active_record.dump_schema_after_migration = false
 
-  # Only use :id for inspections in production.
+  # ログのinspectを:idだけに。個人情報等のダダ漏れ防止
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Hostヘッダ制限を厳しくしたい場合のみ：
+  # config.hosts = ["pawth.hamltail.dev", /.*\.hamltail\.dev/]
+  # config.host_authorization = { exclude: ->(r){ r.path == "/up" } }
 end
