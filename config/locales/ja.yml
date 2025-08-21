@@ -14,6 +14,17 @@ ja:
         profile_message: 'プロフィールメッセージ'
         username: 'ユーザー名'
 
+  activities:
+    show:
+      page_title: '%{name}さんの日記'
+      welcome: 'ようこそ、%{name}さん！'
+      private: '日記は非公開です'
+      footer: 'Pawth © %{year}'
+    latest_post:
+      empty: '日記がありません'
+    calendar:
+      today: 'TODAY'
+
   daily_posts:
     index:
       title: '日記一覧'
@@ -47,6 +58,7 @@ ja:
   date:
     formats:
       default: '%Y-%m-%d'
+      month_year: '%B %Y'
 
   users:
     edit:
