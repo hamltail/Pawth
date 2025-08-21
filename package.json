@@ -1,12 +1,21 @@
 {
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:js": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\"",
+    "lint:js:fix": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\" --fix"
   },
   "dependencies": {
     "gsap": "^3.13.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.3.0",
     "prettier": "^3.6.2"
   }
 }
