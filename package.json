@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "fix:all": "npm run format && npm run lint:fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
