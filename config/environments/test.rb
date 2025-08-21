@@ -4,10 +4,10 @@ Rails.application.configure do
 
   # CIではtrueにして本番同様の読み込み確認をするのが推奨
   # ローカルの単体テストは false の方が速い
-  config.eager_load = ENV["CI"].present?
+  config.eager_load = ENV['CI'].present?
 
   # 静的ファイルの配信に軽いキャッシュヘッダ
-  config.public_file_server.headers = { "cache-control" => "public, max-age=3600" }
+  config.public_file_server.headers = { 'cache-control' => 'public, max-age=3600' }
 
   # エラー詳細を表示（デバッグしやすく）
   config.consider_all_requests_local = true
@@ -27,7 +27,7 @@ Rails.application.configure do
   # 実送信しない。送られたメールは ActionMailer::Base.deliveries に貯まる
   config.action_mailer.delivery_method = :test
   # メール内リンク生成用のホスト。何でもOK（実送信しないため）
-  config.action_mailer.default_url_options = { host: "test.hamltail.dev" }
+  config.action_mailer.default_url_options = { host: 'test.hamltail.dev' }
 
   # Active Jobはテストアダプタ（enqueue/performの検証がしやすい）
   config.active_job.queue_adapter = :test

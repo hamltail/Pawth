@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_account_update_params, only: [ :update ]
+  before_action :configure_account_update_params, only: [:update]
 
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if resource_updated
       bypass_sign_in resource, scope: resource_name
-      redirect_to after_update_path_for(resource), notice: "ユーザー情報を更新しました"
+      redirect_to after_update_path_for(resource), notice: 'ユーザー情報を更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     def configure_account_update_params
       devise_parameter_sanitizer.permit(
         :account_update,
-        keys: [ :display_name, :profile_message, :public_posts, :avatar ]
+        keys: [:display_name, :profile_message, :public_posts, :avatar]
       )
     end
 

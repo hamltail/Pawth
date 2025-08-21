@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # 変更を即反映
@@ -13,10 +13,10 @@ Rails.application.configure do
   config.server_timing = true
 
   # キャッシュは dev:cache トグルに追従（普段はOFFでOK）
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
-    config.public_file_server.headers = { "cache-control" => "public, max-age=#{2.days.to_i}" }
+    config.public_file_server.headers = { 'cache-control' => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
   end
@@ -29,7 +29,7 @@ Rails.application.configure do
   # メール：即時に不具合を見つけたいので error を上げる
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # ブラウザでメールを確認（実送信しない）
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true

@@ -9,6 +9,6 @@ class CreateDailyPosts < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :daily_posts, [ :user_id, :posted_on ], unique: true
+    add_index :daily_posts, [:user_id, :posted_on], unique: true
   end
 end

@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # 本番はコードのホットリロードしない＝速くて安定
@@ -12,7 +12,7 @@ Rails.application.configure do
   # コントローラ/ビューのキャッシュ有効
   config.action_controller.perform_caching = true
   # 指紋付きアセットを1年キャッシュ。Rails標準の安全設定
-  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
+  config.public_file_server.headers = { 'cache-control' => "public, max-age=#{1.year.to_i}" }
   # CDNを使うなら有効化：config.asset_host = "https://cdn.example.com"
 
   # Active Storageをローカル保存。S3に出すときはここを:amazonに
@@ -24,10 +24,10 @@ Rails.application.configure do
   config.force_ssl = true
 
   # リクエストIDをログに付けてSTDOUTへ。systemd/journaldで扱いやすい
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
   # 既定はinfo。トラブル時だけdebugに
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
   # 非推奨警告をログに出さない
   config.active_support.report_deprecations = false
 
@@ -38,16 +38,16 @@ Rails.application.configure do
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # メール
-  config.action_mailer.default_url_options = { host: "pawth.hamltail.dev", protocol: "https" }
+  config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
   # メール送信（SES / SMTP）
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              "email-smtp.ap-northeast-1.amazonaws.com",
+    address:              'email-smtp.ap-northeast-1.amazonaws.com',
     port:                 587,
-    user_name:            ENV["SES_SMTP_USERNAME"],
-    password:             ENV["SES_SMTP_PASSWORD"],
+    user_name:            ENV['SES_SMTP_USERNAME'],
+    password:             ENV['SES_SMTP_PASSWORD'],
     authentication:       :login,
     enable_starttls_auto: true
   }
@@ -59,7 +59,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # ログのinspectを:idだけに。個人情報等のダダ漏れ防止
-  config.active_record.attributes_for_inspect = [ :id ]
+  config.active_record.attributes_for_inspect = [:id]
 
   # Hostヘッダ制限を厳しくしたい場合のみ：
   # config.hosts = ["pawth.hamltail.dev", /.*\.hamltail\.dev/]

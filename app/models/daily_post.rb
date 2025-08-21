@@ -16,19 +16,19 @@ class DailyPost < ApplicationRecord
 
   scope :recent_first, -> { order(posted_on: :desc) }
   scope :search_text, ->(query) {
-    where("content LIKE ?", "%#{sanitize_sql_like(query)}%") if query.present?
+    where('content LIKE ?', "%#{sanitize_sql_like(query)}%") if query.present?
   }
   scope :by_year, ->(year) {
-    where("EXTRACT(YEAR FROM posted_on) = ?", year.to_i) if year.present?
+    where('EXTRACT(YEAR FROM posted_on) = ?', year.to_i) if year.present?
   }
   scope :by_month, ->(month, year = nil) {
     if month.present? && year.present?
-      where("EXTRACT(MONTH FROM posted_on) = ? AND EXTRACT(YEAR FROM posted_on) = ?", month.to_i, year.to_i)
+      where('EXTRACT(MONTH FROM posted_on) = ? AND EXTRACT(YEAR FROM posted_on) = ?', month.to_i, year.to_i)
     end
   }
 
   def edit_remaining_count
-    [ EDIT_COUNT_LIMIT - edit_count, 0 ].max
+    [EDIT_COUNT_LIMIT - edit_count, 0].max
   end
 
   private
@@ -46,7 +46,7 @@ class DailyPost < ApplicationRecord
 
     def only_one_post_per_day
       if user && user.daily_posts.where(posted_on: posted_on).exists?
-        errors.add(:base, "今日はすでに日記をかいています")
+        errors.add(:base, '今日はすでに日記をかいています')
       end
     end
 

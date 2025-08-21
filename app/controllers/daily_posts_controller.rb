@@ -34,13 +34,13 @@ class DailyPostsController < ApplicationController
 
           render turbo_stream: [
             turbo_stream.prepend(
-              "posts",
-              partial: "daily_posts/post",
+              'posts',
+              partial: 'daily_posts/post',
               locals: { post: @daily_post }
             ),
             turbo_stream.replace(
-              "calendar",
-              partial: "activities/calendar",
+              'calendar',
+              partial: 'activities/calendar',
               locals: {
                 user: current_user,
                 calendar_days: calendar_days,
@@ -50,20 +50,20 @@ class DailyPostsController < ApplicationController
               }
             ),
             turbo_stream.replace(
-              "latest_post",
-              partial: "activities/latest_post",
+              'latest_post',
+              partial: 'activities/latest_post',
               locals: { post: @daily_post }
             ),
-            turbo_stream.update("modal", "")
+            turbo_stream.update('modal', '')
           ]
         end
-        format.html { redirect_to activity_path(current_user.username), notice: "日記をかきました" }
+        format.html { redirect_to activity_path(current_user.username), notice: '日記をかきました' }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("form_errors",
-            partial: "daily_posts/form_errors", locals: { daily_post: @daily_post })
+          render turbo_stream: turbo_stream.replace('form_errors',
+            partial: 'daily_posts/form_errors', locals: { daily_post: @daily_post })
         end
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -83,17 +83,17 @@ class DailyPostsController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace("post_#{@daily_post.id}", partial: "daily_posts/post", locals: { post: @daily_post }),
-            turbo_stream.update("modal", "")
+            turbo_stream.replace("post_#{@daily_post.id}", partial: 'daily_posts/post', locals: { post: @daily_post }),
+            turbo_stream.update('modal', '')
           ]
         end
-        format.html { redirect_to daily_posts_path, notice: "編集したよ。" }
+        format.html { redirect_to daily_posts_path, notice: '編集したよ。' }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("form_errors",
-            partial: "daily_posts/form_errors", locals: { daily_post: @daily_post })
+          render turbo_stream: turbo_stream.replace('form_errors',
+            partial: 'daily_posts/form_errors', locals: { daily_post: @daily_post })
         end
         format.html { render :edit, status: :unprocessable_entity }
       end

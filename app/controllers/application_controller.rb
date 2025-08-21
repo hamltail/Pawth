@@ -15,14 +15,14 @@ class ApplicationController < ActionController::Base
   private
     def render_404
       respond_to do |f|
-        f.html { render file: Rails.root.join("public/404.html"), status: :not_found, layout: false }
+        f.html { render file: Rails.root.join('public/404.html'), status: :not_found, layout: false }
         f.any { head :not_found }
       end
     end
 
   protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [ :username, :email ])
-      devise_parameter_sanitizer.permit(:account_update, keys: [ :username, :email ])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
+      devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email])
     end
 end

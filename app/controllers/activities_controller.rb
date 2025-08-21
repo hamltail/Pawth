@@ -16,7 +16,7 @@ class ActivitiesController < ApplicationController
                                 .group_by(&:posted_on)
     @prev_month = today.prev_month
     @next_month = today.next_month
-    @month_label = today.strftime("%B %Y")
+    @month_label = today.strftime('%B %Y')
   end
 
   private

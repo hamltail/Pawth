@@ -1,15 +1,15 @@
 class User < ApplicationRecord
   USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\z/
   RESERVED_USERNAMES = YAML.load_file(
-    Rails.root.join("config/reserved_usernames.yml")
-  )["reserved"].map(&:downcase).freeze
+    Rails.root.join('config/reserved_usernames.yml')
+  )['reserved'].map(&:downcase).freeze
 
   has_one_attached :avatar
   has_many :daily_posts, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
-         authentication_keys: [ :login ]
+         authentication_keys: [:login]
 
   before_validation :normalize_username
 
@@ -33,7 +33,7 @@ class User < ApplicationRecord
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
       where(conditions).where(
-        [ "lower(username) = :value OR lower(email) = :value", { value: login.downcase } ]
+        ['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]
       ).first
     else
       where(conditions).first
@@ -52,7 +52,7 @@ class User < ApplicationRecord
     def avatar_size_within_limit
       return unless avatar.attached?
       if avatar.blob.byte_size > 1.megabyte
-        errors.add(:avatar, "は1MB以下のファイルをアップロードしてください")
+        errors.add(:avatar, 'は1MB以下のファイルをアップロードしてください')
       end
     end
 
@@ -60,7 +60,7 @@ class User < ApplicationRecord
       return unless avatar.attached?
       allowed = %w[image/png image/jpeg image/gif image/webp]
       unless allowed.include?(avatar.blob.content_type)
-        errors.add(:avatar, "はPNG、JPEG、GIF、またはWebP形式でアップロードしてください")
+        errors.add(:avatar, 'はPNG、JPEG、GIF、またはWebP形式でアップロードしてください')
       end
     end
 
@@ -71,7 +71,7 @@ class User < ApplicationRecord
     def username_is_not_reserved
       return if username.blank?
       if RESERVED_USERNAMES.include?(username.downcase)
-        errors.add(:username, "は使用できません")
+        errors.add(:username, 'は使用できません')
       end
     end
 
@@ -80,7 +80,7 @@ class User < ApplicationRecord
       return if username.match?(USERNAME_REGEX)
       errors.add(
         :username,
-        "は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください"
+        'は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください'
       )
     end
 end
