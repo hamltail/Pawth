@@ -2,22 +2,54 @@ ja:
   activerecord:
     attributes:
       daily_post:
-        content: "日記本文"
-        posted_on: "記録日"
+        content: '日記本文'
+        posted_on: '記録日'
       user:
-        avatar: "プロフィール画像"
-        current_password: "現在のパスワード"
-        display_name: "表示名"
-        email: "メールアドレス"
-        password: "パスワード"
-        password_confirmation: "パスワード（確認用）"
-        profile_message: "プロフィールメッセージ"
-        username: "ユーザー名"
+        avatar: 'プロフィール画像'
+        current_password: '現在のパスワード'
+        display_name: '表示名'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード（確認用）'
+        profile_message: 'プロフィールメッセージ'
+        username: 'ユーザー名'
+
+  daily_posts:
+    index:
+      title: '日記一覧'
+      new_button: '＋'
+      posted_today_message: '今日はすでに日記をかいています'
+      search_placeholder: 'キーワード検索'
+      year_prompt: '年'
+      month_prompt: '月'
+      submit_search: '検索'
+      page_label: 'ページ %{page} / %{pages}'
+    new:
+      title: '今日何をした？'
+      submit: '日記をかく'
+    edit:
+      title: '今日何をした？'
+      # submit: '更新'
+      edit_remaining: 'あと%{count}回編集できます'
+    shared:
+      edit: '編集'
+      delete: '削除'
+      delete_confirm: '本当に削除しますか？'
+      delete_today_alert: '今日の日記は削除できません。'
+      edit_limit_alert: '編集は%{limit}回までです。'
+      emoji_button: '😊 絵文字'
+      content_placeholder: '今日何をした？'
+      remaining_chars: '残り%{max}文字'
+      errors_title:
+        one: '%{count}件のエラーがあります'
+        other: '%{count}件のエラーがあります'
+
+  date:
+    formats:
+      default: '%Y-%m-%d'
+
   users:
     edit:
-      title: "ユーザー設定"
-      update: "更新"
-      back: "戻る"
-  daily_posts:
-    form_title: "今日何をした？"
-    edit_remaining: "あと%{count}回編集できます"
+      title: 'ユーザー設定'
+      update: '更新'
+      back: '戻る'

@@ -1,21 +1,21 @@
 %li.group.relative.mb-4.rounded-2xl.bg-white.p-5.shadow-sm.ring-1.ring-gray-300.transition.transform.hover:-translate-y-0.5.hover:shadow-lg{ id: "post_#{post.id}" }
   %div.flex.items-center.justify-between.gap-3
     %div.inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-gray-700.bg-gray-100.ring-1.ring-gray-200{ class: "text-[12px] shadow-[inset_0_-1px_0_rgba(255,255,255,.6)]" }
-      = post.posted_on.strftime("%Y-%m-%d")
+      = l(post.posted_on, format: :default)
     - if post.posted_on == Date.today
       - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
-        = link_to "編集",
+        = link_to t('daily_posts.shared.edit'),
           edit_daily_post_path(post),
-          data: { turbo_frame: "modal" },
-          class: "text-teal-500 hover:underline font-semibold text-sm"
+          data: { turbo_frame: 'modal' },
+          class: 'text-teal-500 hover:underline font-semibold text-sm'
       - else
-        %button.text-gray-400.font-semibold.text-sm.cursor-not-allowed{ type: "button",
-          onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')" } 編集
-      %button.text-gray-300.font-semibold.text-sm.ml-3.cursor-not-allowed{ type: "button",
-        onclick: "alert('今日の日記は削除できません。')" } 削除
+        %button.text-gray-400.font-semibold.text-sm.cursor-not-allowed{ type: 'button',
+          onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')" }= t('daily_posts.shared.edit')
+      %button.text-gray-300.font-semibold.text-sm.ml-3.cursor-not-allowed{ type: 'button',
+        onclick: "alert('今日の日記は削除できません。')" }= t('daily_posts.shared.delete')
     - else
-      = link_to "削除",
+      = link_to t('daily_posts.shared.delete'),
         daily_post_path(post),
-        data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" },
-        class: "text-red-500 hover:underline font-semibold text-sm"
+        data: { 'turbo-method': :delete, turbo_confirm: t('daily_posts.shared.delete_confirm') },
+        class: 'text-red-500 hover:underline font-semibold text-sm'
   %div.mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
