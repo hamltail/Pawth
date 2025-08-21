@@ -18,3 +18,6 @@ ja:
       title: "ユーザー設定"
       update: "更新"
       back: "戻る"
+  daily_posts:
+    form_title: "今日何をした？"
+    edit_remaining: "あと%{count}回編集できます"
