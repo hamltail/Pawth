@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 .toggle-dot {
   transition: transform 0.2s;
@@ -29,4 +29,7 @@ svg.paw.paw--posted {
     -1px  1px 0 #047857,
      1px  1px 0 #047857;
 } */
-dialog { border: 0; padding: 0; }
+dialog {
+  border: 0;
+  padding: 0;
+}
