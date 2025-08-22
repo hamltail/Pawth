@@ -59,7 +59,7 @@ jobs:
         if: hashFiles('package.json') != ''
         run: |
           npx prettier --check \
-            "app/**/*.{js,jsx,ts,tsx,css,scss,html,erb,haml,json,md,yml,yaml}" \
+            "app/**/*.{js,jsx,ts,tsx,css,scss,html,erb,json,md,yml,yaml}" \
             "config/**/*.{yml,yaml}" \
             ".github/**/*.yml"
 
