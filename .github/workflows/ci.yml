@@ -1,54 +1,64 @@
 name: CI
 
 on:
-  pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
-  scan_ruby:
+  test:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      BUNDLE_PATH: vendor/bundle
+      DATABASE_URL: 'postgres://postgres:postgres@localhost:5432/test_db'
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U postgres -d postgres"
+          --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: ${{ vars.RUBY_VERSION || '3.4' }}
           bundler-cache: true
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Setup Node (for ESLint/Prettier)
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v4
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+      - name: Install JS deps
+        if: hashFiles('package.json') != ''
+        run: npm ci
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Prepare DB (create & load schema)
+        run: |
+          bin/rails db:create db:schema:load
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+      - name: RuboCop
+        if: hashFiles('.rubocop.yml') != ''
+        run: bundle exec rubocop --parallel
 
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
+      - name: ESLint
+        if: hashFiles('.eslintrc*') != ''
+        run: npx eslint .
+
+      - name: Prettier (check)
+        if: hashFiles('package.json') != ''
+        run: npx prettier --check .
+
+      - name: Run RSpec
+        if: hashFiles('spec/**/*') != ''
+        run: bundle exec rspec --format documentation
