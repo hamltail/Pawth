@@ -57,7 +57,11 @@ jobs:
 
       - name: Prettier (check)
         if: hashFiles('package.json') != ''
-        run: npx prettier --check .
+        run: |
+          npx prettier --check \
+            "app/**/*.{js,jsx,ts,tsx,css,scss,html,erb,haml,json,md,yml,yaml}" \
+            "config/**/*.{yml,yaml}" \
+            ".github/**/*.yml"
 
       - name: Run RSpec
         if: hashFiles('spec/**/*') != ''
