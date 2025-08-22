@@ -1,0 +1,9 @@
+node_modules/
+vendor/
+vendor/**/*
+vendor/bundle/
+tmp/
+log/
+coverage/
+public/assets/
+public/packs/
