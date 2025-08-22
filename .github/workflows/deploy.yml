@@ -16,19 +16,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1) 秘密鍵を書き出して権限を絞る
-      - name: Write SSH key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
-          chmod 600 key.pem
-
-      # 2) SSHディレクトリ準備
+      # 1) SSHディレクトリ作成
       - name: Prepare SSH dir
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-      # 3) known_hosts 登録
+      # 2) 秘密鍵を書き出し（Base64をデコード）
+      - name: Write SSH key (base64 -> pem)
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY_B64 }}" | base64 -d > key.pem
+          sed -i 's/\r$//' key.pem
+          chmod 600 key.pem
+          ssh-keygen -lf key.pem || true
+
+      # 3) known_hosts 追加
       - name: Add host to known_hosts
         run: |
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
@@ -37,36 +39,29 @@ jobs:
       # 4) 接続テスト
       - name: Test SSH connectivity
         run: |
-          ssh -o StrictHostKeyChecking=yes -i key.pem \
+          ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -i key.pem \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'echo OK-from-EC2'
 
-      # 5) デプロイ
+      # 5) デプロイ本体
       - name: Deploy to EC2
         env:
           APP_DIR: ${{ vars.APP_DIR || '/var/www/pawth' }}
         run: |
-          ssh -o StrictHostKeyChecking=yes -i key.pem \
+          ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -i key.pem \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "bash -lc '
               set -euo pipefail
-
               cd \"${APP_DIR}\"
 
-              # 1) 最新化（既にクローン済み前提）
               git fetch --all --prune
               git reset --hard origin/main
 
-              # 2) 依存解決（本番用）
               bundle config set without \"development test\"
               bundle install --deployment
 
-              # 3) DBマイグレーション
               RAILS_ENV=production bin/rails db:migrate
-
-              # 4) アセット（importmapでも実行推奨）
               RAILS_ENV=production bin/rails assets:precompile || true
 
-              # 5) 再起動
               sudo systemctl restart puma
               sudo systemctl restart solid_queue || true
             '"
