@@ -25,14 +25,28 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            '
-            set -e
-            cd "${{ secrets.APP_DIR }}"
-            git fetch --all
-            git checkout main
-            git pull --ff-only
-            bundle install --without development test
-            RAILS_ENV=production bundle exec rails db:migrate
-            sudo systemctl restart puma
-            sudo systemctl restart solid_queue || true
-            '
+            "bash -lc '
+              set -euo pipefail
+
+              export RAILS_ENV=production
+              export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+
+              [ -f ~/.bash_profile ] && source ~/.bash_profile
+              [ -f ~/.profile ] && source ~/.profile
+
+              cd \"${{ secrets.APP_DIR }}\"
+
+              git fetch --all --prune
+              git checkout main
+              git pull --ff-only
+
+              # bundlerの非推奨フラグ回避しつつ依存解決
+              bundle config set without \"development test\"
+              bundle install --jobs=4 --retry=3
+
+              bundle exec rails db:migrate
+              bundle exec rails assets:precompile
+
+              sudo systemctl restart puma
+              sudo systemctl restart solid_queue || true
+            '"
