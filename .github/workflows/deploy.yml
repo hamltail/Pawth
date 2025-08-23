@@ -15,3 +15,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Write key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Test SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            'echo OK && whoami && uname -a'
