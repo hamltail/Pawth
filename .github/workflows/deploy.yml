@@ -27,9 +27,9 @@ jobs:
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "bash -lc '
               set -euo pipefail
-
               export RAILS_ENV=production
               export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+              export DATABASE_URL=${{ secrets.DATABASE_URL }}
 
               [ -f ~/.bash_profile ] && source ~/.bash_profile
               [ -f ~/.profile ] && source ~/.profile
@@ -40,9 +40,11 @@ jobs:
               git checkout main
               git pull --ff-only
 
-              # bundlerの非推奨フラグ回避しつつ依存解決
               bundle config set without \"development test\"
               bundle install --jobs=4 --retry=3
+
+              # まず接続検証
+              bundle exec rails db:version
 
               bundle exec rails db:migrate
               bundle exec rails assets:precompile
