@@ -21,8 +21,18 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
 
-      - name: Test SSH
+      - name: Deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            'echo OK && whoami && uname -a'
+            '
+            set -e
+            cd "${{ secrets.APP_DIR }}"
+            git fetch --all
+            git checkout main
+            git pull --ff-only
+            bundle install --without development test
+            RAILS_ENV=production bundle exec rails db:migrate
+            sudo systemctl restart puma
+            sudo systemctl restart solid_queue || true
+            '
