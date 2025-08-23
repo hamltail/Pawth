@@ -15,25 +15,3 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key.pem
-          chmod 600 ~/.ssh/key.pem
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy to EC2
-        run: |
-          ssh -i ~/.ssh/key.pem \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            set -e
-            cd /var/www/pawth
-            git fetch --all
-            git reset --hard origin/main
-            bundle install --deployment --without development test
-            RAILS_ENV=production bin/rails db:migrate
-            RAILS_ENV=production bin/rails assets:precompile || true
-            sudo systemctl restart puma
-            sudo systemctl restart solid_queue || true
-          EOF
