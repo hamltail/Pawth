@@ -13,7 +13,7 @@ gem 'kamal', require: false
 gem 'pagy'
 gem 'pg'
 gem 'propshaft'
-gem 'puma', '>= 5.0'
+gem 'puma'
 gem 'rails-i18n'
 gem 'solid_cable'
 gem 'solid_cache'
@@ -35,6 +35,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
   gem 'html2haml'
   gem 'letter_opener'
   gem 'web-console'
