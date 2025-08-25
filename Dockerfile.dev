@@ -7,6 +7,11 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libyaml-dev pkg-config \
   && rm -rf /var/lib/apt/lists/*
 
+# RubyGems がインストールする実行ファイルに PATH を通す
+ENV PATH="/usr/local/bundle/bin:${PATH}"
+# foreman をインストール（bin/dev から使うため）
+RUN gem install foreman -N
+
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
@@ -14,4 +19,4 @@ RUN bundle install
 
 COPY . .
 
-CMD ["bash", "-lc", "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3000"]
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"]
