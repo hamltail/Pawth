@@ -1,6 +1,6 @@
 # Pawth 🐾
 
-## 〜日々の足あとを、そっと描く。〜
+## 〜日々の足あとを描く〜
 
 Pawth は、日々の足あとを記録するためのアプリです。
 1日1投稿、自分だけの歩みをそっと可視化することができます。
@@ -32,7 +32,33 @@ git clone https://github.com/hamltail/pawth.git
 cd pawth
 bundle install
 rails db:setup
-rails server
+bin/dev
+```
+
+## Dockerで開発環境を立ち上げる場合
+
+1. 初回ビルド＆起動
+
+```
+docker compose -f compose.dev.yml up --build -d
+```
+
+2. DBの準備（作成＋マイグレーション）
+
+```
+docker compose -f compose.dev.yml exec web bash -lc "bin/rails db:prepare"
+```
+
+3. ログを確認
+
+```
+docker compose -f compose.dev.yml logs -f web
+```
+
+4. 終了する場合
+
+```
+docker compose -f compose.dev.yml down
 ```
 
 ## テストの実行
