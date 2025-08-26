@@ -3,13 +3,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
+    tty: true
+    stdin_open: true
     environment:
       # RailsからDBへつなぐURL
       DATABASE_URL: postgres://postgres:postgres@db:5432/pawth_development
     volumes:
       - .:/app
+    ports:
+      - "3000:3000"
     depends_on:
       - db
 
