@@ -36,7 +36,7 @@ class DailyPost < ApplicationRecord
       max = CONTENT_MAX_LENGTH
       length = content.to_s.scan(/\X/).length
       if length > max
-        errors.add(:base, "日記本文は#{max}文字以内で入力してください")
+        errors.add(:base, "日記本文は#{max}文字以内で入力してください。")
       end
     end
 
@@ -46,19 +46,19 @@ class DailyPost < ApplicationRecord
 
     def only_one_post_per_day
       if user && user.daily_posts.where(posted_on: posted_on).exists?
-        errors.add(:base, '今日はすでに日記をかいています')
+        errors.add(:base, '今日はすでに日記をかいています。')
       end
     end
 
     def edit_count_within_limit
       if edit_count > EDIT_COUNT_LIMIT
-        errors.add(:base, "編集は#{EDIT_COUNT_LIMIT}回までです")
+        errors.add(:base, "編集は#{EDIT_COUNT_LIMIT}回までです。")
       end
     end
 
     def only_today_can_be_edited
       if posted_on != Date.today
-        errors.add(:base, "編集は当日（#{posted_on.strftime('%Y-%m-%d')}）のみ可能です")
+        errors.add(:base, "編集は当日（#{posted_on.strftime('%Y-%m-%d')}）のみ可能です。")
       end
     end
 end

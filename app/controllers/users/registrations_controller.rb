@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if resource_updated
       bypass_sign_in resource, scope: resource_name
-      redirect_to after_update_path_for(resource), notice: 'ユーザー情報を更新しました'
+      redirect_to after_update_path_for(resource), notice: 'ユーザー情報を更新しました。'
     else
       render :edit, status: :unprocessable_entity
     end

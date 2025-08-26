@@ -18,7 +18,7 @@ function bindPawEvents() {
       const content = target.dataset.content;
       document.getElementById('daily-post-date').textContent = date;
       document.getElementById('daily-post-content').textContent =
-        content || 'まだ日記をかいていません';
+        content || 'まだ日記をかいていません。';
       gsap.fromTo(
         '#daily-post-content',
         { y: -10, opacity: 0 },

@@ -52,7 +52,7 @@ class User < ApplicationRecord
     def avatar_size_within_limit
       return unless avatar.attached?
       if avatar.blob.byte_size > 1.megabyte
-        errors.add(:avatar, 'は1MB以下のファイルをアップロードしてください')
+        errors.add(:avatar, 'は1MB以下のファイルをアップロードしてください。')
       end
     end
 
@@ -60,7 +60,7 @@ class User < ApplicationRecord
       return unless avatar.attached?
       allowed = %w[image/png image/jpeg image/gif image/webp]
       unless allowed.include?(avatar.blob.content_type)
-        errors.add(:avatar, 'はPNG、JPEG、GIF、またはWebP形式でアップロードしてください')
+        errors.add(:avatar, 'はPNG、JPEG、GIF、またはWebP形式でアップロードしてください。')
       end
     end
 
@@ -71,7 +71,7 @@ class User < ApplicationRecord
     def username_is_not_reserved
       return if username.blank?
       if RESERVED_USERNAMES.include?(username.downcase)
-        errors.add(:username, 'は使用できません')
+        errors.add(:username, 'は使用できません。')
       end
     end
 
@@ -80,7 +80,7 @@ class User < ApplicationRecord
       return if username.match?(USERNAME_REGEX)
       errors.add(
         :username,
-        'は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください'
+        'は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください。'
       )
     end
 end

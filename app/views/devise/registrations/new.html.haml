@@ -4,7 +4,7 @@
       = t("devise.shared.sign_up")
     - if resource.errors.any?
       %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
-        %p.font-bold= "#{resource.errors.count}件のエラーがあります"
+        %p.font-bold= "#{resource.errors.count}件のエラーがあります。"
         %ul.ml-4.list-disc
           - priority = [:username, :email, :password, :password_confirmation]
           - sorted_errors = resource.errors.messages.sort_by { |k, _| priority.index(k) }

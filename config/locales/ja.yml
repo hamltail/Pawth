@@ -13,15 +13,22 @@ ja:
         password_confirmation: 'パスワード（確認用）'
         profile_message: 'プロフィールメッセージ'
         username: 'ユーザー名'
+    errors:
+      messages:
+        blank: "を入力してください。"
+        confirmation: "と%{attribute}の入力が一致しません。"
+        invalid: "が不正です。"
+        too_long: "は%{count}文字以内で入力してください。"
+        too_short: "は%{count}文字以上で入力してください。"
 
   activities:
     show:
       page_title: '%{name}さんの日記'
       welcome: 'ようこそ、%{name}さん！'
-      private: '日記は非公開です'
+      private: '日記は非公開です。'
       footer: 'Pawth © %{year}'
     latest_post:
-      empty: '日記がありません'
+      empty: '日記がありません。'
     calendar:
       today: 'TODAY'
 
@@ -29,7 +36,7 @@ ja:
     index:
       title: '日記一覧'
       new_button: '＋'
-      posted_today_message: '今日はすでに日記をかいています'
+      posted_today_message: '今日はすでに日記をかいています。'
       search_placeholder: 'キーワード検索'
       year_prompt: '年'
       month_prompt: '月'
@@ -41,7 +48,7 @@ ja:
     edit:
       title: '今日何をした？'
       # submit: '更新'
-      edit_remaining: 'あと%{count}回編集できます'
+      edit_remaining: 'あと%{count}回編集できます。'
     shared:
       edit: '編集'
       delete: '削除'
@@ -52,8 +59,8 @@ ja:
       content_placeholder: '今日何をした？'
       remaining_chars: '残り%{max}文字'
       errors_title:
-        one: '%{count}件のエラーがあります'
-        other: '%{count}件のエラーがあります'
+        one: '%{count}件のエラーがあります。'
+        other: '%{count}件のエラーがあります。'
 
   date:
     formats:

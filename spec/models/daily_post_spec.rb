@@ -54,7 +54,7 @@ RSpec.describe DailyPost, type: :model do
       DailyPost.create!(content: 'first post', user: user, posted_on: date_today)
       second_post = DailyPost.new(content: 'second post', user: user, posted_on: date_today)
       expect(second_post).not_to be_valid
-      expect(second_post.errors[:base]).to include("今日はすでに日記をかいています")
+      expect(second_post.errors[:base]).to include("今日はすでに日記をかいています。")
     end
 
     it '別の日なら投稿できる' do
@@ -69,7 +69,7 @@ RSpec.describe DailyPost, type: :model do
       post = DailyPost.create!(content: 'sample post', user: user, posted_on: date_today, edit_count: 2)
       post.edit_count = 3
       expect(post).not_to be_valid
-      expect(post.errors[:base]).to include("編集は2回までです")
+      expect(post.errors[:base]).to include("編集は2回までです。")
     end
 
     it '編集回数が2回以下ならOK' do
@@ -85,7 +85,7 @@ RSpec.describe DailyPost, type: :model do
       post.edit_count = 1
       post.content = 'edited content'
       expect(post).not_to be_valid
-      expect(post.errors[:base]).to include("編集は当日（#{date_yesterday.strftime('%Y-%m-%d')}）のみ可能です")
+      expect(post.errors[:base]).to include("編集は当日（#{date_yesterday.strftime('%Y-%m-%d')}）のみ可能です。")
     end
 
     it '今日の日記は編集できる' do
