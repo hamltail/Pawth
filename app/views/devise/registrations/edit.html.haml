@@ -50,9 +50,9 @@
     -#     新しいメールアドレス（#{resource.unconfirmed_email}）の確認をお待ちください。
     .mb-4
       = f.label :password, class: "block text-gray-700"
-      %span.text-xs.text-gray-500.ml-1 (変更しない場合は空欄のままにしてください。)
+      %span.text-xs.text-gray-500.ml-1= t("devise.registrations.edit.password_hint_nochange")
       - if @minimum_password_length
-        %em.text-xs.text-gray-500.ml-2 (#{@minimum_password_length} 文字以上で入力してください。)
+        %em.text-xs.text-gray-500.ml-2= t("devise.shared.password_min_length", length: @minimum_password_length)
       = f.password_field :password, autocomplete: "new-password", class: "border rounded w-full px-3 py-2"
       - if resource.errors[:password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password).first
@@ -63,7 +63,7 @@
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password_confirmation).first
     .mb-4
       = f.label :current_password, class: "block text-gray-700"
-      %span.text-xs.text-gray-500.ml-1 (変更を確定するには現在のパスワードが必要です。)
+      %span.text-xs.text-gray-500.ml-1= t("devise.registrations.edit.current_password_hint")
       = f.password_field :current_password, autocomplete: "current-password", class: "border rounded w-full px-3 py-2"
       - if resource.errors[:current_password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first

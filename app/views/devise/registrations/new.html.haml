@@ -26,7 +26,7 @@
         = f.label :password, class: "block text-gray-700"
         - if @minimum_password_length
           %em.text-xs.text-gray-500.mb-1
-            (#{@minimum_password_length} characters minimum)
+            = t("devise.shared.password_min_length", length: @minimum_password_length)
         = f.password_field :password, autocomplete: "new-password", class: "border rounded w-full px-3 py-2"
         - if resource.errors[:password].any?
           %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password).first

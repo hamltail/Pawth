@@ -49,6 +49,9 @@ ja:
       update_needs_confirmation: '更新しました。新しいメールアドレスの確認が必要です。メールをご確認ください。'
       updated: 'アカウント情報を更新しました。'
       updated_but_not_signed_in: 'パスワードを変更したため、再度ログインしてください。'
+      edit:
+        password_hint_nochange: '（変更しない場合は空欄のままにしてください。）'
+        current_password_hint: '（変更を確定するには現在のパスワードが必要です。）'
     sessions:
       username_or_email: 'ユーザー名またはメールアドレス'
       remember_me: 'ログイン状態を保持する'
@@ -57,6 +60,7 @@ ja:
       already_signed_out: 'ログアウトしました。'
     shared:
       forgot_your_password: 'パスワードをお忘れですか？'
+      password_min_length: '（%{length}文字以上で入力してください。）'
       sign_in: 'ログイン'
       sign_up: '新規登録'
     unlocks:
