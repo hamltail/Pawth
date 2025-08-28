@@ -1,5 +1,11 @@
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
+Rails/TimeZone:
+  Enabled: true
+
+Style/DateTime:
+  Enabled: true
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
