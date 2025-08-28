@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def posted_today?
-    daily_posts.exists?(posted_on: Time.zone.today)
+    daily_posts.exists?(posted_on: Date.current)
   end
 
   def display_name_or_username

@@ -41,7 +41,7 @@ class DailyPost < ApplicationRecord
     end
 
     def set_posted_on_today
-      self.posted_on ||= Time.zone.today
+      self.posted_on ||= Date.current
     end
 
     def only_one_post_per_day

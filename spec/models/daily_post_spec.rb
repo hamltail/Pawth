@@ -14,7 +14,7 @@ RSpec.describe DailyPost, type: :model do
     post = DailyPost.new(user: user, content: "sample", posted_on: nil)
     expect(post).to be_valid
     post.validate
-    expect(post.posted_on).to eq(Time.zone.today)
+    expect(post.posted_on).to eq(Date.current)
   end
 
   it 'userが必須であること' do
