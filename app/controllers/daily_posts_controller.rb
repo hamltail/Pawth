@@ -54,6 +54,11 @@ class DailyPostsController < ApplicationController
               partial: 'activities/latest_post',
               locals: { post: @daily_post }
             ),
+            turbo_stream.replace(
+              'new-post-button',
+              partial: 'activities/new_post_button',
+              locals: { posted_today: true }
+            ),
             turbo_stream.update('modal', '')
           ]
         end
