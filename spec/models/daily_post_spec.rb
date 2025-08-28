@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DailyPost, type: :model do
   let(:user) { FactoryBot.create(:user) }
-  let(:date_today) { Date.today }
+  let(:date_today) { Date.current }
   let(:date_yesterday) { Date.yesterday }
 
   it 'contentが必須であること' do

@@ -57,7 +57,7 @@ class DailyPost < ApplicationRecord
     end
 
     def only_today_can_be_edited
-      if posted_on != Date.today
+      if posted_on != Date.current
         errors.add(:base, "編集は当日（#{posted_on.strftime('%Y-%m-%d')}）のみ可能です。")
       end
     end

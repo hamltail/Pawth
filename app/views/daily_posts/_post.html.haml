@@ -2,7 +2,7 @@
   %div.flex.items-center.justify-between.gap-3
     %div.inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-gray-700.bg-gray-100.ring-1.ring-gray-200{ class: "text-[12px] shadow-[inset_0_-1px_0_rgba(255,255,255,.6)]" }
       = l(post.posted_on, format: :default)
-    - if post.posted_on == Date.today
+    - if post.posted_on == Date.current
       - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
         = link_to t('daily_posts.shared.edit'),
           edit_daily_post_path(post),

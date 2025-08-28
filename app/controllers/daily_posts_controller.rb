@@ -17,7 +17,7 @@ class DailyPostsController < ApplicationController
 
   def create
     @daily_post = current_user.daily_posts.build(daily_post_params)
-    @daily_post.posted_on = Date.today
+    @daily_post.posted_on = Date.current
 
     if @daily_post.save
       respond_to do |format|
