@@ -5,7 +5,7 @@
     = avatar_for(@user, size: 80, css: 'mb-4')
   - if user_signed_in? && current_user == @user
     %div.mb-8.text-center
-      %strong.text-yellow-600.text-lg= t('.welcome', name: current_user.display_name_or_username)
+      %strong.text-teal-700.text-lg= t('.welcome', name: current_user.display_name_or_username)
     %div.absolute.top-8.right-8
       %div#new-post-button
         = render 'activities/new_post_button', posted_today: current_user.posted_today?
@@ -25,4 +25,4 @@
     - else
       %div.flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
         %span.text-gray-400= t('.private')
-  %div.text-xs.text-gray-400.text-center.mt-8= t('.footer', year: Time.current.year)
+  %div.text-xs.text-gray-500.text-center.mt-8= t('.footer', year: Time.current.year)

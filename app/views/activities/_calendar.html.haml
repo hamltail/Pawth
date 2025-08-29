@@ -23,8 +23,8 @@
       - is_today = date == Date.current
       - wday = date.wday
       - cell_classes = 'relative flex flex-col items-center'
-      - cell_classes += ' text-blue-500' if wday == 6
-      - cell_classes += ' text-red-500' if wday == 0
+      - cell_classes += ' text-blue-600' if wday == 6
+      - cell_classes += ' text-red-600' if wday == 0
       %div{ class: cell_classes }
         %span.text-xs= date.day
         - if post
