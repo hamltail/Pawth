@@ -31,6 +31,8 @@ ja:
       empty: '日記がありません。'
     calendar:
       today: 'TODAY'
+      prev_month: '前の月へ'
+      next_month: '次の月へ'
 
   daily_posts:
     index:
