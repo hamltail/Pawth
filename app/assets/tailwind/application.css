@@ -33,3 +33,24 @@ dialog {
   border: 0;
   padding: 0;
 }
+
+.neon-pink {
+  text-shadow:
+    0 0 6px rgba(255, 211, 243, 0.7),
+    0 0 16px rgba(251, 189, 216, 0.5),
+    0 0 32px rgba(255, 200, 220, 0.3);
+}
+
+.neon-green {
+  text-shadow:
+    0 0 6px rgba(220, 255, 220, 0.7),
+    0 0 16px rgba(200, 255, 200, 0.5),
+    0 0 32px rgba(191, 254, 191, 0.3);
+}
+
+.neon-yellow-soft {
+  text-shadow:
+    0 0 6px rgba(255, 250, 205, 0.7),
+    0 0 16px rgba(255, 250, 205, 0.5),
+    0 0 32px rgba(255, 250, 205, 0.3);
+}
