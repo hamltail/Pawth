@@ -7,15 +7,15 @@
         = link_to t('daily_posts.shared.edit'),
           edit_daily_post_path(post),
           data: { turbo_frame: 'modal' },
-          class: 'text-teal-500 hover:underline font-semibold text-sm'
+          class: 'text-teal-700 hover:underline font-semibold text-sm'
       - else
-        %button.text-gray-400.font-semibold.text-sm.cursor-not-allowed{ type: 'button',
+        %button.text-gray-500.font-semibold.text-sm.cursor-not-allowed{ type: 'button',
           onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')" }= t('daily_posts.shared.edit')
-      %button.text-gray-300.font-semibold.text-sm.ml-3.cursor-not-allowed{ type: 'button',
+      %button.text-gray-500.font-semibold.text-sm.ml-3.cursor-not-allowed{ type: 'button',
         onclick: "alert('今日の日記は削除できません。')" }= t('daily_posts.shared.delete')
     - else
       = link_to t('daily_posts.shared.delete'),
         daily_post_path(post),
         data: { 'turbo-method': :delete, turbo_confirm: t('daily_posts.shared.delete_confirm') },
-        class: 'text-red-500 hover:underline font-semibold text-sm'
+        class: 'text-red-600 hover:underline font-semibold text-sm'
   %div.mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)

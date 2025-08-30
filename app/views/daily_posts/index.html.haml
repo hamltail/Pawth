@@ -20,7 +20,7 @@
                { prompt: t('.month_prompt') }, 
                class: 'px-2 py-2 border border-gray-300 rounded-md'
     = f.submit t('.submit_search'), 
-               class: 'px-4 py-2 bg-teal-400 text-white rounded-md hover:bg-teal-500'
+               class: 'px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-500'
   %ul#posts.space-y-6.mt-8
     - @daily_posts.each do |post|
       = render 'post', post: post
