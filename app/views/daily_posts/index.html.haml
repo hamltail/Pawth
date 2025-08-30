@@ -4,11 +4,23 @@
     %div#new-post-button
       = render 'activities/new_post_button', posted_today: current_user.posted_today?
   = turbo_frame_tag 'modal'
-  = form_with url: daily_posts_path, method: :get, local: true, class: 'mb-4 flex justify-center space-x-2' do |f|
-    = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q], class: 'px-4 py-2 border border-gray-300 rounded-md w-64'
-    = f.select :year, options_for_select((2025..Date.current.year).to_a.reverse, params[:year]), { prompt: t('.year_prompt') }, class: 'px-2 py-2 border border-gray-300 rounded-md'
-    = f.select :month, options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]), { prompt: t('.month_prompt') }, class: 'px-2 py-2 border border-gray-300 rounded-md'
-    = f.submit t('.submit_search'), class: 'px-4 py-2 bg-teal-400 text-white rounded-md hover:bg-teal-500'
+  = form_with url: daily_posts_path, method: :get, local: true, 
+              class: 'mb-4 flex justify-center space-x-2' do |f|
+    = label_tag :q, t('.search_placeholder'), class: 'sr-only'
+    = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q], 
+                   class: 'px-4 py-2 border border-gray-300 rounded-md w-64'
+    = label_tag :year, t('.year_prompt'), class: 'sr-only'
+    = f.select :year, 
+               options_for_select((2025..Date.current.year).to_a.reverse, params[:year]), 
+               { prompt: t('.year_prompt') }, 
+               class: 'px-2 py-2 border border-gray-300 rounded-md'
+    = label_tag :month, t('.month_prompt'), class: 'sr-only'
+    = f.select :month, 
+               options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]), 
+               { prompt: t('.month_prompt') }, 
+               class: 'px-2 py-2 border border-gray-300 rounded-md'
+    = f.submit t('.submit_search'), 
+               class: 'px-4 py-2 bg-teal-400 text-white rounded-md hover:bg-teal-500'
   %ul#posts.space-y-6.mt-8
     - @daily_posts.each do |post|
       = render 'post', post: post
