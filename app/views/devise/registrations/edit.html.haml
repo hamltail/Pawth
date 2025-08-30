@@ -19,7 +19,8 @@
         alt: "activerecord.attributes.user.avatar",
         data: { default_src: default_src }
       }
-      = f.file_field :avatar, id: "avatar-input", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
+      = f.file_field :avatar, id: "avatar-input", 
+                     class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
       - if resource.errors[:avatar].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:avatar).first
     .mb-4
@@ -68,4 +69,4 @@
       - if resource.errors[:current_password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
     .mb-6.text-center
-      = f.submit t("users.edit.update"), class: "bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-8 rounded"
+      = f.submit t("users.edit.update"), class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-8 rounded"
