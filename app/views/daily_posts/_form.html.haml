@@ -4,7 +4,7 @@
     .flex.items-center.gap-2.mb-2
       %button#emojiButton{ type: 'button',
                            data: { emoji_target: 'button', action: 'emoji#open' },
-                           class: 'bg-teal-400 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200',
+                           class: 'bg-teal-700 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200',
                            aria: { expanded: 'false', controls: 'emojiDialog' } }
         = t('daily_posts.shared.emoji_button')
     %dialog#emojiDialog{ data: { emoji_target: 'dialog' },
@@ -23,4 +23,4 @@
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
   %div.flex.justify-end
     = f.submit t('daily_posts.new.submit'),
-      class: "bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow"
+      class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow"
