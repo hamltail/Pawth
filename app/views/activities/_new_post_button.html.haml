@@ -4,7 +4,7 @@
       action: 'click->new-post-button#handle',
       new_post_button_posted_today_value: current_user.posted_today?,
       new_post_button_message_value: t('daily_posts.index.posted_today_message') },
-  class: 'inline-block bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full text-xl'
+  class: 'inline-block bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full text-xl'
 - else
   %button.inline-block.bg-gray-300.text-white.font-bold.py-2.px-4.rounded-full.text-xl.cursor-not-allowed{ disabled: true, aria: { disabled: true } }
     = t('daily_posts.index.new_button')
