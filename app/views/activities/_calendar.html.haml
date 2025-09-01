@@ -1,4 +1,4 @@
-%div.mb-8
+%div#calendar.mb-8{ data: { controller: 'calendar' } }
   - month_label = calendar_days.first.strftime(t('date.formats.month_year'))
   - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
   - first_wday = calendar_days.first.wday
