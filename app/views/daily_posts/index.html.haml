@@ -21,7 +21,7 @@
                class: 'px-2 py-2 border border-gray-300 rounded-md'
     = f.submit t('.submit_search'), 
                class: 'px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-500'
-  %ul#posts.space-y-6.mt-8{ data: { turbo_temporary: true } }
+  %ul#posts.space-y-6.mt-8{ data: { controller: 'posts-fade', turbo_temporary: true } }
     - @daily_posts.each do |post|
       = render 'post', post: post
   %div{ class: 'mt-6 flex flex-col items-center gap-2', data: { turbo_temporary: true } }
