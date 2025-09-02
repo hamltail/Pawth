@@ -2,3 +2,21 @@ linters:
   RuboCop:
     enabled: true
     rubocop_config: .rubocop.yml
+
+  LineLength:
+    enabled: true
+    max: 140
+
+  ConsecutiveSilentScripts:
+    enabled: true
+    max_consecutive: 2
+
+  ImplicitDiv:
+    enabled: true
+
+  ClassesBeforeIds:
+    enabled: true
+
+  IdNames:
+    enabled: true
+    regex: '^[a-z][a-z0-9\-]*$'
