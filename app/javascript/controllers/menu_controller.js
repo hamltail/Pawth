@@ -6,11 +6,12 @@ export default class extends Controller {
   connect() {
     this.onDocumentClick = this.handleDocumentClick.bind(this);
     this.onKeydown = this.handleKeydown.bind(this);
-    this.onResize = this.syncDesktopState.bind(this);
+    this.mq = window.matchMedia('(min-width: 768px)');
+    this.onMqlChange = this.handleBreakpointChange.bind(this);
 
     document.addEventListener('click', this.onDocumentClick);
     document.addEventListener('keydown', this.onKeydown);
-    window.addEventListener('resize', this.onResize);
+    this.mq.addEventListener('change', this.onMqlChange);
 
     this.syncDesktopState();
   }
@@ -18,7 +19,7 @@ export default class extends Controller {
   disconnect() {
     document.removeEventListener('click', this.onDocumentClick);
     document.removeEventListener('keydown', this.onKeydown);
-    window.removeEventListener('resize', this.onResize);
+    this.mq.removeEventListener('change', this.onMqlChange);
   }
 
   toggle() {
@@ -50,11 +51,21 @@ export default class extends Controller {
   }
 
   syncDesktopState() {
-    if (this.isDesktop()) {
+    const desktop = this.isDesktop();
+    this.sidebarTarget.classList.toggle('-translate-x-full', !desktop);
+    this.buttonTarget.classList.toggle('hidden', desktop);
+    this.sidebarTarget.setAttribute('aria-hidden', desktop ? 'false' : 'true');
+    this.buttonTarget.setAttribute('aria-expanded', desktop ? 'true' : 'false');
+  }
+
+  handleBreakpointChange(e) {
+    if (e.matches) {
       this.sidebarTarget.classList.remove('-translate-x-full');
       this.buttonTarget.classList.add('hidden');
+      this.sidebarTarget.setAttribute('aria-hidden', 'false');
+      this.buttonTarget.setAttribute('aria-expanded', 'true');
     } else {
-      this.buttonTarget.classList.remove('hidden');
+      this.close();
     }
   }
 
