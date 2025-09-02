@@ -36,6 +36,7 @@ end
 
 group :development do
   gem 'foreman'
+  gem 'haml_lint', require: false
   gem 'html2haml'
   gem 'letter_opener'
   gem 'web-console'
