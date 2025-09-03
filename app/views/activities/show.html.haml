@@ -1,13 +1,13 @@
 - page_title= t('.page_title', name: @user.display_name_or_username)
-%div.bg-white.shadow-md.rounded-lg.px-8.py-8.relative
+.bg-white.shadow-md.rounded-lg.px-8.py-8.relative
   %h1.text-2xl.font-bold.text-gray-700.mb-8.text-center.neon-green= page_title
-  %div.flex.flex-col.items-center
+  .flex.flex-col.items-center
     = avatar_for(@user, size: 80, css: 'mb-4')
   - if user_signed_in? && current_user == @user
-    %div.mb-8.text-center
+    .mb-8.text-center
       %strong.text-teal-700.text-lg.neon-yellow-soft= t('.welcome', name: current_user.display_name_or_username)
-    %div.absolute.top-8.right-8
-      %div#new-post-button
+    .absolute.top-8.right-8
+      #new-post-button
         = render 'activities/new_post_button', posted_today: current_user.posted_today?
       = turbo_frame_tag 'modal'
   = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
@@ -23,6 +23,6 @@
     - if can_view_posts
       = render 'activities/latest_post', post: @latest_daily_post
     - else
-      %div.flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
+      .flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
         %span.text-gray-400= t('.private')
-  %div.text-xs.text-gray-500.text-center.mt-8= t('.footer', year: Time.current.year)
+  .text-xs.text-gray-500.text-center.mt-8= t('.footer', year: Time.current.year)
