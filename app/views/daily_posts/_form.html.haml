@@ -1,17 +1,39 @@
-= form_with model: @daily_post, class: 'space-y-6', data: { controller: 'emoji' } do |f|
-  %div{ data: { controller: 'character-counter',
-                character_counter_max_value: DailyPost::CONTENT_MAX_LENGTH } }
+= form_with model: daily_post,
+            class: 'space-y-6',
+            data: { controller: 'emoji' } do |f|
+  %div{
+    data: {
+      controller: 'character-counter',
+      character_counter_max_value: DailyPost::CONTENT_MAX_LENGTH
+    }
+  }
     .flex.items-center.gap-2.mb-2
-      %button#emojiButton{ type: 'button',
-                           data: { emoji_target: 'button', action: 'emoji#open' },
-                           class: 'bg-teal-700 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200',
-                           aria: { expanded: 'false', controls: 'emojiDialog' } }
+      %button#emoji-button{
+        type: 'button',
+        data: {
+          emoji_target: 'button',
+          action: 'emoji#open'
+        },
+        class: 'bg-teal-700 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200',
+        aria: {
+          expanded: 'false',
+          controls: 'emojiDialog'
+        }
+      }
         = t('daily_posts.shared.emoji_button')
-    %dialog#emojiDialog{ data: { emoji_target: 'dialog' },
-                         class: 'p-0 border-0 bg-transparent' }
+    %dialog#emoji-dialog{
+      data: {
+        emoji_target: 'dialog'
+      },
+      class: 'p-0 border-0 bg-transparent'
+    }
       .rounded-2xl.shadow-xl.bg-white.p-2.overflow-hidden
-        %emoji-picker{ data: { emoji_target: 'picker' },
-                       style: 'width: 360px; height: 380px; display:block;' }
+        %emoji-picker{
+          data: {
+            emoji_target: 'picker',
+            class: 'block w-[360px] h-[380px]'
+          }
+        }
     = f.text_area :content,
       rows: 12,
       placeholder: t('daily_posts.shared.content_placeholder'),
@@ -19,8 +41,8 @@
       data: { character_counter_target: 'input',
               action: 'input->character-counter#update paste->character-counter#paste',
               emoji_target: 'textarea' }
-    %div.text-right.text-sm.text-gray-500{ data: { character_counter_target: 'counter' } }
+    .text-right.text-sm.text-gray-500{ data: { character_counter_target: 'counter' } }
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
-  %div.flex.justify-end
+  .flex.justify-end
     = f.submit t('daily_posts.new.submit'),
-      class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow"
+      class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow'
