@@ -1,12 +1,13 @@
-%div#calendar.mb-8{ data: { controller: 'calendar' } }
-  - month_label = calendar_days.first.strftime(t('date.formats.month_year'))
-  - week_days = %w[Mon Tue Wed Thu Fri Sat Sun]
-  - first_wday = calendar_days.first.wday
-  - empty_cells = (first_wday - 1) % 7
-  - total_cells = 42
-  - filled_cells = empty_cells + calendar_days.size
-  - trailing_empty_cells = total_cells - filled_cells
-  %div.flex.items-center.justify-center.mb-8
+.mb-8#calendar{ data: { controller: 'calendar' } }
+  :ruby
+    month_label          = calendar_days.first.strftime(t('date.formats.month_year'))
+    week_days            = %w[Mon Tue Wed Thu Fri Sat Sun]
+    first_wday           = calendar_days.first.wday
+    empty_cells          = (first_wday - 1) % 7
+    total_cells          = 42
+    filled_cells         = empty_cells + calendar_days.size
+    trailing_empty_cells = total_cells - filled_cells
+  .flex.items-center.justify-center.mb-8
     = link_to activity_path(username: user.username, year: prev_month.year, month: prev_month.month),
               class: 'mx-2',
               aria: { label: t('activities.calendar.prev_month') } do
@@ -16,19 +17,20 @@
               class: 'mx-2',
               aria: { label: t('activities.calendar.next_month') } do
       = render 'shared/icon_arrow', direction: 'right', klass: 'text-gray-400 hover:text-gray-700'
-  %div.grid.grid-cols-7.gap-2.justify-center.mb-8
+  .grid.grid-cols-7.gap-2.justify-center.mb-8
     - week_days.each do |wd|
-      %div.text-xs.font-bold.text-center= wd
-  %div.grid.grid-cols-7.gap-2.justify-center.h-120
+      .text-xs.font-bold.text-center= wd
+  .grid.grid-cols-7.gap-2.justify-center.h-120
     - empty_cells.times do
       %div
     - calendar_days.each do |date|
-      - post = daily_posts_by_date[date]&.first
-      - is_today = date == Date.current
-      - wday = date.wday
-      - cell_classes = 'relative flex flex-col items-center'
-      - cell_classes += ' text-blue-600' if wday == 6
-      - cell_classes += ' text-red-600' if wday == 0
+      :ruby
+        post         = daily_posts_by_date[date]&.first
+        is_today     = date == Date.current
+        wday         = date.wday
+        cell_classes = 'relative flex flex-col items-center'
+        cell_classes << ' text-blue-600' if wday == 6
+        cell_classes << ' text-red-600' if wday == 0
       %div{ class: cell_classes }
         %span.text-xs= date.day
         - if post
@@ -41,7 +43,12 @@
             klass: 'text-gray-300 opacity-50',
             grad: false
         - if is_today
-          %div{ class: 'today-badge pointer-events-none select-none absolute top-11 left-1/2 -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]' }
+          %div{
+            class: "
+              today-badge pointer-events-none select-none absolute top-11 left-1/2
+              -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]
+            "
+          }
             - t('.today').chars.each_with_index do |ch, i|
               %span.today-char{ data: { idx: i } }= ch
     - trailing_empty_cells.times do
