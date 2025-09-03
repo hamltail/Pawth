@@ -1,37 +1,24 @@
 .mb-8#calendar{ data: { controller: 'calendar' } }
-  :ruby
-    month_label          = calendar_days.first.strftime(t('date.formats.month_year'))
-    week_days            = %w[Mon Tue Wed Thu Fri Sat Sun]
-    first_wday           = calendar_days.first.wday
-    empty_cells          = (first_wday - 1) % 7
-    total_cells          = 42
-    filled_cells         = empty_cells + calendar_days.size
-    trailing_empty_cells = total_cells - filled_cells
+  - meta = calendar_meta(calendar_days)
   .flex.items-center.justify-center.mb-8
     = link_to activity_path(username: user.username, year: prev_month.year, month: prev_month.month),
               class: 'mx-2',
               aria: { label: t('activities.calendar.prev_month') } do
       = render 'shared/icon_arrow', direction: 'left', klass: 'text-gray-400 hover:text-gray-700'
-    %h2.text-lg.font-bold.mx-4.flex-1.text-center{ aria: { live: 'polite' } }= month_label
+    %h2.text-lg.font-bold.mx-4.flex-1.text-center{ aria: { live: 'polite' } }= meta[:month_label]
     = link_to activity_path(username: user.username, year: next_month.year, month: next_month.month),
               class: 'mx-2',
               aria: { label: t('activities.calendar.next_month') } do
       = render 'shared/icon_arrow', direction: 'right', klass: 'text-gray-400 hover:text-gray-700'
   .grid.grid-cols-7.gap-2.justify-center.mb-8
-    - week_days.each do |wd|
+    - meta[:week_days].each do |wd|
       .text-xs.font-bold.text-center= wd
   .grid.grid-cols-7.gap-2.justify-center.h-120
-    - empty_cells.times do
+    - meta[:empty_cells].times do
       %div
     - calendar_days.each do |date|
-      :ruby
-        post         = daily_posts_by_date[date]&.first
-        is_today     = date == Date.current
-        wday         = date.wday
-        cell_classes = 'relative flex flex-col items-center'
-        cell_classes << ' text-blue-600' if wday == 6
-        cell_classes << ' text-red-600' if wday == 0
-      %div{ class: cell_classes }
+      - post = post_for(date, daily_posts_by_date)
+      %div{ class: day_cell_classes(date) }
         %span.text-xs= date.day
         - if post
           = render 'shared/paw',
@@ -42,7 +29,7 @@
           = render 'shared/paw',
             klass: 'text-gray-300 opacity-50',
             grad: false
-        - if is_today
+        - if calendar_today?(date)
           %div{
             class: "
               today-badge pointer-events-none select-none absolute top-11 left-1/2
@@ -51,5 +38,5 @@
           }
             - t('.today').chars.each_with_index do |ch, i|
               %span.today-char{ data: { idx: i } }= ch
-    - trailing_empty_cells.times do
+    - meta[:trailing_empty_cells].times do
       %div
