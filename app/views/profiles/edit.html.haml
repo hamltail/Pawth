@@ -1,35 +1,49 @@
-%h2.text-xl.font-bold.mb-4 プロフィール設定
-= form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|
-  .mb-4{ data: { controller: 'avatar-preview' } }
-    = f.label :avatar, 'アバター', class: 'block mb-1'
-    - has_avatar = @profile.avatar.attached?
-    - default_src = asset_path('default_avatar.png')
-    %img.mt-2.mb-2.rounded.w-24.h-24.object-cover#avatar-preview{
-      src: (has_avatar ? url_for(@profile.avatar) : default_src),
-      alt: 'avatar',
-      data: { avatar_preview_target: 'img', default_src: default_src }
-    }
-    = f.file_field :avatar,
-                   id: 'avatar-input',
-                   data: { avatar_preview_target: 'input', action: 'change->avatar-preview#update' }
+.bg-white.shadow-md.rounded-lg.px-8.py-8
+  %h2.text-2xl.font-bold.text-gray-700.mb-8.text-center プロフィール設定
+  = form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|
+    - if @profile.errors.any?
+      %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
+        %p.font-bold= "#{@profile.errors.count}件のエラーがあります。"
+        %ul.ml-4.list-disc
+          - priority = [:avatar, :display_name]
+          - sorted_errors = @profile.errors.messages.sort_by { |k, _| priority.index(k) }
+          - sorted_errors.each do |attribute, messages|
+            - messages.each do |msg|
+              %li= @profile.class.human_attribute_name(attribute) + msg
+    
+    .mb-4{ data: { controller: 'avatar-preview' } }
+      = f.label :avatar, t('activerecord.attributes.user.avatar'), class: 'block text-gray-700 mb-2'
+      - has_avatar = @profile.avatar.attached? && @profile.avatar.blob&.persisted?
+      - default_src = asset_path('default_avatar.png')
+      %img.mt-2.mb-2.rounded.w-24.h-24.object-cover#avatar-preview{
+        src: (has_avatar ? url_for(@profile.avatar) : default_src),
+        alt: 'activerecord.attributes.user.avatar',
+        data: { avatar_preview_target: 'img', default_src: default_src }
+      }
+      = f.file_field :avatar,
+                     id: 'avatar-input',
+                     data: { avatar_preview_target: 'input', action: 'change->avatar-preview#update' },
+                     class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
+      - if @profile.errors[:avatar].any?
+        %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
 
-  .mb-4
-    = f.label :display_name, '表示名', class: 'block mb-1'
-    = f.text_field :display_name, class: 'border rounded w-full px-3 py-2'
+    .mb-4
+      = f.label :display_name, '表示名', class: 'block mb-1'
+      = f.text_field :display_name, class: 'border rounded w-full px-3 py-2'
 
-  .mb-4{ data: { controller: 'public-posts-toggle' } }
-    = f.label :public_posts, '日記の公開設定', class: 'block mb-1'
-    = f.check_box :public_posts,
-                  class: 'sr-only',
-                  id: 'toggle-public-profile',
-                  data: { public_posts_toggle_target: 'checkbox', action: 'change->public-posts-toggle#sync' }
-    %label{ for: 'toggle-public-profile', class: 'relative inline-block' }
-      %span#toggle-bar.block.w-16.h-8.rounded-full.transition-colors.duration-200.bg-gray-300{
-        data: { public_posts_toggle_target: 'bar' } }
-      %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md.transition-transform.duration-200{
-        data: { public_posts_toggle_target: 'dot' } }
-    %span#public-profile-label.ml-2{ data: { public_posts_toggle_target: 'label' } }
-      = @profile.public_posts? ? '公開' : '非公開'
+    .mb-4{ data: { controller: 'public-posts-toggle' } }
+      = f.label :public_posts, '日記の公開設定', class: 'block mb-1'
+      = f.check_box :public_posts,
+                    class: 'sr-only',
+                    id: 'toggle-public-profile',
+                    data: { public_posts_toggle_target: 'checkbox', action: 'change->public-posts-toggle#sync' }
+      %label{ for: 'toggle-public-profile', class: 'relative inline-block' }
+        %span#toggle-bar.block.w-16.h-8.rounded-full.transition-colors.duration-200.bg-gray-300{
+          data: { public_posts_toggle_target: 'bar' } }
+        %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md.transition-transform.duration-200{
+          data: { public_posts_toggle_target: 'dot' } }
+      %span#public-profile-label.ml-2{ data: { public_posts_toggle_target: 'label' } }
+        = @profile.public_posts? ? '公開' : '非公開'
 
-  .mt-6
-    = f.submit '更新', class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded'
+    .mt-6.text-center
+      = f.submit '更新', class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded'
