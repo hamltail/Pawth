@@ -4,6 +4,7 @@ class User < ApplicationRecord
     Rails.root.join('config/reserved_usernames.yml')
   )['reserved'].map(&:downcase).freeze
 
+  has_one :profile, dependent: :destroy
   has_one_attached :avatar
   has_many :daily_posts, dependent: :destroy
 
