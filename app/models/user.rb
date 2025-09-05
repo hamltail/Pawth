@@ -16,7 +16,6 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :display_name, length: { maximum: 20 }, allow_blank: true
-  validates :profile_message, length: { maximum: 200 }, allow_blank: true
 
   validate :avatar_size_within_limit
   validate :avatar_type_allowed

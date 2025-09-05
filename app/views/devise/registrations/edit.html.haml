@@ -5,7 +5,7 @@
       %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
         %p.font-bold= "#{resource.errors.count}件のエラーがあります。"
         %ul.ml-4.list-disc
-          - priority = [:avatar, :display_name, :profile_message, :email, :password, :password_confirmation, :current_password]
+          - priority = [:avatar, :display_name, :email, :password, :password_confirmation, :current_password]
           - sorted_errors = resource.errors.messages.sort_by { |k, _| priority.index(k) }
           - sorted_errors.each do |attribute, messages|
             - messages.each do |msg|
@@ -30,11 +30,6 @@
       = f.text_field :display_name, class: "border rounded w-full px-3 py-2"
       - if resource.errors[:display_name].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:display_name).first
-    .mb-4
-      = f.label :profile_message, t("activerecord.attributes.user.profile_message"), class: "block text-gray-700 mb-2"
-      = f.text_area :profile_message, rows: 3, class: "border rounded w-full px-3 py-2"
-      - if resource.errors[:profile_message].any?
-        %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:profile_message).first
     .mb-4
       = f.label :public_posts, '日記の公開設定', class: 'block text-gray-700 mb-2'
       %div.flex.items-center.gap-2{ data: { controller: 'public-posts-toggle' } }

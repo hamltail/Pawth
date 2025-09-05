@@ -11,7 +11,6 @@ ja:
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: 'パスワード（確認用）'
-        profile_message: 'プロフィールメッセージ'
         username: 'ユーザー名'
     errors:
       messages:
