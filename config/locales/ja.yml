@@ -70,6 +70,6 @@ ja:
 
   users:
     edit:
-      title: 'ユーザー設定'
+      title: 'アカウント設定'
       update: '更新'
       back: '戻る'

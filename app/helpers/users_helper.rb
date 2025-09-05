@@ -1,7 +1,7 @@
 module UsersHelper
   def avatar_for(user, size: 80, css: '')
-    if user&.avatar&.attached?
-      image_tag user.avatar,
+    if user&.profile&.avatar&.attached?
+      image_tag user.profile.avatar,
                 width: size, height: size,
                 class: "rounded-full object-cover #{css}",
                 alt: "#{user.username}のアバター"

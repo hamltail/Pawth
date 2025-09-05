@@ -4,21 +4,18 @@ class User < ApplicationRecord
     Rails.root.join('config/reserved_usernames.yml')
   )['reserved'].map(&:downcase).freeze
 
-  has_one_attached :avatar
+  has_one :profile, dependent: :destroy
   has_many :daily_posts, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
          authentication_keys: [:login]
 
-  before_validation :normalize_username
+  after_create :build_default_profile
 
+  before_validation :normalize_username
   validates :email, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
-  validates :display_name, length: { maximum: 20 }, allow_blank: true
-
-  validate :avatar_size_within_limit
-  validate :avatar_type_allowed
   validate :username_is_not_reserved
   validate :username_is_valid_format_github_like
 
@@ -44,23 +41,12 @@ class User < ApplicationRecord
   end
 
   def display_name_or_username
-    display_name.presence || username
+    profile&.display_name.presence || username
   end
 
   private
-    def avatar_size_within_limit
-      return unless avatar.attached?
-      if avatar.blob.byte_size > 1.megabyte
-        errors.add(:avatar, 'は1MB以下のファイルをアップロードしてください。')
-      end
-    end
-
-    def avatar_type_allowed
-      return unless avatar.attached?
-      allowed = %w[image/png image/jpeg image/gif image/webp]
-      unless allowed.include?(avatar.blob.content_type)
-        errors.add(:avatar, 'はPNG、JPEG、GIF、またはWebP形式でアップロードしてください。')
-      end
+    def build_default_profile
+      create_profile! unless profile
     end
 
     def normalize_username
