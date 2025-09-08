@@ -15,11 +15,11 @@
       - else
         %button.text-gray-500.font-semibold.text-sm.cursor-not-allowed{
           type: 'button',
-          onclick: "alert('編集は#{DailyPost::EDIT_COUNT_LIMIT}回までです。')"
+          onclick: "alert('#{t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT)}')"
         }= t('daily_posts.shared.edit')
       %button.text-gray-500.font-semibold.text-sm.ml-3.cursor-not-allowed{
         type: 'button',
-        onclick: "alert('今日の日記は削除できません。')"
+        onclick: "alert('#{t('daily_posts.shared.delete_today_alert')}')"
       }= t('daily_posts.shared.delete')
     - else
       = link_to t('daily_posts.shared.delete'),
