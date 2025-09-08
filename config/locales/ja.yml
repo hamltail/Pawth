@@ -68,6 +68,18 @@ ja:
       default: '%Y-%m-%d'
       month_year: '%B %Y'
 
+  layout:
+    sidebar:
+      app_name: 'Pawth'
+      calendar: 'カレンダー'
+      daily_posts: '日記一覧'
+      settings: '設定'
+      profile_settings: 'プロフィール設定'
+      account_settings: 'アカウント設定'
+      logout: 'ログアウト'
+      logout_confirm: '本当にログアウトしますか？'
+      footer: 'Pawth © %{year}'
+
   users:
     edit:
       title: 'アカウント設定'
