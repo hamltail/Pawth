@@ -1,9 +1,9 @@
 .bg-white.shadow-md.rounded-lg.px-8.py-8
-  %h2.text-2xl.font-bold.text-gray-700.mb-8.text-center プロフィール設定
+  %h2.text-2xl.font-bold.text-gray-700.mb-8.text-center= t('profiles.edit.title')
   = form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|
     - if @profile.errors.any?
       %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
-        %p.font-bold= "#{@profile.errors.count}件のエラーがあります。"
+        %p.font-bold= t('shared.errors.title', count: @profile.errors.count)
         %ul.ml-4.list-disc
           - priority = [:avatar, :display_name]
           - sorted_errors = @profile.errors.messages.sort_by { |k, _| priority.index(k) }
@@ -28,11 +28,11 @@
         %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
 
     .mb-4
-      = f.label :display_name, '表示名', class: 'block mb-1'
+      = f.label :display_name, t('activerecord.attributes.user.avatar'), class: 'block mb-1'
       = f.text_field :display_name, class: 'border rounded w-full px-3 py-2'
 
     .mb-4{ data: { controller: 'public-posts-toggle' } }
-      = f.label :public_posts, '日記の公開設定', class: 'block mb-1'
+      = f.label :public_posts, t('profiles.edit.public_posts_label'), class: 'block mb-1'
       .flex.items-center
         = f.check_box :public_posts,
                       class: 'sr-only',
@@ -44,7 +44,7 @@
           %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md.transition-transform.duration-200{
             data: { public_posts_toggle_target: 'dot' } }
         %span#public-profile-label.ml-2{ data: { public_posts_toggle_target: 'label' } }
-          = @profile.public_posts? ? '公開' : '非公開'
+          = @profile.public_posts? ? t('profiles.edit.public') : t('profiles.edit.private')
 
     .mt-6.text-center
-      = f.submit '更新', class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded'
+      = f.submit t('profiles.edit.update'), class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded'

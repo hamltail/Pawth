@@ -4,6 +4,10 @@ ja:
       daily_post:
         content: '日記本文'
         posted_on: '記録日'
+      profile:
+        avatar: 'プロフィール画像'
+        display_name: '表示名'
+        public_posts: '日記の公開設定'
       user:
         avatar: 'プロフィール画像'
         current_password: '現在のパスワード'
@@ -79,6 +83,20 @@ ja:
       logout: 'ログアウト'
       logout_confirm: '本当にログアウトしますか？'
       footer: 'Pawth © %{year}'
+
+  profiles:
+    edit:
+      title: 'プロフィール設定'
+      update: '更新'
+      public_posts_label: '日記の公開設定'
+      public: '公開'
+      private: '非公開'
+
+  shared:
+    errors:
+      title:
+        one: '%{count}件のエラーがあります。'
+        other: '%{count}件のエラーがあります。'
 
   users:
     edit:
