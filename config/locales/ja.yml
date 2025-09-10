@@ -22,6 +22,18 @@ ja:
         too_long: 'は%{count}文字以内で入力してください。'
         too_short: 'は%{count}文字以上で入力してください。'
       models:
+        daily_post:
+          attributes:
+            base:
+              content_too_long: '日記本文は%{max}文字以内で入力してください。'
+              already_posted_today: '今日はすでに日記をかいています。'
+              edit_limit_exceeded: '編集は%{limit}回までです。'
+              edit_only_today: '編集は当日（%{date}）のみ可能です。'
+        profile:
+          attributes:
+            avatar:
+              size_too_large: 'は%{size}以下のファイルをアップロードしてください。'
+              invalid_content_type: 'は%{types}形式でアップロードしてください。'
         user:
           attributes:
             username:
