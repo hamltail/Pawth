@@ -56,16 +56,13 @@ class User < ApplicationRecord
     def username_is_not_reserved
       return if username.blank?
       if RESERVED_USERNAMES.include?(username.downcase)
-        errors.add(:username, 'は使用できません。')
+        errors.add(:username, :reserved)
       end
     end
 
     def username_is_valid_format_github_like
       return if username.blank?
       return if username.match?(USERNAME_REGEX)
-      errors.add(
-        :username,
-        'は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください。'
-      )
+      errors.add(:username, :invalid_github_like)
     end
 end

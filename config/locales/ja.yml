@@ -21,6 +21,12 @@ ja:
         invalid: 'が不正です。'
         too_long: 'は%{count}文字以内で入力してください。'
         too_short: 'は%{count}文字以上で入力してください。'
+      models:
+        user:
+          attributes:
+            username:
+              reserved: 'は使用できません。'
+              invalid_github_like: 'は英数字と-のみ使用でき、先頭と末尾は英数字、--は不可、1〜39文字で入力してください。'
 
   activities:
     show:
