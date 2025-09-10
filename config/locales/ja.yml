@@ -53,6 +53,17 @@ ja:
       prev_month: '前の月へ'
       next_month: '次の月へ'
 
+  controllers:
+    users:
+      registrations:
+        updated: 'ユーザー情報を更新しました。'
+    daily_posts:
+      created: '日記をかきました。'
+      updated: '日記を更新しました。'
+      destroyed: '日記を削除しました。'
+    profiles:
+      updated: 'プロフィールを更新しました。'
+
   daily_posts:
     index:
       title: '日記一覧'

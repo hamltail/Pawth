@@ -62,7 +62,7 @@ class DailyPostsController < ApplicationController
             turbo_stream.update('modal', '')
           ]
         end
-        format.html { redirect_to activity_path(current_user.username), notice: '日記をかきました。' }
+        format.html { redirect_to activity_path(current_user.username), notice: t('controllers.daily_posts.created') }
       end
     else
       respond_to do |format|
@@ -92,7 +92,7 @@ class DailyPostsController < ApplicationController
             turbo_stream.update('modal', '')
           ]
         end
-        format.html { redirect_to daily_posts_path, notice: '編集したよ。' }
+        format.html { redirect_to daily_posts_path, notice: t('controllers.daily_posts.updated') }
       end
     else
       respond_to do |format|
@@ -108,7 +108,7 @@ class DailyPostsController < ApplicationController
   def destroy
     @daily_post = current_user.daily_posts.find(params[:id])
     @daily_post.destroy
-    redirect_to daily_posts_path, status: :see_other
+    redirect_to daily_posts_path, status: :see_other, notice: t('controllers.daily_posts.destroyed')
   end
 
   private
