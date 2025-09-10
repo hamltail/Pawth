@@ -11,7 +11,7 @@
             - messages.each do |msg|
               %li= @profile.class.human_attribute_name(attribute) + msg
     .mb-4{ data: { controller: 'avatar-preview' } }
-      = f.label :avatar, t('activerecord.attributes.user.avatar'), class: 'block text-gray-700 mb-2'
+      = f.label :avatar, t('activerecord.attributes.profile.avatar'), class: 'block text-gray-700 mb-2'
       - has_avatar = @profile.avatar.attached? && @profile.avatar.blob&.persisted?
       - default_src = asset_path('default_avatar.png')
       %img.mt-2.mb-2.rounded.w-24.h-24.object-cover#avatar-preview{
@@ -26,7 +26,7 @@
       - if @profile.errors[:avatar].any?
         %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
     .mb-4
-      = f.label :display_name, t('activerecord.attributes.user.avatar'), class: 'block mb-1'
+      = f.label :display_name, t('activerecord.attributes.profile.display_name'), class: 'block mb-1'
       = f.text_field :display_name, class: 'border rounded w-full px-3 py-2'
     .mb-4{ data: { controller: 'public-posts-toggle' } }
       = f.label :public_posts, t('profiles.edit.public_posts_label'), class: 'block mb-1'
