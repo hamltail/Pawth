@@ -16,7 +16,7 @@
       - default_src = asset_path('default_avatar.png')
       %img.mt-2.mb-2.rounded.w-24.h-24.object-cover#avatar-preview{
         src: (has_avatar ? url_for(@profile.avatar) : default_src),
-        alt: 'activerecord.attributes.user.avatar',
+        alt: t('activerecord.attributes.profile.avatar'),
         data: { avatar_preview_target: 'img', default_src: default_src }
       }
       = f.file_field :avatar,

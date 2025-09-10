@@ -88,6 +88,11 @@ ja:
       default: '%Y-%m-%d'
       month_year: '%B %Y'
 
+  helpers:
+    avatar:
+      user: '%{username}のプロフィール画像'
+      default: 'デフォルトプロフィール画像'
+
   layout:
     sidebar:
       app_name: 'Pawth'

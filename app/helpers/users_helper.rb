@@ -4,12 +4,12 @@ module UsersHelper
       image_tag user.profile.avatar,
                 width: size, height: size,
                 class: "rounded-full object-cover #{css}",
-                alt: "#{user.username}のアバター"
+                alt: t('helpers.avatar.user', username: user.username)
     else
       image_tag 'default_avatar.png',
                 size: "#{size}x#{size}",
                 class: "rounded-full object-cover #{css}",
-                alt: 'デフォルトアバター'
+                alt: t('helpers.avatar.default')
     end
   end
 end
