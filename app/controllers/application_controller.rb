@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   allow_browser versions: :modern
+  after_action :log_flash_notice_in_dev
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
@@ -13,6 +14,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def log_flash_notice_in_dev
+      return unless Rails.env.development?
+      Rails.logger.info("[FLASH] notice=#{flash[:notice].inspect}") if flash[:notice].present?
+      Rails.logger.info("[FLASH] alert=#{flash[:alert].inspect}") if flash[:alert].present?
+    end
+
     def render_404
       respond_to do |f|
         f.html { render file: Rails.root.join('public/404.html'), status: :not_found, layout: false }
