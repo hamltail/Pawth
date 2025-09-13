@@ -1,20 +1,19 @@
 module CalendarHelper
+  TOTAL_CELLS = 7 * 6 # 42
   def calendar_meta(calendar_days)
-    first = calendar_days.first
-    first_wday = first.wday
-    empty = (first_wday - 1) % 7
-    total = 42
-    filled = empty + calendar_days.size
+    first_day = calendar_days.first
+    leading_empty = ((first_day.wday - 1) % 7)
+    filled = leading_empty + calendar_days.size
 
     {
-      month_label: first.strftime(t('date.formats.month_year')),
-      week_days: week_days_labels,
-      empty_cells: empty,
-      trailing_empty_cells: total - filled
+      month_label: first_day.strftime(t('date.formats.month_year')),
+      weekdays: weekdays_labels,
+      leading_empty:,
+      trailing_empty: TOTAL_CELLS - filled
     }
   end
 
-  def week_days_labels
+  def weekdays_labels
     I18n.t('date.abbr_day_names', locale: :en).rotate(1) # %w[Mon Tue Wed Thu Fri Sat Sun]
   end
 
@@ -27,11 +26,33 @@ module CalendarHelper
     end
   end
 
-  def post_for(date, daily_posts_by_date)
-    daily_posts_by_date[date]&.first
+  def first_post_on(date, posts_by_date)
+    Array(posts_by_date[date]).first
   end
 
   def calendar_today?(date, today = Date.current)
     date == today
+  end
+
+  def paw_icon_for(date, post)
+    if post
+      render 'shared/paw',
+             klass: 'text-pink-300 cursor-pointer paw--posted',
+             dataset: { date:, content: post.content },
+             grad: true
+    else
+      render 'shared/paw',
+             klass: 'text-gray-300 opacity-50',
+             grad: false
+    end
+  end
+
+  def today_badge(text = t('.today'))
+    content_tag :div,
+                class: 'today-badge pointer-events-none select-none absolute top-11 left-1/2 -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]' do
+      safe_join(text.chars.each_with_index.map { |ch, i|
+        content_tag(:span, ch, class: 'today-char', data: { idx: i })
+      })
+    end
   end
 end
