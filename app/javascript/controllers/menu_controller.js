@@ -27,19 +27,25 @@ export default class extends Controller {
     this.isOpen() ? this.close() : this.open();
   }
 
+  applyState({ open, desktop }) {
+    this.sidebarTarget.classList.toggle('-translate-x-full', !open);
+    this.buttonTarget.classList.toggle('hidden', open);
+    this.sidebarTarget.setAttribute('aria-hidden', open ? 'false' : 'true');
+    this.buttonTarget.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    if (desktop && open) {
+      this.sidebarTarget.classList.remove('-translate-x-full');
+      this.buttonTarget.classList.add('hidden');
+    }
+  }
+
   open() {
-    this.sidebarTarget.classList.remove('-translate-x-full');
-    this.buttonTarget.classList.add('hidden');
-    this.sidebarTarget.setAttribute('aria-hidden', 'false');
-    this.buttonTarget.setAttribute('aria-expanded', 'true');
+    this.applyState({ open: true, desktop: this.isDesktop() });
   }
 
   close() {
-    if (this.isDesktop()) return; // md以上は閉じない
-    this.sidebarTarget.classList.add('-translate-x-full');
-    this.buttonTarget.classList.remove('hidden');
-    this.sidebarTarget.setAttribute('aria-hidden', 'true');
-    this.buttonTarget.setAttribute('aria-expanded', 'false');
+    if (this.isDesktop()) return;
+    this.applyState({ open: false, desktop: this.isDesktop() });
   }
 
   isOpen() {
@@ -47,15 +53,11 @@ export default class extends Controller {
   }
 
   isDesktop() {
-    return window.matchMedia('(min-width: 768px)').matches;
+    return this.mq.matches;
   }
 
   syncDesktopState() {
-    const desktop = this.isDesktop();
-    this.sidebarTarget.classList.toggle('-translate-x-full', !desktop);
-    this.buttonTarget.classList.toggle('hidden', desktop);
-    this.sidebarTarget.setAttribute('aria-hidden', desktop ? 'false' : 'true');
-    this.buttonTarget.setAttribute('aria-expanded', desktop ? 'true' : 'false');
+    this.applyState({ open: this.isDesktop(), desktop: this.isDesktop() });
   }
 
   handleBreakpointChange(e) {
