@@ -3,20 +3,24 @@ import { gsap } from 'gsap';
 
 export default class extends Controller {
   connect() {
-    // プレビュー（キャッシュ表示）中は演出しない
     if (document.documentElement.hasAttribute('data-turbo-preview')) return;
 
-    // 参照を保持
-    this.onMouseover = this.handleMouseover.bind(this);
-    this.onClick = this.handleClick.bind(this);
+    this.ctx = gsap.context(() => {
+      this.dateEl = document.getElementById('daily-post-date');
+      this.contentEl = document.getElementById('daily-post-content');
 
-    // イベント（デリゲーション）
-    this.element.addEventListener('mouseover', this.onMouseover);
-    this.element.addEventListener('click', this.onClick);
+      this.onMouseover =
+        this.onMouseover?.bind(this) ?? this.handleMouseover.bind(this);
+      this.onClick = this.onClick?.bind(this) ?? this.handleClick.bind(this);
 
-    // 初期演出
-    this.fadeInPaws();
-    this.animateTodayBadge();
+      this.element.addEventListener('mouseover', this.onMouseover, {
+        passive: true,
+      });
+      this.element.addEventListener('click', this.onClick);
+
+      this.fadeInPaws();
+      this.animateTodayBadge();
+    }, this.element);
   }
 
   disconnect() {
@@ -36,18 +40,16 @@ export default class extends Controller {
     this.squish(el, { scale: 1.55, duration: 0.16 });
 
     const { date, content } = el.dataset;
-    const dateEl = document.getElementById('daily-post-date');
-    const contentEl = document.getElementById('daily-post-content');
-    if (dateEl) dateEl.textContent = date || '';
-    if (contentEl)
-      contentEl.textContent = content || 'まだ日記をかいていません。';
-
-    gsap.killTweensOf('#daily-post-content');
-    gsap.fromTo(
-      '#daily-post-content',
-      { y: -10, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: 'power1.out' },
-    );
+    if (this.dateEl) this.dateEl.textContent = date || '';
+    if (this.contentEl) {
+      this.contentEl.textContent = content || 'まだ日記をかいていません。';
+      gsap.killTweensOf(this.contentEl);
+      gsap.fromTo(
+        this.contentEl,
+        { y: -10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power1.out' },
+      );
+    }
   }
 
   squish(el, { scale = 1.5, duration = 0.15 } = {}) {
@@ -74,6 +76,7 @@ export default class extends Controller {
     if (!chars.length) return;
 
     this.tl?.kill();
+
     this.tl = gsap
       .timeline({ delay: 0.3, repeat: -1, repeatDelay: 0.8 })
       .to(chars, { y: -6, duration: 0.22, ease: 'power1.out', stagger: 0.06 })
@@ -85,14 +88,22 @@ export default class extends Controller {
   }
 
   teardown() {
+    if (this.onMouseover)
+      this.element.removeEventListener('mouseover', this.onMouseover);
+    if (this.onClick) this.element.removeEventListener('click', this.onClick);
+
     this.tl?.kill();
     this.tl = null;
+
     gsap.killTweensOf([
-      '.today-badge .today-char',
-      'svg.paw.paw--posted',
-      '#daily-post-content',
+      this.contentEl,
+      this.element.querySelectorAll('.today-badge .today-char'),
+      this.element.querySelectorAll('svg.paw.paw--posted'),
     ]);
-    this.element.removeEventListener('mouseover', this.onMouseover);
-    this.element.removeEventListener('click', this.onClick);
+
+    this.ctx?.revert();
+    this.ctx = null;
+    this.dateEl = null;
+    this.contentEl = null;
   }
 }
