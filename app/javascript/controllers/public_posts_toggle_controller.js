@@ -4,10 +4,10 @@ export default class extends Controller {
   static targets = ['checkbox', 'label', 'bar', 'dot'];
 
   connect() {
-    this.sync();
+    this.render();
   }
 
-  sync() {
+  render() {
     const on = !!this.checkboxTarget.checked;
 
     this.labelTarget.textContent = on ? '公開' : '非公開';

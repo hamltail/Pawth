@@ -21,7 +21,8 @@
       }
       = f.file_field :avatar,
                      id: 'avatar-input',
-                     data: { avatar_preview_target: 'input', action: 'change->avatar-preview#update' },
+                     data: { avatar_preview_target: 'input',
+                             action: 'change->avatar-preview#update' },
                      class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
       - if @profile.errors[:avatar].any?
         %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
@@ -34,7 +35,8 @@
         = f.check_box :public_posts,
                       class: 'sr-only',
                       id: 'toggle-public-profile',
-                      data: { public_posts_toggle_target: 'checkbox', action: 'change->public-posts-toggle#sync' }
+                      data: { public_posts_toggle_target: 'checkbox',
+                              action: 'change->public-posts-toggle#render' }
         %label{ for: 'toggle-public-profile', class: 'relative inline-block' }
           %span.block.w-16.h-8.rounded-full.transition-colors.duration-200.bg-gray-300#toggle-bar{
             data: {
