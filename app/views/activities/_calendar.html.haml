@@ -1,4 +1,9 @@
-.mb-8#calendar{ data: { controller: 'calendar' } }
+.mb-8#calendar{
+  data: {
+    controller: 'calendar',
+    action: 'mouseover->calendar#handleMouseover click->calendar#handleClick'
+  }
+}
   - meta = calendar_meta(calendar_days)
 
   .flex.items-center.justify-center.mb-8

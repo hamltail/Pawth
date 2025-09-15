@@ -9,15 +9,6 @@ export default class extends Controller {
       this.dateEl = document.getElementById('daily-post-date');
       this.contentEl = document.getElementById('daily-post-content');
 
-      this.onMouseover =
-        this.onMouseover?.bind(this) ?? this.handleMouseover.bind(this);
-      this.onClick = this.onClick?.bind(this) ?? this.handleClick.bind(this);
-
-      this.element.addEventListener('mouseover', this.onMouseover, {
-        passive: true,
-      });
-      this.element.addEventListener('click', this.onClick);
-
       this.fadeInPaws();
       this.animateTodayBadge();
     }, this.element);
@@ -88,10 +79,6 @@ export default class extends Controller {
   }
 
   teardown() {
-    if (this.onMouseover)
-      this.element.removeEventListener('mouseover', this.onMouseover);
-    if (this.onClick) this.element.removeEventListener('click', this.onClick);
-
     this.tl?.kill();
     this.tl = null;
 
