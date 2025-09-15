@@ -72,28 +72,18 @@ export default class extends Controller {
   }
 
   handleDocumentClick(e) {
-    // サイドバー開状態で、外側クリックなら閉じる
     if (!this.isOpen() || this.isDesktop()) return;
 
-    const clickedInsideSidebar = this.sidebarTarget.contains(e.target);
-    const clickedMenuButton = this.buttonTarget.contains(e.target);
-    if (clickedInsideSidebar || clickedMenuButton) {
-      // sidebar内でも「sidebar-no-close」は閉じない対象
-      const noClose = e.target.closest('.sidebar-no-close');
-      if (!noClose) return;
-    }
+    const insideSidebar = this.sidebarTarget.contains(e.target);
+    const onMenuButton = this.buttonTarget.contains(e.target);
+    const noClose = e.target.closest('.sidebar-no-close');
 
-    // 外側クリック（またはno-close以外のリンク）で閉じる
-    if (!clickedInsideSidebar && !clickedMenuButton) {
-      this.close();
-      return;
-    }
+    // 外クリック
+    if (!insideSidebar && !onMenuButton) return this.close();
 
-    // サイドバー内のリンククリックで閉じる（no-closeは除外）
+    // サイドバー内リンククリック（no-close除外）
     const link = e.target.closest('#sidebar nav a');
-    if (link && !link.classList.contains('sidebar-no-close')) {
-      this.close();
-    }
+    if (link && !noClose) this.close();
   }
 
   handleKeydown(e) {
