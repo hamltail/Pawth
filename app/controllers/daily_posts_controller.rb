@@ -1,12 +1,14 @@
 class DailyPostsController < ApplicationController
   include Pagy::Backend
 
+  before_action :set_daily_post, only: %i[edit update destroy]
+
   def index
     posts = current_user.daily_posts
-    posts = posts.search_text(params[:q])
-    posts = posts.by_year(params[:year])
-    posts = posts.by_month(params[:month], params[:year])
-    posts = posts.recent_first
+                        .search_text(params[:q])
+                        .by_year(params[:year])
+                        .by_month(params[:month], params[:year])
+                        .recent_first
 
     @pagy, @daily_posts = pagy(posts, limit: 10)
   end
@@ -16,103 +18,96 @@ class DailyPostsController < ApplicationController
   end
 
   def create
-    @daily_post = current_user.daily_posts.build(daily_post_params)
-    @daily_post.posted_on = Date.current
+    @daily_post = current_user.daily_posts.build(daily_post_params.merge(posted_on: Date.current))
 
     if @daily_post.save
       respond_to do |format|
-        format.turbo_stream do
-          today = Date.current
-          month_from = today.beginning_of_month
-          month_to = today.end_of_month
-          calendar_days = (month_from..month_to).to_a
-          daily_posts_by_date = current_user.daily_posts
-                                  .where(posted_on: month_from..month_to)
-                                  .group_by(&:posted_on)
-          prev_month = today.prev_month
-          next_month = today.next_month
-
-          render turbo_stream: [
-            turbo_stream.prepend(
-              'posts',
-              partial: 'daily_posts/post',
-              locals: { post: @daily_post }
-            ),
-            turbo_stream.replace(
-              'calendar',
-              partial: 'activities/calendar',
-              locals: {
-                user: current_user,
-                calendar_days: calendar_days,
-                daily_posts_by_date: daily_posts_by_date,
-                prev_month: today.prev_month,
-                next_month: today.next_month
-              }
-            ),
-            turbo_stream.replace(
-              'latest_post',
-              partial: 'activities/latest_post',
-              locals: { post: @daily_post }
-            ),
-            turbo_stream.replace(
-              'new-post-button',
-              partial: 'activities/new_post_button',
-              locals: { posted_today: true }
-            ),
-            turbo_stream.update('modal', '')
-          ]
-        end
+        format.turbo_stream { render turbo_stream: create_success_stream(@daily_post) }
         format.html { redirect_to activity_path(current_user.username), notice: t('controllers.daily_posts.created') }
       end
     else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('form_errors',
-            partial: 'daily_posts/form_errors', locals: { daily_post: @daily_post })
-        end
-        format.html { render :new, status: :unprocessable_entity }
-      end
+      render_form_errors(@daily_post, :new)
     end
   end
 
-  def edit
-    @daily_post = current_user.daily_posts.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @daily_post = current_user.daily_posts.find(params[:id])
-    @daily_post.edit_count ||= 0
-    @daily_post.edit_count += 1
+    # TODO: 編集回数の責務はモデルで管理したい
+    @daily_post.edit_count = (@daily_post.edit_count || 0) + 1
 
     if @daily_post.update(daily_post_params)
       respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.replace("post_#{@daily_post.id}", partial: 'daily_posts/post', locals: { post: @daily_post }),
-            turbo_stream.update('modal', '')
-          ]
-        end
+        format.turbo_stream { render turbo_stream: update_success_stream(@daily_post) }
         format.html { redirect_to daily_posts_path, notice: t('controllers.daily_posts.updated') }
       end
     else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('form_errors',
-            partial: 'daily_posts/form_errors', locals: { daily_post: @daily_post })
-        end
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+      render_form_errors(@daily_post, :edit)
     end
   end
 
   def destroy
-    @daily_post = current_user.daily_posts.find(params[:id])
     @daily_post.destroy
     redirect_to daily_posts_path, status: :see_other, notice: t('controllers.daily_posts.destroyed')
   end
 
   private
-    def daily_post_params
-      params.require(:daily_post).permit(:content)
+
+  def set_daily_post
+    @daily_post = current_user.daily_posts.find(params[:id])
+  end
+
+  def daily_post_params
+    params.require(:daily_post).permit(:content)
+  end
+
+  # ----- Turbo Stream builders -----
+  def create_success_stream(post)
+    today = Date.current
+    month_from, month_to = today.beginning_of_month, today.end_of_month
+
+    calendar_days = (month_from..month_to).to_a
+    daily_posts_by_date = current_user.daily_posts
+                                      .where(posted_on: month_from..month_to)
+                                      .group_by(&:posted_on)
+
+    [
+      turbo_stream.prepend('posts', partial: 'daily_posts/post', locals: { post: post }),
+      turbo_stream.replace(
+        'calendar',
+        partial: 'activities/calendar',
+        locals: {
+          user: current_user,
+          calendar_days:,
+          daily_posts_by_date:,
+          prev_month: today.prev_month,
+          next_month: today.next_month
+        }
+      ),
+      turbo_stream.replace('latest_post', partial: 'activities/latest_post', locals: { post: post }),
+      turbo_stream.replace('new-post-button', partial: 'activities/new_post_button', locals: { posted_today: true }),
+      turbo_stream.update('modal', '')
+    ]
+  end
+
+  def update_success_stream(post)
+    [
+      turbo_stream.replace("post_#{post.id}", partial: 'daily_posts/post', locals: { post: post }),
+      turbo_stream.update('modal', '')
+    ]
+  end
+
+  # ----- Error rendering -----
+  def render_form_errors(resource, fallback_view)
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          'form_errors',
+          partial: 'daily_posts/form_errors',
+          locals: { daily_post: resource }
+        )
+      end
+      format.html { render fallback_view, status: :unprocessable_entity }
     end
+  end
 end
