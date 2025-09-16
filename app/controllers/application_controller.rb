@@ -14,22 +14,24 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def log_flash_notice_in_dev
-      return unless Rails.env.development?
-      Rails.logger.info("[FLASH] notice=#{flash[:notice].inspect}") if flash[:notice].present?
-      Rails.logger.info("[FLASH] alert=#{flash[:alert].inspect}") if flash[:alert].present?
-    end
 
-    def render_404
-      respond_to do |f|
-        f.html { render file: Rails.root.join('public/404.html'), status: :not_found, layout: false }
-        f.any { head :not_found }
-      end
+  def log_flash_notice_in_dev
+    return unless Rails.env.development?
+    Rails.logger.info("[FLASH] notice=#{flash[:notice].inspect}") if flash[:notice].present?
+    Rails.logger.info("[FLASH] alert=#{flash[:alert].inspect}") if flash[:alert].present?
+  end
+
+  def render_404
+    respond_to do |f|
+      f.html { render file: Rails.root.join('public/404.html'), status: :not_found, layout: false }
+      f.any { head :not_found }
     end
+  end
 
   protected
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
-      devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email])
-    end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email])
+  end
 end
