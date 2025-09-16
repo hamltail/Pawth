@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+const DEFAULT_MAX = 365;
+
 export default class extends Controller {
   static targets = ['input', 'counter'];
   static values = { max: Number };
@@ -10,35 +12,33 @@ export default class extends Controller {
         ? new Intl.Segmenter('ja', { granularity: 'grapheme' })
         : null;
 
-    this.max = this.hasMaxValue
-      ? this.maxValue
-      : Number(this.data.get('maxValue') || 365);
+    this.limit = this.hasMaxValue
+      ? Number(this.maxValue)
+      : Number(this.data.get('maxValue')) || DEFAULT_MAX;
 
     this.update();
   }
 
   update() {
-    const v = this.inputTarget.value || '';
-    const units = this.graphemes(v);
+    const text = this.inputTarget.value || '';
+    const units = this.graphemes(text);
 
-    if (units.length > this.max) {
-      this.inputTarget.value = units.slice(0, this.max).join('');
+    if (units.length > this.limit) {
+      this.inputTarget.value = units.slice(0, this.limit).join('');
     }
 
-    const current = this.graphemes(this.inputTarget.value).length;
-    const remain = Math.max(0, this.max - current);
-    if (this.hasCounterTarget)
-      this.counterTarget.textContent = `残り${remain}文字`;
+    const current = Math.min(units.length, this.limit);
+    this.renderCounter(this.limit - current);
   }
 
-  paste() {
-    setTimeout(() => this.update(), 0);
+  renderCounter(remain) {
+    if (!this.hasCounterTarget) return;
+    this.counterTarget.textContent = `残り${Math.max(0, remain)}文字`;
   }
 
   graphemes(str) {
-    if (this.segmenter) {
-      return Array.from(this.segmenter.segment(str), (s) => s.segment);
-    }
-    return Array.from(str);
+    return this.segmenter
+      ? Array.from(this.segmenter.segment(str), (s) => s.segment)
+      : Array.from(str);
   }
 }
