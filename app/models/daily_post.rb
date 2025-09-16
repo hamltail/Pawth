@@ -32,33 +32,34 @@ class DailyPost < ApplicationRecord
   end
 
   private
-    def content_length_within_limit
-      max = CONTENT_MAX_LENGTH
-      length = content.to_s.scan(/\X/).length
-      if length > max
-        errors.add(:base, :content_too_long, max: max)
-      end
-    end
 
-    def set_posted_on_today
-      self.posted_on ||= Date.current
+  def content_length_within_limit
+    max = CONTENT_MAX_LENGTH
+    length = content.to_s.scan(/\X/).length
+    if length > max
+      errors.add(:base, :content_too_long, max: max)
     end
+  end
 
-    def only_one_post_per_day
-      if user && user.daily_posts.where(posted_on: posted_on).exists?
-        errors.add(:base, :already_posted_today)
-      end
-    end
+  def set_posted_on_today
+    self.posted_on ||= Date.current
+  end
 
-    def edit_count_within_limit
-      if edit_count > EDIT_COUNT_LIMIT
-        errors.add(:base, :edit_limit_exceeded, limit: EDIT_COUNT_LIMIT)
-      end
+  def only_one_post_per_day
+    if user && user.daily_posts.where(posted_on: posted_on).exists?
+      errors.add(:base, :already_posted_today)
     end
+  end
 
-    def only_today_can_be_edited
-      if posted_on != Date.current
-        errors.add(:base, :edit_only_today, date: I18n.l(posted_on, format: :default))
-      end
+  def edit_count_within_limit
+    if edit_count > EDIT_COUNT_LIMIT
+      errors.add(:base, :edit_limit_exceeded, limit: EDIT_COUNT_LIMIT)
     end
+  end
+
+  def only_today_can_be_edited
+    if posted_on != Date.current
+      errors.add(:base, :edit_only_today, date: I18n.l(posted_on, format: :default))
+    end
+  end
 end

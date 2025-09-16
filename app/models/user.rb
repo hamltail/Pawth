@@ -45,24 +45,25 @@ class User < ApplicationRecord
   end
 
   private
-    def build_default_profile
-      create_profile! unless profile
-    end
 
-    def normalize_username
-      self.username = username.to_s.downcase.strip.presence
-    end
+  def build_default_profile
+    create_profile! unless profile
+  end
 
-    def username_is_not_reserved
-      return if username.blank?
-      if RESERVED_USERNAMES.include?(username.downcase)
-        errors.add(:username, :reserved)
-      end
-    end
+  def normalize_username
+    self.username = username.to_s.downcase.strip.presence
+  end
 
-    def username_is_valid_format_github_like
-      return if username.blank?
-      return if username.match?(USERNAME_REGEX)
-      errors.add(:username, :invalid_github_like)
+  def username_is_not_reserved
+    return if username.blank?
+    if RESERVED_USERNAMES.include?(username.downcase)
+      errors.add(:username, :reserved)
     end
+  end
+
+  def username_is_valid_format_github_like
+    return if username.blank?
+    return if username.match?(USERNAME_REGEX)
+    errors.add(:username, :invalid_github_like)
+  end
 end
