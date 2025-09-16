@@ -33,9 +33,6 @@ class DailyPostsController < ApplicationController
   def edit; end
 
   def update
-    # TODO: 編集回数の責務はモデルで管理したい
-    @daily_post.edit_count = (@daily_post.edit_count || 0) + 1
-
     if @daily_post.update(daily_post_params)
       respond_to do |format|
         format.turbo_stream { render turbo_stream: update_success_stream(@daily_post) }
