@@ -4,6 +4,8 @@ gem 'rails', '~> 8.0.2'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'devise-i18n'
+gem 'factory_bot_rails'
+gem 'faker'
 gem 'haml-rails'
 gem 'importmap-rails'
 gem 'pagy'
@@ -23,8 +25,6 @@ group :development, :test do
   gem 'capybara'
   gem 'debug', require: 'debug/prelude'
   gem 'dotenv-rails'
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'rspec-rails'
   gem 'rubocop-rails-omakase', require: false
   gem 'selenium-webdriver'
