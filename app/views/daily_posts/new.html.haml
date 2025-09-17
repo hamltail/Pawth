@@ -7,7 +7,7 @@
         type: 'button',
         onclick: "document.getElementById('modal').innerHTML = ''"
       } ×
-      %h1.text-2xl.font-bold.text-gray-700.mb-8.text-center= t('.title')
+      %h1.text-2xl.font-bold.text-brand-dark.neon-yellow-soft.mb-8.text-center= t('.title')
       = turbo_frame_tag 'form_errors' do
         = render 'form_errors', daily_post: @daily_post
       = render 'form', daily_post: @daily_post
