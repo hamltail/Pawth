@@ -6,6 +6,19 @@
   --color-brand-dark: #4c1d95; /* purple-900 */
 }
 
+@layer base {
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  textarea {
+    @apply border rounded px-3 py-2
+        focus:outline-none
+        focus:ring-2 focus:ring-yellow-200
+        focus:border-yellow-200
+        focus:shadow-[0_0_10px_#facc15];
+  }
+}
+
 .toggle-dot {
   transition: transform 0.2s;
 }
