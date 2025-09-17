@@ -27,4 +27,4 @@
         - if resource.errors[:password_confirmation].any?
           %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password_confirmation).first
       .mb-6
-        = f.submit t("devise.passwords.edit.change_my_password"), class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded w-full"
+        = f.submit t("devise.passwords.edit.change_my_password"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-4 rounded w-full"

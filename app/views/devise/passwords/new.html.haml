@@ -10,7 +10,7 @@
         = f.label :email, class: "block text-gray-700 mb-2"
         = f.email_field :email, autofocus: true, autocomplete: "email", class: "border rounded w-full px-3 py-2"
       .mb-6
-        = f.submit t("devise.passwords.send_button"), class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded w-full"
+        = f.submit t("devise.passwords.send_button"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-4 rounded w-full"
     .flex.justify-between.text-sm
       = link_to t("devise.shared.sign_in"), new_session_path(resource_name), class: "text-blue-600 hover:underline"
       = link_to t("devise.shared.sign_up"), new_registration_path(resource_name), class: "text-blue-600 hover:underline"
