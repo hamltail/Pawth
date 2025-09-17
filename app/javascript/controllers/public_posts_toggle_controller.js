@@ -14,7 +14,7 @@ export default class extends Controller {
     this.labelTarget.classList.toggle('text-green-700', on);
     this.labelTarget.classList.toggle('text-red-600', !on);
 
-    this.barTarget.classList.toggle('bg-teal-400', on);
+    this.barTarget.classList.toggle('bg-yellow-300', on);
     this.barTarget.classList.toggle('bg-gray-300', !on);
 
     this.dotTarget.style.transform = on ? 'translateX(2rem)' : 'translateX(0)';
