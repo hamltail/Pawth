@@ -26,7 +26,7 @@
         %header.fixed.top-8.left-8.z-40
           = link_to "Pawth",
                     new_user_session_path,
-                    class: "text-brand neon-pink font-extrabold text-xl hover:underline",
+                    class: "text-brand font-extrabold text-xl hover:underline",
                     aria: { label: "Pawth ログインへ" }
       - main_class = user_signed_in? ? "ml-0 md:ml-64 flex-1" : "flex-1"
       %main{ class: main_class }
