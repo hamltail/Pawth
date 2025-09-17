@@ -10,12 +10,22 @@
   input[type='text'],
   input[type='email'],
   input[type='password'],
-  textarea {
+  input[type='number'],
+  input[type='url'],
+  input[type='search'],
+  input[type='tel'],
+  textarea,
+  select {
     @apply border rounded px-3 py-2
         focus:outline-none
         focus:ring-2 focus:ring-yellow-200
         focus:border-yellow-200
         focus:shadow-[0_0_10px_#facc15];
+  }
+
+  button:focus,
+  a:focus {
+    @apply outline-none ring-2 ring-yellow-200 shadow-[0_0_10px_#facc15];
   }
 }
 
