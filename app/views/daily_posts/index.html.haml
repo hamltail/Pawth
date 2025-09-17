@@ -25,7 +25,7 @@
     - @daily_posts.each do |post|
       = render 'post', post: post
   .mt-6.flex.flex-col.items-center.gap-2{ data: { turbo_temporary: true } }
-    %div{ class: '[&_a]:px-3 [&_a]:py-1 [&_a]:rounded-full [&_a]:ring-1 [&_a]:ring-gray-300' }
+    %div.pagy-nav
       = pagy_nav(@pagy).html_safe
     .text-xs.text-gray-500
       = t('.page_label', page: @pagy.page, pages: @pagy.pages)
