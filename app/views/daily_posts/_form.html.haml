@@ -14,7 +14,7 @@
           emoji_target: 'button',
           action: 'emoji#open'
         },
-        class: 'bg-teal-700 hover:bg-teal-500 text-white px-3 py-1 rounded shadow focus:outline-none focus:ring-2 focus:ring-teal-200',
+        class: 'bg-brand hover:bg-brand-light text-white px-3 py-1 rounded shadow',
         aria: {
           expanded: 'false',
           controls: 'emojiDialog'
@@ -37,7 +37,7 @@
     = f.text_area :content,
       rows: 12,
       placeholder: t('daily_posts.shared.content_placeholder'),
-      class: 'border border-gray-300 rounded w-full p-3 text-base focus:ring-2 focus:ring-blue-200 focus:border-blue-400 resize-none',
+      class: 'border border-gray-300 rounded w-full p-3 text-base resize-none',
       data: { character_counter_target: 'input',
               action: 'input->character-counter#update paste->character-counter#paste',
               emoji_target: 'textarea' }
@@ -45,4 +45,4 @@
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
   .flex.justify-end
     = f.submit t('daily_posts.new.submit'),
-      class: 'bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded shadow'
+      class: 'bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded shadow'

@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@theme {
+    --color-brand: #6d28d9;   /* purple-700 */
+    --color-brand-light: #8b5cf6; /* purple-500 */
+    --color-brand-dark: #4c1d95;  /* purple-900 */
+}
+
 .toggle-dot {
   transition: transform 0.2s;
 }

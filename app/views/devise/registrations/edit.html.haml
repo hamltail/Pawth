@@ -35,4 +35,4 @@
       - if resource.errors[:current_password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
     .mb-6.text-center
-      = f.submit t("users.edit.update"), class: "bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-8 rounded"
+      = f.submit t("users.edit.update"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded"

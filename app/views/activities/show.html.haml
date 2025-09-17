@@ -1,11 +1,11 @@
 - page_title= t('.page_title', name: @user.display_name_or_username)
 .bg-white.shadow-md.rounded-lg.px-8.py-8.relative
-  %h1.text-2xl.font-bold.text-gray-700.mb-8.text-center.neon-green= page_title
+  %h1.text-2xl.font-bold.text-brand-dark.mb-8.text-center.neon-yellow-soft= page_title
   .flex.flex-col.items-center
     = avatar_for(@user, size: 80, css: 'mb-4')
   - if user_signed_in? && current_user == @user
     .mb-8.text-center
-      %strong.text-teal-700.text-lg.neon-yellow-soft= t('.welcome', name: current_user.display_name_or_username)
+      %strong.text-yellow-700.text-lg.neon-yellow-soft= t('.welcome', name: current_user.display_name_or_username)
     .absolute.top-8.right-8
       #new-post-button
         = render 'activities/new_post_button', posted_today: current_user.posted_today?

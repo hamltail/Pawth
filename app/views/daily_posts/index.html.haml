@@ -20,7 +20,7 @@
                { prompt: t('.month_prompt') },
                class: 'px-2 py-2 border border-gray-300 rounded-md'
     = f.submit t('.submit_search'),
-               class: 'px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-500'
+               class: 'px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-light'
   %ul.posts.space-y-6.mt-8{ data: { controller: 'posts-fade', turbo_temporary: true } }
     - @daily_posts.each do |post|
       = render 'post', post: post
