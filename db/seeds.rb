@@ -44,11 +44,8 @@ rin.profile.avatar.attach(
 )
 
 # 他のユーザーはローテーション
-avatar_paths = [
-  Rails.root.join("db/seed_images/avatar1.png"),
-  Rails.root.join("db/seed_images/avatar2.png"),
-  nil # 未登録
-]
+avatar_paths = Dir[Rails.root.join("db/seed_images/avatar*.png")].sort
+avatar_paths << nil
 avatar_enum = avatar_paths.cycle
 
 other_users.each do |user|
