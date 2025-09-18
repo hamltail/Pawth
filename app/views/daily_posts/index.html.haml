@@ -21,10 +21,10 @@
                class: 'px-2 py-2 border border-gray-300 rounded-md'
     = f.submit t('.submit_search'),
                class: 'px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-light'
-  %ul.posts.space-y-6.mt-8{ data: { controller: 'posts-fade', turbo_temporary: true } }
+  %ul.posts.space-y-6.mt-8#posts{ data: { controller: 'posts-fade' } }
     - @daily_posts.each do |post|
       = render 'post', post: post
-  .mt-6.flex.flex-col.items-center.gap-2{ data: { turbo_temporary: true } }
+  .mt-6.flex.flex-col.items-center.gap-2
     %div.pagy-nav
       = pagy_nav(@pagy).html_safe
     .text-xs.text-gray-500
