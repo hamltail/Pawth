@@ -46,7 +46,7 @@ ja:
       welcome: 'ようこそ、%{name}さん！'
       private: '日記は非公開です。'
       footer: 'Pawth © %{year}'
-    latest_post:
+    current_post:
       empty: '日記がありません。'
     calendar:
       today: 'TODAY'

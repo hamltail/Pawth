@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
   before_action :set_user
 
   def show
-    @latest_daily_post = @user.daily_posts.order(posted_on: :desc).first
+    @current_post = @user.daily_posts.order(posted_on: :desc).first
 
     current_month = if params[:year].present? && params[:month].present?
       Date.new(params[:year].to_i, params[:month].to_i)

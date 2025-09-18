@@ -19,9 +19,9 @@
       next_month: @next_month,
       month_label: @month_label
   - can_view_posts = @user.profile.public_posts? || (user_signed_in? && current_user == @user)
-  = turbo_frame_tag 'latest_post' do
+  = turbo_frame_tag 'current_post' do
     - if can_view_posts
-      = render 'activities/latest_post', post: @latest_daily_post
+      = render 'activities/current_post', post: @current_post
     - else
       .flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
         %span.text-gray-400= t('.private')
