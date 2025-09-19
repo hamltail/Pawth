@@ -1,19 +1,41 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['dialog', 'message'];
+  static targets = ['dialog', 'message', 'okButton', 'cancelButton'];
+  static values = { okOnly: Boolean, okText: String, cancelText: String };
 
   connect() {
-    window.appConfirm = (message) => this.open(message);
+    window.appConfirm = (opts) => this.open(opts);
   }
-
   disconnect() {
     if (window.appConfirm) delete window.appConfirm;
   }
 
-  open(message = '実行してよろしいですか？') {
-    this.messageTarget.textContent = message;
+  open(opts) {
+    const {
+      message,
+      okOnly = false,
+      okText = '実行する',
+      cancelText = 'キャンセル',
+    } = typeof opts === 'string' ? { message: opts } : opts || {};
+
+    this.messageTarget.textContent = message || '実行してよろしいですか？';
+
+    // ボタン表示/文言
+    if (this.hasCancelButtonTarget) {
+      this.cancelButtonTarget.classList.toggle('hidden', !!okOnly);
+      if (this.hasCancelTextValue)
+        this.cancelButtonTarget.textContent = this.cancelTextValue;
+      else this.cancelButtonTarget.textContent = cancelText;
+    }
+    if (this.hasOkButtonTarget) {
+      if (this.hasOkTextValue)
+        this.okButtonTarget.textContent = this.okTextValue;
+      else this.okButtonTarget.textContent = okText;
+    }
+
     this.dialogTarget.showModal();
+    this.okButtonTarget?.focus();
 
     return new Promise((resolve) => {
       this._resolver = (ok) => {
@@ -27,7 +49,6 @@ export default class extends Controller {
     this._resolver?.(true);
     this._resolver = null;
   }
-
   cancel() {
     this._resolver?.(false);
     this._resolver = null;
