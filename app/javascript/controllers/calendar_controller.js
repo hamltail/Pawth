@@ -6,12 +6,15 @@ export default class extends Controller {
     if (document.documentElement.hasAttribute('data-turbo-preview')) return;
 
     this.ctx = gsap.context(() => {
-      this.dateEl = document.getElementById('daily-post-date');
-      this.contentEl = document.getElementById('daily-post-content');
-
+      this.refreshCurrentPostRefs();
       this.fadeInPaws();
       this.animateTodayBadge();
     }, this.element);
+  }
+
+  refreshCurrentPostRefs() {
+    this.dateEl = document.getElementById('daily-post-date');
+    this.contentEl = document.getElementById('daily-post-content');
   }
 
   disconnect() {
@@ -25,6 +28,7 @@ export default class extends Controller {
   }
 
   handleClick(e) {
+    this.refreshCurrentPostRefs();
     const el = e.target.closest('.paw.paw--posted');
     if (!el || !this.element.contains(el)) return;
 
