@@ -20,6 +20,6 @@
           %li= link_to t('layout.sidebar.profile_settings'), edit_profile_path, class: 'text-gray-700 hover:text-brand-light font-medium'
           %li= link_to t('layout.sidebar.account_settings'), edit_user_registration_path, class: 'text-gray-700 hover:text-brand-light font-medium'
       = link_to t('layout.sidebar.logout'), destroy_user_session_path,
-          data: { turbo_method: :delete, turbo_confirm: t('layout.sidebar.logout_confirm') },
+          data: { turbo_method: :delete },
           class: 'sidebar-no-close text-red-600 hover:underline font-medium'
   .text-xs.text-gray-500.mt-8= t('layout.sidebar.footer', year: Time.current.year)
