@@ -35,7 +35,11 @@ export default class extends Controller {
     }
 
     this.dialogTarget.showModal();
-    this.okButtonTarget?.focus();
+
+    requestAnimationFrame(() => {
+      const target = okOnly ? this.okButtonTarget : this.cancelButtonTarget;
+      target?.focus();
+    });
 
     return new Promise((resolve) => {
       this._resolver = (ok) => {
