@@ -24,6 +24,9 @@
     - else
       = link_to t('daily_posts.shared.delete'),
         daily_post_path(post),
-        data: { 'turbo-method': :delete, turbo_confirm: t('daily_posts.shared.delete_confirm') },
-        class: 'text-red-600 hover:underline font-semibold text-sm'
+        class: 'text-red-600 hover:underline font-semibold text-sm',
+        data: { controller: 'confirm',
+          action: 'click->confirm#click',
+          confirm_message_value: t('daily_posts.shared.delete_confirm'),
+          confirm_method_value: 'delete' }
   .mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
