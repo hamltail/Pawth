@@ -4,6 +4,8 @@ export default class extends Controller {
   static values = {
     message: String,
     method: { type: String, default: 'delete' },
+    requiresText: { type: Boolean, default: false },
+    expectedText: String,
   };
 
   async click(event) {
@@ -11,9 +13,13 @@ export default class extends Controller {
     const href = this.element.getAttribute('href');
     if (!href) return;
 
-    const ok = await window.appConfirm?.(
-      this.messageValue || '実行してよろしいですか？',
-    );
+    const ok = await window.appConfirm?.({
+      message: this.messageValue || '実行してよろしいですか？',
+      requiresText: this.requiresTextValue,
+      expectedText: this.expectedTextValue || '削除する',
+      okText: '実行する',
+      cancelText: 'キャンセル',
+    });
     if (!ok) return;
 
     this.submitWithMethod(href, this.methodValue.toUpperCase());

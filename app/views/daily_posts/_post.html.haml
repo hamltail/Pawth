@@ -36,5 +36,7 @@
         data: { controller: 'confirm',
           action: 'click->confirm#click',
           confirm_message_value: t('daily_posts.shared.delete_confirm'),
-          confirm_method_value: 'delete' }
+          confirm_method_value: 'delete',
+          confirm_requires_text_value: true,
+          confirm_expected_text_value: '削除する' }
   .mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
