@@ -2,6 +2,8 @@ ja:
   devise:
     confirmations:
       confirmed: 'メールアドレスの確認が完了しました。'
+      resend_title: '確認メールを再送'
+      resend_button: '確認メールを再送する'
       send_instructions: '数分以内に、メールアドレス確認の手順を記載したメールが届きます。'
       send_paranoid_instructions: '登録があるメールアドレスの場合、確認手順のメールが数分以内に届きます。'
     failure:
