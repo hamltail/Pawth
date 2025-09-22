@@ -125,6 +125,13 @@ ja:
       private: '非公開'
 
   shared:
+    confirm_modal:
+      title: '確認'
+      message: '本当に削除しますか？'
+      label: '「削除する」と入力してください。'
+      hint: '全角/半角・余分な空白に注意'
+      cancel: 'キャンセル'
+      ok: '実行する'
     errors:
       title:
         one: '%{count}件のエラーがあります。'

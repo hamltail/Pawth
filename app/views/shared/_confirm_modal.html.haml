@@ -1,11 +1,11 @@
 %dialog#confirm-modal{ data: { controller: 'modal-confirm', modal_confirm_target: 'dialog' },
                        class: 'p-0 border-0 bg-transparent' }
   %div{ class: 'p-6 w-[min(92vw,420px)] bg-white rounded-2xl shadow-xl' }
-    %h3.text-lg.font-semibold.mb-3 確認
-    %p.text-gray-700.mb-4{ data: { modal_confirm_target: 'message' } } 本当に削除しますか？
+    %h3.text-lg.font-semibold.mb-3= t('shared.confirm_modal.title')
+    %p.text-gray-700.mb-4{ data: { modal_confirm_target: 'message' } }= t('shared.confirm_modal.message')
 
     %div.hidden.mt-2{ data: { modal_confirm_target: 'textWrap' } }
-      %label.block.text-sm.text-gray-600.mb-1{ for: 'confirm-text' } 「削除する」と入力してください。
+      %label.block.text-sm.text-gray-600.mb-1{ for: 'confirm-text' }= t('shared.confirm_modal.label')
       %input#confirm-text.w-full.ring-1.ring-gray-300.rounded-lg.px-3.py-2.outline-none.focus:ring-2.focus:ring-red-500{
         type: 'text',
         autocomplete: 'off',
@@ -14,15 +14,15 @@
           modal_confirm_target: 'textInput'
         }
       }
-      %p.text-xs.text-gray-500.mt-1{ data: { modal_confirm_target: 'hint' } } 全角/半角・余分な空白に注意
+      %p.text-xs.text-gray-500.mt-1{ data: { modal_confirm_target: 'hint' } }= t('shared.confirm_modal.hint')
 
     .flex.justify-end.gap-3.mt-6
       %button.px-4.py-2.rounded-xl.ring-1.ring-gray-300{
         type: 'button',
         data: { action: 'modal-confirm#cancel', modal_confirm_target: 'cancelButton' }
-      } キャンセル
+      }= t('shared.confirm_modal.cancel')
       %button.px-4.py-2.rounded-xl.text-white.bg-red-600.disabled:bg-red-300.disabled:cursor-not-allowed{
         type: 'button',
         disabled: true,
         data: { action: 'modal-confirm#ok', modal_confirm_target: 'okButton' }
-      } 実行する
+      }= t('shared.confirm_modal.ok')
