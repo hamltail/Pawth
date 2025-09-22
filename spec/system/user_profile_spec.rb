@@ -12,4 +12,8 @@ RSpec.describe 'ユーザー設定', type: :system do
     expect(page).to have_content("ようこそ、#{user.username}さん！")
     expect(page).not_to have_content("非公開です。")
   end
+
+  it "CI-TEST: fails intentionally" do
+    expect(1).to eq(2)
+  end
 end
