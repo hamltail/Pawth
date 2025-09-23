@@ -29,6 +29,7 @@ ja:
               already_posted_today: '今日はすでに日記をかいています。'
               edit_limit_exceeded: '編集は%{limit}回までです。'
               edit_only_today: '編集は当日（%{date}）のみ可能です。'
+              cannot_destroy_today: '今日の日記は削除できません。'
         profile:
           attributes:
             avatar:

@@ -6,6 +6,7 @@ class DailyPost < ApplicationRecord
 
   before_update :increment_edit_count_if_changed, if: :will_save_change_to_content?
   before_validation :set_posted_on_today, on: :create
+  before_destroy :prevent_destroy_if_today
 
   validates :posted_on, presence: true
   validates :content, presence: true
@@ -42,7 +43,6 @@ class DailyPost < ApplicationRecord
     self.posted_on ||= Date.current
   end
 
-  # ----- validations -----
   def content_length_within_limit
     max = CONTENT_MAX_LENGTH
     length = content.to_s.scan(/\X/).length
@@ -70,8 +70,13 @@ class DailyPost < ApplicationRecord
     end
   end
 
-  # ----- callbacks -----
   def increment_edit_count_if_changed
     self.edit_count = edit_count.to_i + 1
+  end
+
+  def prevent_destroy_if_today
+    return unless posted_on == Date.current
+    errors.add(:base, :cannot_destroy_today)
+    throw :abort
   end
 end

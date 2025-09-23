@@ -96,6 +96,22 @@ RSpec.describe DailyPost, type: :model do
     end
   end
 
+  describe 'destroy_restriction_for_today' do
+    it '今日の日記はdestroyできない' do
+      post = DailyPost.create!(content: 'today', user: user, posted_on: date_today)
+
+      expect(post.destroy).to be_falsey
+      expect(post.errors[:base]).to include(I18n.t('activerecord.errors.models.daily_post.attributes.base.cannot_destroy_today'))
+      expect(DailyPost.exists?(post.id)).to be(true)
+    end
+
+    it '昨日の日記はdestroyできる' do
+      post = DailyPost.create!(content: 'yesterday', user: user, posted_on: date_yesterday)
+
+      expect { post.destroy }.to change { DailyPost.exists?(post.id) }.from(true).to(false)
+    end
+  end
+
   describe 'scope' do
     it 'recent_firstは最新の日記から順に並べる' do
       post1 = DailyPost.create!(content: 'post 1', user: user, posted_on: 3.day.ago)

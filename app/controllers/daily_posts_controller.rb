@@ -44,8 +44,11 @@ class DailyPostsController < ApplicationController
   end
 
   def destroy
-    @daily_post.destroy
-    redirect_to daily_posts_path, status: :see_other, notice: t('controllers.daily_posts.destroyed')
+    if @daily_post.destroy
+      redirect_to daily_posts_path, status: :see_other, notice: t('controllers.daily_posts.destroyed')
+    else
+      redirect_to daily_posts_path, status: :see_other, alert: @daily_post.errors.full_messages.to_sentence
+    end
   end
 
   private
