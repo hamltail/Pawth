@@ -1,5 +1,5 @@
 class DailyPost < ApplicationRecord
-  EDIT_COUNT_LIMIT = 2
+  EDIT_COUNT_LIMIT = 3
   CONTENT_MAX_LENGTH = 365
 
   belongs_to :user

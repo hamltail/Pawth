@@ -65,16 +65,16 @@ RSpec.describe DailyPost, type: :model do
   end
 
   describe 'edit_count_within_limit' do
-    it '編集回数が2回を超えるとエラーになる' do
-      post = DailyPost.create!(content: 'sample post', user: user, posted_on: date_today, edit_count: 2)
-      post.edit_count = 3
+    it '編集回数が3回を超えるとエラーになる' do
+      post = DailyPost.create!(content: 'sample post', user: user, posted_on: date_today, edit_count: 3)
+      post.edit_count = 4
       expect(post).not_to be_valid
-      expect(post.errors[:base]).to include("編集は2回までです。")
+      expect(post.errors[:base]).to include("編集は3回までです。")
     end
 
-    it '編集回数が2回以下ならOK' do
-      post = DailyPost.create!(content: 'sample post', user: user, posted_on: date_today, edit_count: 1)
-      post.edit_count = 2
+    it '編集回数が3回以下ならOK' do
+      post = DailyPost.create!(content: 'sample post', user: user, posted_on: date_today, edit_count: 2)
+      post.edit_count = 3
       expect(post).to be_valid
     end
   end
