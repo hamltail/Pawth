@@ -44,5 +44,5 @@
     .text-right.text-sm.text-gray-500{ data: { character_counter_target: 'counter' } }
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
   .flex.justify-end
-    = f.submit t('daily_posts.new.submit'),
+    = f.submit t('daily_posts.shared.submit'),
       class: 'bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded shadow'

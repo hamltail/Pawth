@@ -76,11 +76,9 @@ ja:
       submit_search: '検索'
       page_label: 'ページ %{page} / %{pages}'
     new:
-      title: '今日何をした？'
-      submit: '日記をかく'
+      title: '今日の1歩は？'
     edit:
       title: '今日何をした？'
-      # submit: '更新'
       edit_remaining: 'あと%{count}回編集できます。'
     shared:
       edit: '編集'
@@ -89,8 +87,9 @@ ja:
       delete_today_alert: '今日の日記は削除できません。'
       edit_limit_alert: '編集は%{limit}回までです。'
       emoji_button: '😊 絵文字'
-      content_placeholder: '今日何をした？'
+      content_placeholder: '今日の一歩をかこう！'
       remaining_chars: '残り%{max}文字'
+      submit: '日記をかく'
       errors_title:
         one: '%{count}件のエラーがあります。'
         other: '%{count}件のエラーがあります。'
