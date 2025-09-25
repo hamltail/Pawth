@@ -45,4 +45,15 @@ RSpec.describe 'DailyPosts', type: :request do
     created = DailyPost.order(created_at: :desc).first
     expect(created.user_id).to eq(user.id)
   end
+
+  it '他人の投稿は削除できない' do
+    others_post = create(:daily_post, user: other, posted_on: Date.yesterday)
+
+    expect {
+      delete daily_post_path(others_post)
+    }.not_to change(DailyPost, :count)
+
+    expect(response).to have_http_status(:not_found)
+    expect(DailyPost.exists?(others_post.id)).to be(true)
+  end
 end
