@@ -11,6 +11,8 @@ RSpec.describe 'DailyPosts', type: :request do
     delete daily_post_path(post_today)
 
     expect(response).to redirect_to(daily_posts_path)
+    expect(response).to have_http_status(:see_other)
+
     follow_redirect!
     expect(response.body).to include('今日の日記は削除できません。')
     expect(DailyPost.exists?(post_today.id)).to be(true)
@@ -21,7 +23,7 @@ RSpec.describe 'DailyPosts', type: :request do
 
     expect {
       post daily_posts_path, params: {
-        daily_post: { posted_on: Date.current, content: '二重投稿テスト' }
+        daily_post: { content: '二重投稿テスト' }
       }
     }.not_to change(DailyPost, :count)
 
@@ -30,8 +32,6 @@ RSpec.describe 'DailyPosts', type: :request do
   end
 
   it '他人の user_id を指定しても、現在のユーザーとしてしか作成されない' do
-    other = create(:user)
-
     expect {
       post daily_posts_path, params: {
         daily_post: {
