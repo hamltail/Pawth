@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'DailyPosts', type: :request do
-  Rails.application.routes_reloader.execute_unless_loaded
   let(:user) { create(:user) }
   before { sign_in user }
 
