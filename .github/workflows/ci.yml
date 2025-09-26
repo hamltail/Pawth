@@ -91,6 +91,13 @@ jobs:
       - name: Install E2E deps
         working-directory: e2e
         run: npm ci
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
       - name: Install Playwright browsers
         working-directory: e2e
         run: npm run install:browsers
