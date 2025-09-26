@@ -11,6 +11,9 @@
   "scripts": {
     "install:browsers": "playwright install --with-deps",
     "pretest": "RAILS_ENV=test ../bin/rails db:prepare",
-    "test": "playwright test"
+    "test": "playwright test",
+    "headed": "playwright test --headed",
+    "debug": "playwright test --debug",
+    "trace": "playwright show-trace $(ls -t test-results/**/trace.zip | head -1)"
   }
 }
