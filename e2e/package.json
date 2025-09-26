@@ -1,0 +1,16 @@
+{
+  "name": "pawth-e2e",
+  "private": true,
+  "devDependencies": {
+    "@axe-core/playwright": "latest",
+    "@playwright/test": "latest",
+    "@types/node": "latest",
+    "typescript": "latest",
+    "wait-on": "latest"
+  },
+  "scripts": {
+    "install:browsers": "playwright install --with-deps",
+    "pretest": "RAILS_ENV=test ../bin/rails db:prepare",
+    "test": "playwright test"
+  }
+}
