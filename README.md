@@ -5,7 +5,9 @@
 Pawth は、1日1投稿の小さな日記アプリです。  
 毎日の歩みを可視化し、その日の記録にコミットするための制約設計を大切にしています。
 
-> 🟢 本番: https://pawth.hamltail.dev
+> 🟢 本番: https://pawth.hamltail.dev <br>
+> 🟢 サンプルユーザー: https://pawth.hamltail.dev/user1 〜 /user10 <br>
+> 　　　　　　　　　（ログイン不要で閲覧可能）
 
 ## 目次
 - [コンセプト / 非採用機能](#コンセプト--非採用機能)
