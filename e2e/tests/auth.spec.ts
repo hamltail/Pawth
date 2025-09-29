@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginAsPlaywright } from '../helpers/auth';
+import { loginAsPlaywright } from '../helpers/auth.js';
 
 test.describe('auth', () => {
   test('ログインしてログアウトできる', async ({ page }) => {

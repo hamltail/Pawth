@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { loginAsPlaywright } from '../../helpers/auth';
+import { loginAsPlaywright } from '../../helpers/auth.js';
 
 test.describe('a11y: calendar', () => {
   test('カレンダー画面のa11y', async ({ page }) => {

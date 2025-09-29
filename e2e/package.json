@@ -1,6 +1,7 @@
 {
   "name": "pawth-e2e",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "@axe-core/playwright": "latest",
     "@playwright/test": "latest",
