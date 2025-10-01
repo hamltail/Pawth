@@ -45,7 +45,7 @@ jobs:
         if: hashFiles('package.json') != ''
         run: npm ci
       - name: Prepare DB (create & load schema)
-        run: bin/rails db:create db:schema:load
+        run: bin/rails db:prepare
       - name: RuboCop
         if: hashFiles('.rubocop.yml') != ''
         run: bundle exec rubocop --parallel
@@ -108,7 +108,7 @@ jobs:
         run: npm run install:browsers
       - name: Prepare DB
         working-directory: e2e
-        run: ../bin/rails db:create db:schema:load
+        run: ../bin/rails db:prepare
       - name: Run Playwright
         working-directory: e2e
         run: npm test
