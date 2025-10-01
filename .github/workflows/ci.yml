@@ -43,6 +43,13 @@ jobs:
       - name: Install JS deps
         if: hashFiles('package.json') != ''
         run: npm ci
+      - name: Wait for Postgres
+        run: |
+          for i in {1..30}; do
+            pg_isready -h localhost -p 5432 && exit 0
+            sleep 1
+          done
+          echo 'Postgres not ready' && exit 1
       - name: Prepare DB (create & load schema)
         run: bin/rails db:create db:schema:load
       - name: RuboCop
@@ -107,6 +114,13 @@ jobs:
       - name: Install Playwright browsers
         working-directory: e2e
         run: npm run install:browsers
+      - name: Wait for Postgres
+        run: |
+          for i in {1..30}; do
+            pg_isready -h localhost -p 5432 && exit 0
+            sleep 1
+          done
+          echo 'Postgres not ready' && exit 1
       - name: Prepare DB
         working-directory: e2e
         run: ../bin/rails db:create db:schema:load
