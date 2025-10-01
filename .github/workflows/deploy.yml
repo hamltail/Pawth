@@ -18,39 +18,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Write key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
-          chmod 600 key.pem
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "bash -lc '
-              set -euo pipefail
-              export RAILS_ENV=production
-              export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
-              export DATABASE_URL=${{ secrets.DATABASE_URL }}
+          ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            set -euo pipefail
+            export RAILS_ENV=production
+            export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+            export DATABASE_URL=${{ secrets.DATABASE_URL }}
 
-              [ -f ~/.bash_profile ] && source ~/.bash_profile
-              [ -f ~/.profile ] && source ~/.profile
+            [ -f ~/.bash_profile ] && source ~/.bash_profile
+            [ -f ~/.profile ] && source ~/.profile
 
-              cd \"${{ secrets.APP_DIR }}\"
+            cd "${{ secrets.APP_DIR }}"
 
-              git fetch --all --prune
-              git checkout main
-              git pull --ff-only
+            git fetch --prune
+            git checkout main
+            git pull --ff-only
 
-              bundle config set without \"development test\"
-              bundle install --jobs=4 --retry=3
+            bundle config set --local without 'development test'
+            bundle install --jobs=4 --retry=3
 
-              # まず接続検証
-              bundle exec rails db:version
+            # DB接続確認
+            bundle exec rails db:version
 
-              bundle exec rails db:migrate
-              bundle exec rails assets:precompile
+            bundle exec rails db:prepare
+            bundle exec rails assets:precompile
 
-              sudo systemctl restart puma
-              sudo systemctl restart solid_queue || true
-            '"
+            sudo systemctl restart --no-block puma
+            sudo systemctl restart --no-block solid_queue || true
+          EOF
