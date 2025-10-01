@@ -134,3 +134,4 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report
           if-no-files-found: ignore
+          retention-days: 7
