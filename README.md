@@ -152,6 +152,10 @@ flowchart TD
 
 本ソフトウェアは無保証であり、使用により発生した問題について著者はいかなる責任も負いません。
 
+This repository is published **for portfolio purposes only**.
+
+This software is provided "as is", without warranty of any kind.
+
 ## 著者
 
 - h-waji (@hamltail)
