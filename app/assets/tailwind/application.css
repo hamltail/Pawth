@@ -22,59 +22,62 @@
   a:focus-visible {
     @apply ring-2 ring-yellow-200 shadow-[0_0_10px_#facc15];
   }
+
+  dialog {
+    border: 0;
+    padding: 0;
+  }
+  dialog#confirm-modal {
+    border: 0;
+    padding: 0;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    transform: translate(0, 0);
+  }
+  dialog#confirm-modal::backdrop {
+    background: rgba(0, 0, 0, 0.32);
+  }
+  dialog#confirm-modal:focus {
+    outline: none;
+  }
 }
 
-.toggle-dot {
-  transition: transform 0.2s;
-}
-input:checked + label .toggle-dot {
-  transform: translateX(100%);
-}
-svg.paw.paw--posted {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-.today-badge .today-char {
-  display: inline-block;
-}
-.today-badge {
-  color: #ffe66d;
-  text-shadow:
-    -1px -1px 0 #d97706,
-    1px -1px 0 #d97706,
-    -1px 1px 0 #d97706,
-    1px 1px 0 #d97706;
-}
-dialog {
-  border: 0;
-  padding: 0;
-}
-dialog#confirm-modal {
-  border: 0;
-  padding: 0;
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  transform: translate(0, 0);
-}
-dialog#confirm-modal::backdrop {
-  background: rgba(0, 0, 0, 0.32);
-}
-dialog#confirm-modal:focus {
-  outline: none;
-}
-.neon-yellow-soft {
-  text-shadow:
-    0 0 6px rgba(255, 250, 205, 0.7),
-    0 0 16px rgba(255, 250, 205, 0.5),
-    0 0 32px rgba(255, 250, 205, 0.3);
-}
-.pagy.nav a {
-  @apply px-3 py-1 mx-0.5 rounded-xl ring-1 ring-gray-300;
-}
-.pagy.nav a.current[aria-current='page'] {
-  @apply bg-brand text-white ring-brand;
-}
-.pagy.nav a[aria-disabled='true']:not(.current) {
-  @apply opacity-40 cursor-default;
+@layer components {
+  .toggle-dot {
+    @apply motion-safe:transition-transform duration-200;
+  }
+
+  .paw--posted {
+    @apply opacity-0 -translate-y-2;
+  }
+
+  .today-badge .today-char {
+    @apply inline-block;
+  }
+  .today-badge {
+    color: #ffe66d;
+    text-shadow:
+      -1px -1px 0 #d97706,
+      1px -1px 0 #d97706,
+      -1px 1px 0 #d97706,
+      1px 1px 0 #d97706;
+  }
+
+  .neon-yellow-soft {
+    text-shadow:
+      0 0 6px rgba(255, 250, 205, 0.7),
+      0 0 16px rgba(255, 250, 205, 0.5),
+      0 0 32px rgba(255, 250, 205, 0.3);
+  }
+
+  .pagy.nav a {
+    @apply px-3 py-1 mx-0.5 rounded-xl ring-1 ring-gray-300;
+  }
+  .pagy.nav a.current[aria-current='page'] {
+    @apply bg-brand text-white ring-brand;
+  }
+  .pagy.nav a[aria-disabled='true']:not(.current) {
+    @apply opacity-40 cursor-default;
+  }
 }
