@@ -1,6 +1,7 @@
 class DailyPostsController < ApplicationController
   include Pagy::Backend
 
+  before_action :authenticate_user!
   before_action :set_daily_post, only: %i[edit update destroy]
 
   def index
@@ -18,7 +19,7 @@ class DailyPostsController < ApplicationController
   end
 
   def create
-    @daily_post = current_user.daily_posts.build(daily_post_params.merge(posted_on: Date.current))
+    @daily_post = current_user.daily_posts.build(daily_post_params)
 
     if @daily_post.save
       respond_to do |format|
@@ -54,36 +55,19 @@ class DailyPostsController < ApplicationController
   private
 
   def set_daily_post
-    @daily_post = current_user.daily_posts.find(params[:id])
+    @daily_post = current_user.daily_posts.find_by!(id: params[:id])
   end
 
   def daily_post_params
     params.require(:daily_post).permit(:content)
   end
 
-  # ----- Turbo Stream builders -----
   def create_success_stream(post)
-    today = Date.current
-    month_from, month_to = today.beginning_of_month, today.end_of_month
-
-    calendar_days = (month_from..month_to).to_a
-    daily_posts_by_date = current_user.daily_posts
-                                      .where(posted_on: month_from..month_to)
-                                      .group_by(&:posted_on)
+    ctx = month_context_for(Date.current)
 
     [
       turbo_stream.prepend('posts', partial: 'daily_posts/post', locals: { post: post }),
-      turbo_stream.replace(
-        'calendar',
-        partial: 'activities/calendar',
-        locals: {
-          user: current_user,
-          calendar_days:,
-          daily_posts_by_date:,
-          prev_month: today.prev_month,
-          next_month: today.next_month
-        }
-      ),
+      turbo_stream.replace('calendar', partial: 'activities/calendar', locals: ctx),
       turbo_stream.replace('current_post', partial: 'activities/current_post', locals: { post: post }),
       turbo_stream.replace('new-post-button', partial: 'activities/new_post_button', locals: { posted_today: true }),
       turbo_stream.update('modal', '')
@@ -97,7 +81,19 @@ class DailyPostsController < ApplicationController
     ]
   end
 
-  # ----- Error rendering -----
+  def month_context_for(date)
+    range  = date.all_month
+    posts  = current_user.daily_posts.where(posted_on: range).to_a
+
+    {
+      user: current_user,
+      calendar_days:       range.to_a,
+      daily_posts_by_date: posts.index_by(&:posted_on),
+      prev_month:          date.prev_month,
+      next_month:          date.next_month
+    }
+  end
+
   def render_form_errors(resource, fallback_view)
     respond_to do |format|
       format.turbo_stream do
