@@ -1,6 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_user
-  before_action :set_month
+  before_action :set_user, :set_month
 
   def show
     @current_post = @user.daily_posts.order(posted_on: :desc).first
