@@ -14,7 +14,7 @@ module CalendarHelper
   end
 
   def weekdays_labels
-    I18n.t('date.abbr_day_names', locale: :en).rotate(1) # %w[Mon Tue Wed Thu Fri Sat Sun]
+    I18n.t('date.abbr_day_names', locale: :en).rotate(1) # 英語固定（月曜始まり）
   end
 
   def day_cell_classes(date)
@@ -26,8 +26,8 @@ module CalendarHelper
     end
   end
 
-  def first_post_on(date, posts_by_date)
-    Array(posts_by_date[date]).first
+  def post_for(date, posts_by_day)
+    posts_by_day[date]
   end
 
   def calendar_today?(date, today = Date.current)

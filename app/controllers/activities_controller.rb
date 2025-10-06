@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
     posts       = @user.daily_posts.where(posted_on: month_range).to_a
 
     @calendar_days       = month_range.to_a
-    @daily_posts_by_date = posts.index_by(&:posted_on)
+    @posts_by_day = posts.index_by(&:posted_on)
 
     @prev_month = @month.prev_month
     @next_month = @month.next_month

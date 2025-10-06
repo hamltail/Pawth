@@ -88,7 +88,7 @@ class DailyPostsController < ApplicationController
     {
       user: current_user,
       calendar_days:       range.to_a,
-      daily_posts_by_date: posts.index_by(&:posted_on),
+      posts_by_day: posts.index_by(&:posted_on),
       prev_month:          date.prev_month,
       next_month:          date.next_month
     }

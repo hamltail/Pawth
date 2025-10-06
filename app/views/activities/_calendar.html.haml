@@ -28,7 +28,7 @@
       %div
 
     - calendar_days.each do |date|
-      - post = first_post_on(date, daily_posts_by_date)
+      - post = post_for(date, posts_by_day)
       %div{ class: day_cell_classes(date) }
         %span.text-xs= date.day
         = paw_icon_for(date, post)
