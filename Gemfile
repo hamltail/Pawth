@@ -37,7 +37,3 @@ group :development do
   gem 'letter_opener'
   gem 'web-console'
 end
-
-group :production do
-  gem 'newrelic_rpm'
-end
