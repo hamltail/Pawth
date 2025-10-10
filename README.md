@@ -3,7 +3,7 @@
 ## 〜日々の足あとを描く〜
 
 Pawth は、1日1投稿の小さな日記アプリです。  
-毎日の歩みを可視化し、その日の記録にコミットするための制約設計を大切にしています。
+日々の歩みを可視化し、その日の記録にコミットするための制約設計を大切にしています。
 
 > 🟢 本番: https://pawth.hamltail.dev <br>
 > 🟢 サンプルユーザー: https://pawth.hamltail.dev/user1 〜 /user10 <br>
@@ -15,7 +15,7 @@ Pawth は、1日1投稿の小さな日記アプリです。
 - [技術スタック](#技術スタック)
 - [セットアップ（ローカル）](#セットアップローカル)
 - [Dockerでの起動](#dockerで開発環境を立ち上げる場合)
-- [テスト（RSpec / E2E: Playwright）](#rspec--e2e-playwright)
+- [テスト（RSpec / E2E: Playwright）](#テストrspec--e2e-playwright)
 - [クラウド構成](#クラウド構成)
 - [テストデータと画像の取り扱い](#テストデータと画像の取り扱い)
 - [ライセンス](#ライセンス)
@@ -83,7 +83,7 @@ docker compose -f compose.dev.yml logs -f web
 docker compose -f compose.dev.yml down
 ```
 
-## （RSpec / E2E: Playwright）
+## テスト（RSpec / E2E: Playwright）
 
 ### RSpec
 
