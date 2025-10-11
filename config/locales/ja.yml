@@ -146,3 +146,4 @@ ja:
       delete_section_description: 'この操作は取り消せません。関連データも削除されます。'
       delete_label: '現在のパスワード'
       delete_button: 'アカウントを完全に削除する'
+      delete_wrong_password: '現在のパスワードが正しくありません。'

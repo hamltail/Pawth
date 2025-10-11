@@ -33,7 +33,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     current_pw = params.dig(:user, :current_password).to_s
 
     unless current_pw.present? && resource.valid_password?(current_pw)
-      flash[:alert] = t('devise.registrations.wrong_password')
+      flash[:delete_alert] = t('devise.registrations.wrong_password')
       redirect_to edit_user_registration_path and return
     end
 
