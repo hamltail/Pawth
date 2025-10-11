@@ -34,5 +34,19 @@
       = f.password_field :current_password, autocomplete: "current-password", class: "border rounded w-full px-3 py-2"
       - if resource.errors[:current_password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
-    .mb-6.text-center
+    .text-center
       = f.submit t("users.edit.update"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded"
+%div.bg-white.shadow-md.rounded-lg.px-8.py-8.mt-24
+  %section
+    %h2.text-red-600.font-bold.mb-2= t('users.edit.delete_section_title')
+    %p.text-sm.text-gray-500.mb-4= t('users.edit.delete_section_description')
+    - if flash[:delete_alert].present?
+      %p.bg-red-50.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6{ role: 'alert', 'aria-live': 'polite' }
+        = flash[:delete_alert]
+    = form_with scope: resource_name, url: registration_path(resource_name),
+                method: :delete, local: true, data: { turbo: 'false' } do |f|
+      .mb-4
+        = f.label :current_password, t('users.edit.delete_label'), class: 'block text-gray-700 mb-2'
+        = f.password_field :current_password, autocomplete: 'current-password', class: 'border rounded w-full px-3 py-2'
+      .text-center
+        = f.submit t('users.edit.delete_button'), class: 'bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded'
