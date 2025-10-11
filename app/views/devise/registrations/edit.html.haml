@@ -38,12 +38,11 @@
       = f.submit t("users.edit.update"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded"
 %div.bg-white.shadow-md.rounded-lg.px-8.py-8.mt-24
   %section
-    %h2.text-red-600.font-bold.mb-2 危険な操作
-    %p.text-sm.text-gray-500.mb-4 この操作は取り消せません。関連データも削除されます。
+    %h2.text-red-600.font-bold.mb-2= t('users.edit.delete_section_title')
+    %p.text-sm.text-gray-500.mb-4= t('users.edit.delete_section_description')
     = form_with scope: resource_name, url: registration_path(resource_name),
-                method: :delete, local: true, data: { turbo: "false" } do |f|
+                method: :delete, local: true, data: { turbo: 'false' } do |f|
       .mb-2
-        = f.label :current_password, '現在のパスワード', class: "block text-gray-700 mb-2"
-        = f.password_field :current_password, required: true, autocomplete: "current-password", class: "border rounded w-full px-3 py-2"
-      = f.submit 'アカウントを完全に削除する', class: "bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded",
-        data: { confirm: '本当に削除しますか？この操作は取り消せません。' }
+        = f.label :current_password, t('users.edit.delete_label'), class: 'block text-gray-700 mb-2'
+        = f.password_field :current_password, required: true, autocomplete: 'current-password', class: 'border rounded w-full px-3 py-2'
+      = f.submit t('users.edit.delete_button'), class: 'bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded'
