@@ -40,7 +40,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.destroy
     sign_out(resource_name)
     set_flash_message! :notice, :destroyed
-    redirect_to after_sign_out_path_for(resource_name)
+    redirect_to after_sign_out_path_for(resource_name), status: :see_other
   end
 
   protected
