@@ -2,9 +2,14 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
+  before_action :authenticate_scope!, only: [:edit, :update, :destroy]
+
+  def edit
+    self.resource = current_user
+  end
 
   def update
-    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    self.resource = current_user
 
     if password_change_requested?(account_update_params)
       resource_updated = update_resource(resource, account_update_params)
@@ -22,6 +27,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    current_pw = params.dig(:user, :current_password).to_s
+
+    unless current_pw.present? && resource.valid_password?(current_pw)
+      flash[:alert] = t('devise.registrations.wrong_password')
+      redirect_to edit_user_registration_path and return
+    end
+
+    resource.destroy
+    sign_out(resource_name)
+    set_flash_message! :notice, :destroyed
+    redirect_to after_sign_out_path_for(resource_name)
   end
 
   protected

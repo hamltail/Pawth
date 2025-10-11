@@ -51,6 +51,7 @@ ja:
       update_needs_confirmation: '更新しました。新しいメールアドレスの確認が必要です。メールをご確認ください。'
       updated: 'アカウント情報を更新しました。'
       updated_but_not_signed_in: 'パスワードを変更したため、再度ログインしてください。'
+      wrong_password: '現在のパスワードが正しくありません。'
       edit:
         password_hint_nochange: '（変更しない場合は空欄のままにしてください。）'
         current_password_hint: '（変更を確定するには現在のパスワードが必要です。）'
