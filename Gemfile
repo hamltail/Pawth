@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '8.1.0.beta1'
+gem 'rails', '8.1.0.rc1'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'devise-i18n'
