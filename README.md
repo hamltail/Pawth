@@ -37,7 +37,7 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 ## 技術スタック
 
-- **Backend**: Ruby 3.4.7 / Rails 8.1.0.rc1
+- **Backend**: Ruby 3.4.7 / Rails 8.1.0
 - **DB**: PostgreSQL 14
 - **Auth**: Devise
 - **Frontend**: Haml, Tailwind CSS, Turbo, GSAP
