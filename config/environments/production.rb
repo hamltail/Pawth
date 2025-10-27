@@ -35,7 +35,7 @@ Rails.application.configure do
   config.cache_store = :solid_cache_store
   # Solid Queue（DBキュー）を使う。キュー用DB/接続を切ってるならこのまま。単一DBならconnects_toは省略可
   config.active_job.queue_adapter = :solid_queue
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
+  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # メール
   config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
