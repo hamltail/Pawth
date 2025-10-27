@@ -31,10 +31,11 @@ Rails.application.configure do
   # 非推奨警告をログに出さない
   config.active_support.report_deprecations = false
 
-  # solid_cache未導入なので、メモリキャッシュでOK
-  config.cache_store = :memory_store
-  # asyncで同期的に処理して500を防止
-  config.active_job.queue_adapter = :async
+  # Solid Cacheを使う指定。gemを入れてる前提。未導入ならmemory_storeやredis_cache_storeに変える
+  config.cache_store = :solid_cache_store
+  # Solid Queue（DBキュー）を使う。キュー用DB/接続を切ってるならこのまま。単一DBならconnects_toは省略可
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # メール
   config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
