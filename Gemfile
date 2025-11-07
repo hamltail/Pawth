@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '8.1.0'
+gem 'rails', '8.1.1'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'devise-i18n'
@@ -9,7 +9,7 @@ gem 'faker'
 gem 'haml-rails'
 gem 'image_processing'
 gem 'importmap-rails'
-gem 'pagy'
+gem 'pagy', '< 43'
 gem 'pg'
 gem 'propshaft'
 gem 'puma'

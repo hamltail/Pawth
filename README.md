@@ -11,15 +11,20 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 ## 目次
 
-- [コンセプト / 非採用機能](#コンセプト--非採用機能)
-- [技術スタック](#技術スタック)
-- [セットアップ（ローカル）](#セットアップローカル)
-- [Dockerでの起動](#dockerで開発環境を立ち上げる場合)
-- [テスト（RSpec / E2E: Playwright）](#テストrspec--e2e-playwright)
-- [クラウド構成](#クラウド構成)
-- [テストデータと画像の取り扱い](#テストデータと画像の取り扱い)
-- [ライセンス](#ライセンス)
-- [著者](#著者)
+- [Pawth 🐾](#pawth-)
+  - [〜日々の足あとを描く〜](#日々の足あとを描く)
+  - [目次](#目次)
+  - [コンセプト / 非採用機能](#コンセプト--非採用機能)
+  - [技術スタック](#技術スタック)
+  - [セットアップ（ローカル）](#セットアップローカル)
+  - [Dockerで開発環境を立ち上げる場合](#dockerで開発環境を立ち上げる場合)
+  - [テスト（RSpec / E2E: Playwright）](#テストrspec--e2e-playwright)
+    - [RSpec](#rspec)
+    - [Playwright](#playwright)
+  - [クラウド構成](#クラウド構成)
+  - [テストデータと画像の取り扱い](#テストデータと画像の取り扱い)
+  - [ライセンス](#ライセンス)
+  - [著者](#著者)
 
 ---
 
@@ -37,8 +42,8 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 ## 技術スタック
 
-- **Backend**: Ruby 3.4.7 / Rails 8.1.0
-- **DB**: PostgreSQL 14
+- **Backend**: Ruby 3.4.7 / Rails 8.1.1
+- **DB**: PostgreSQL 17
 - **Auth**: Devise
 - **Frontend**: Haml, Tailwind CSS, Turbo, GSAP
 - **Test**: RSpec, FactoryBot
@@ -158,4 +163,4 @@ This software is provided "as is", without warranty of any kind.
 
 ## 著者
 
-- h-waji (@hamltail)
+- h-waji (@lumetone)
