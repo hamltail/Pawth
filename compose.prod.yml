@@ -1,0 +1,33 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.production
+    depends_on:
+      - db
+    ports:
+      # 外からは 80 番でアクセスして、コンテナ内の 3000 番に転送
+      - "80:3000"
+    volumes:
+      # 必要ならログやアップロードファイルだけホストにマウント
+      - ./log:/app/log
+      - ./storage:/app/storage
+    restart: always
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: pawth
+      POSTGRES_PASSWORD: change_me_in_env
+      POSTGRES_DB: pawth_prod
+    ports:
+      # Lightsail内部でしか使わないなら公開しなくてもOK（コメントアウト推奨）
+      # - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db_data:
