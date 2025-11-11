@@ -48,7 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_05_051846) do
     t.integer "edit_count", default: 0, null: false
     t.date "posted_on", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id", "posted_on"], name: "index_daily_posts_on_user_id_and_posted_on", unique: true
     t.index ["user_id"], name: "index_daily_posts_on_user_id"
   end

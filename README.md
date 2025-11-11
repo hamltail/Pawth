@@ -73,7 +73,7 @@ docker compose -f compose.dev.yml up --build -d
 DB準備（作成 + マイグレーション）
 
 ```
-docker compose -f compose.dev.yml exec web bash -lc "bin/rails db:prepare"
+docker compose -f compose.dev.yml exec web bash -lc "bin/rails db:setup"
 ```
 
 ログ

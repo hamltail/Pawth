@@ -8,10 +8,8 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
-
 COPY . .
 
 CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec foreman start -f Procfile.dev"]
