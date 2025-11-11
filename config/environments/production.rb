@@ -22,7 +22,7 @@ Rails.application.configure do
   # config.assume_ssl = true
   # 常時HTTPS強制＋HSTS＋secure cookie
   # config.force_ssl = true
-  if ENV["PAWTH_DOCKER_LOCAL"] == "true"
+  if ENV['PAWTH_DOCKER_LOCAL'] == 'true'
     config.assume_ssl = false
     config.force_ssl  = false
   else
@@ -45,7 +45,7 @@ Rails.application.configure do
   # config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # メール
-  if ENV["PAWTH_DOCKER_LOCAL"] == "true"
+  if ENV['PAWTH_DOCKER_LOCAL'] == 'true'
     config.action_mailer.default_url_options = { host: 'localhost', port: 3001, protocol: 'http' }
   else
     config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
