@@ -234,7 +234,9 @@ GEM
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    pagy (9.4.0)
+    pagy (43.0.1)
+      json
+      yaml
     parallel (1.27.0)
     parser (3.3.10.0)
       ast (~> 2.4.1)
@@ -436,6 +438,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yaml (0.4.0)
     zeitwerk (2.7.3)
 
 PLATFORMS
@@ -467,7 +470,7 @@ DEPENDENCIES
   image_processing
   importmap-rails
   letter_opener
-  pagy (< 43)
+  pagy (< 44)
   pg
   propshaft
   puma
