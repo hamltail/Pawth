@@ -19,9 +19,16 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # NginxなどでSSL終端してる前提でX-Forwarded-Protoを信頼。リダイレクトの無限ループ防止に効く
-  config.assume_ssl = true
+  # config.assume_ssl = true
   # 常時HTTPS強制＋HSTS＋secure cookie
-  config.force_ssl = true
+  # config.force_ssl = true
+  if ENV["PAWTH_DOCKER_LOCAL"] == "true"
+    config.assume_ssl = false
+    config.force_ssl  = false
+  else
+    config.assume_ssl = true
+    config.force_ssl  = true
+  end
 
   # リクエストIDをログに付けてSTDOUTへ。systemd/journaldで扱いやすい
   config.log_tags = [:request_id]
@@ -38,7 +45,11 @@ Rails.application.configure do
   # config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # メール
-  config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
+  if ENV["PAWTH_DOCKER_LOCAL"] == "true"
+    config.action_mailer.default_url_options = { host: 'localhost', port: 3001, protocol: 'http' }
+  else
+    config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
+  end
   # メール送信（SES / SMTP）
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true

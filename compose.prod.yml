@@ -1,3 +1,4 @@
+#TODO: セキュアな値を環境変数に設定すること
 services:
   web:
     build:
@@ -5,26 +6,28 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env.production
+#    environment:
+#      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+    environment:
+      PAWTH_DOCKER_LOCAL: "true"
     depends_on:
       - db
     ports:
-      # 外からは 80 番でアクセスして、コンテナ内の 3000 番に転送
-      - "80:3000"
+#      - '80:3000'
+      - '3001:3000'
     volumes:
-      # 必要ならログやアップロードファイルだけホストにマウント
       - ./log:/app/log
       - ./storage:/app/storage
     restart: always
 
   db:
-    image: postgres:14
+    image: postgres:17
     environment:
       POSTGRES_USER: pawth
-      POSTGRES_PASSWORD: change_me_in_env
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: pawth_prod
-    ports:
-      # Lightsail内部でしか使わないなら公開しなくてもOK（コメントアウト推奨）
-      # - "5432:5432"
+    # ports:
+    #   - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: always

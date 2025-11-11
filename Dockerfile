@@ -25,7 +25,6 @@ ENV RAILS_ENV=production \
 # build ステージ（アセット・gem をビルド）
 # ===========================
 FROM base AS build
-
 # gem / assets のビルドに必要なパッケージ（ビルド専用なので多少重くてもOK）
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -64,24 +63,14 @@ RUN DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy_db \
 # final ステージ（実行用イメージ）
 # ===========================
 FROM base
-
-# build ステージで作成した gem とアプリ本体をコピー
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /app /app
-
-# 非 root ユーザーを作成し、書き込みが必要なディレクトリに権限を付与
+# 非 root ユーザーを作成し、アプリ全体に権限を付与
 RUN groupadd --system --gid 1000 app && \
     useradd app --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     mkdir -p log tmp/pids tmp/cache tmp/sockets storage && \
-    chown -R app:app log tmp storage tmp
-
+    chown -R app:app .
 USER 1000:1000
-
-# Rails のログを STDOUT に流す
 ENV RAILS_LOG_TO_STDOUT=1
-
-# アプリが listen するポート
 EXPOSE 3000
-
-# 起動コマンド（マイグレーションは外に出す）
 CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3000"]
