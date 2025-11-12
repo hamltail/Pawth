@@ -34,11 +34,18 @@ jobs:
 
           cd "${APP_DIR}"
 
+          echo "==> Stop default Nginx (port 80)"
+          sudo systemctl stop nginx || true
+          sudo systemctl disable nginx || true
+
           echo "==> Git fetch / reset"
           git fetch --prune
           git checkout main || git checkout -b main
           git reset --hard origin/main
           git clean -fd
+
+          echo "==> Docker Compose down (cleanup old containers)"
+          docker compose -f compose.prod.yml down || true
 
           echo "==> Docker Compose build & up"
           COMPOSE="docker compose -f compose.prod.yml"
