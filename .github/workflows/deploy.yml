@@ -34,10 +34,11 @@ jobs:
 
           cd "${APP_DIR}"
 
-          echo "==> Git fetch / pull"
+          echo "==> Git fetch / reset"
           git fetch --prune
-          git checkout main
-          git pull --ff-only
+          git checkout main || git checkout -b main
+          git reset --hard origin/main
+          git clean -fd
 
           echo "==> Docker Compose build & up"
           COMPOSE="docker compose -f compose.prod.yml"
