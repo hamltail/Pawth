@@ -25,39 +25,31 @@ jobs:
 
       - name: Deploy on Lightsail (Docker)
         env:
-          APP_DIR: ${{ secrets.APP_DIR }}
-          HOST: ${{ secrets.SERVER_HOST }}
-          USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          APP_DIR:     ${{ secrets.APP_DIR }}
         run: |
-          ssh -o StrictHostKeyChecking=no "${USER}@${HOST}" << 'EOF'
+          ssh -o StrictHostKeyChecking=no "${SERVER_USER}@${SERVER_HOST}" <<EOF
           set -euo pipefail
-
+          
           cd "${APP_DIR}"
-
+          
           echo "==> Git fetch / pull"
           git fetch --prune
           git checkout main
           git pull --ff-only
-
+          
           echo "==> Docker Compose build & up"
-          # 使うComposeファイルは明示
           COMPOSE="docker compose -f compose.prod.yml"
-
-          # 画像を最新に（レジストリ未使用ならエラーでも継続OK）
-          $COMPOSE pull || true
-          # 依存を引き込みつつ再ビルドして起動。不要サービスは落とす
-          $COMPOSE up -d --build --remove-orphans
-
-          echo "==> Wait DB / Rails ready (retry)"
-          retry () { n=0; until "$@"; do n=$((n+1)); [ $n -ge 10 ] && return 1; echo "retry #$n"; sleep 3; done; }
-          retry $COMPOSE exec -T web bash -lc "bundle exec rails db:version" >/dev/null
-
+          \$COMPOSE pull || true
+          \$COMPOSE up -d --build --remove-orphans
+          
+          echo "==> DB ready check"
+          retry () { n=0; until "\$@"; do n=\$((n+1)); [ \$n -ge 10 ] && return 1; echo "retry #\$n"; sleep 3; done; }
+          retry \$COMPOSE exec -T web bash -lc "bundle exec rails db:version" >/dev/null
+          
           echo "==> DB migrate"
-          # -T: 非TTY環境でハングしないように。失敗ならログを出して終了
-          $COMPOSE exec -T web bash -lc "bundle exec rails db:migrate"
-
-          echo "==> Cleanup dangling images"
-          docker image prune -f >/dev/null || true
-
+          \$COMPOSE exec -T web bash -lc "bundle exec rails db:migrate"
+          
           echo "✅ Deploy finished on Lightsail"
           EOF
