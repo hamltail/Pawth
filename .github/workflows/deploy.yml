@@ -23,33 +23,41 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy on EC2
+      - name: Deploy on Lightsail (Docker)
+        env:
+          APP_DIR: ${{ secrets.APP_DIR }}
+          HOST: ${{ secrets.SERVER_HOST }}
+          USER: ${{ secrets.SERVER_USER }}
         run: |
-          ssh -o StrictHostKeyChecking=no \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            set -euo pipefail
-            export RAILS_ENV=production
-            export RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
-            export DATABASE_URL=${{ secrets.DATABASE_URL }}
+          ssh -o StrictHostKeyChecking=no "${USER}@${HOST}" << 'EOF'
+          set -euo pipefail
 
-            [ -f ~/.bash_profile ] && source ~/.bash_profile
-            [ -f ~/.profile ] && source ~/.profile
+          cd "${APP_DIR}"
 
-            cd "${{ secrets.APP_DIR }}"
+          echo "==> Git fetch / pull"
+          git fetch --prune
+          git checkout main
+          git pull --ff-only
 
-            git fetch --prune
-            git checkout main
-            git pull --ff-only
+          echo "==> Docker Compose build & up"
+          # 使うComposeファイルは明示
+          COMPOSE="docker compose -f compose.prod.yml"
 
-            bundle config set --local without 'development test'
-            bundle install --jobs=4 --retry=3
+          # 画像を最新に（レジストリ未使用ならエラーでも継続OK）
+          $COMPOSE pull || true
+          # 依存を引き込みつつ再ビルドして起動。不要サービスは落とす
+          $COMPOSE up -d --build --remove-orphans
 
-            # DB接続確認
-            bundle exec rails db:version
+          echo "==> Wait DB / Rails ready (retry)"
+          retry () { n=0; until "$@"; do n=$((n+1)); [ $n -ge 10 ] && return 1; echo "retry #$n"; sleep 3; done; }
+          retry $COMPOSE exec -T web bash -lc "bundle exec rails db:version" >/dev/null
 
-            bundle exec rails db:prepare
-            bundle exec rails assets:precompile
+          echo "==> DB migrate"
+          # -T: 非TTY環境でハングしないように。失敗ならログを出して終了
+          $COMPOSE exec -T web bash -lc "bundle exec rails db:migrate"
 
-            sudo systemctl restart --no-block puma
-            sudo systemctl restart --no-block solid_queue || true
+          echo "==> Cleanup dangling images"
+          docker image prune -f >/dev/null || true
+
+          echo "✅ Deploy finished on Lightsail"
           EOF
