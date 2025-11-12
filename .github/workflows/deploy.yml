@@ -27,29 +27,29 @@ jobs:
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
-          APP_DIR:     ${{ secrets.APP_DIR }}
+          APP_DIR: ${{ secrets.APP_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no "${SERVER_USER}@${SERVER_HOST}" <<EOF
           set -euo pipefail
-          
+
           cd "${APP_DIR}"
-          
+
           echo "==> Git fetch / pull"
           git fetch --prune
           git checkout main
           git pull --ff-only
-          
+
           echo "==> Docker Compose build & up"
           COMPOSE="docker compose -f compose.prod.yml"
           \$COMPOSE pull || true
           \$COMPOSE up -d --build --remove-orphans
-          
+
           echo "==> DB ready check"
           retry () { n=0; until "\$@"; do n=\$((n+1)); [ \$n -ge 10 ] && return 1; echo "retry #\$n"; sleep 3; done; }
           retry \$COMPOSE exec -T web bash -lc "bundle exec rails db:version" >/dev/null
-          
+
           echo "==> DB migrate"
           \$COMPOSE exec -T web bash -lc "bundle exec rails db:migrate"
-          
+
           echo "✅ Deploy finished on Lightsail"
           EOF
