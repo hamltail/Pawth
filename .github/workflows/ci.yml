@@ -68,7 +68,6 @@ jobs:
       - name: Run RSpec
         if: hashFiles('spec/**/*') != ''
         run: bundle exec rspec --format documentation
-
 # TODO: 一時的にE2Eを停止
 #  e2e:
 #    name: E2E (Playwright)

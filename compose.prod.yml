@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     ports:
-      - '80:3000'
+      - '3000:3000'
     #      - '3001:3000' # ローカル環境用
     volumes:
       - ./log:/app/log

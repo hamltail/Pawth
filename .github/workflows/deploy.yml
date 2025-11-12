@@ -34,10 +34,6 @@ jobs:
 
           cd "${APP_DIR}"
 
-          echo "==> Stop default Nginx (port 80)"
-          sudo systemctl stop nginx || true
-          sudo systemctl disable nginx || true
-
           echo "==> Git fetch / reset"
           git fetch --prune
           git checkout main || git checkout -b main
