@@ -123,7 +123,9 @@ npm run trace
 
 ## クラウド構成
 
-AWSのシンプル構成（EC2 / RDS / SES）
+※現在は Lightsail で動かしています。
+
+AWS構成（EC2 / RDS / SES）
 
 ```mermaid
 flowchart TD
@@ -163,4 +165,4 @@ This software is provided "as is", without warranty of any kind.
 
 ## 著者
 
-- h-waji (@lumetone)
+- h-waji (@hamltail)
