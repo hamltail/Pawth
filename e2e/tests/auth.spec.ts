@@ -1,10 +1,11 @@
-import { test, expect } from '@playwright/test';
-import { loginAsPlaywright } from '../helpers/auth.js';
+import { test } from '@playwright/test';
+import { AuthPage } from '../pages/auth-page.js';
 
 test.describe('auth', () => {
   test('ログインしてログアウトできる', async ({ page }) => {
-    await loginAsPlaywright(page);
-    await page.getByRole('link', { name: 'ログアウト' }).click();
-    await expect(page.getByText('ログアウトしました。')).toBeVisible();
+    const authPage = new AuthPage(page);
+    await authPage.goto();
+    const appShell = await authPage.loginAsPlaywright();
+    await appShell.logout();
   });
 });
