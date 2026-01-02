@@ -37,10 +37,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to edit_user_registration_path and return
     end
 
-    resource.destroy
-    sign_out(resource_name)
-    set_flash_message! :notice, :destroyed
-    redirect_to after_sign_out_path_for(resource_name), status: :see_other
+    if resource.destroy
+      sign_out(resource_name)
+      set_flash_message! :notice, :destroyed
+      redirect_to after_sign_out_path_for(resource_name), status: :see_other
+    else
+      flash[:alert] = resource.errors.full_messages.to_sentence.presence || 'アカウント削除に失敗しました。'
+      redirect_to edit_user_registration_path, status: :see_other
+    end
   end
 
   protected

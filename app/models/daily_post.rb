@@ -2,6 +2,8 @@ class DailyPost < ApplicationRecord
   EDIT_COUNT_LIMIT = 3
   CONTENT_MAX_LENGTH = 365
 
+  attr_accessor :skip_destroy_guard
+
   belongs_to :user
 
   before_update :increment_edit_count_if_changed, if: :will_save_change_to_content?
@@ -75,6 +77,8 @@ class DailyPost < ApplicationRecord
   end
 
   def prevent_destroy_if_today
+    return if destroyed_by_association&.name == :daily_posts
+
     return unless posted_on == Date.current
     errors.add(:base, :cannot_destroy_today)
     throw :abort
