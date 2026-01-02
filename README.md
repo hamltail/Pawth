@@ -165,4 +165,4 @@ This software is provided "as is", without warranty of any kind.
 
 ## 著者
 
-- h-waji (@hamltail)
+- h-waji (@h-waji)
