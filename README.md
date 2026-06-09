@@ -5,6 +5,7 @@
 Pawth は、1日1投稿の小さな日記アプリです。  
 日々の歩みを可視化し、その日の記録にコミットするための制約設計を大切にしています。
 
+⚠️ 現在、本番環境の公開は停止しています。
 > 🟢 本番: https://pawth.hamltail.dev <br>
 > 🟢 サンプルユーザー: https://pawth.hamltail.dev/user1 〜 /user10 <br>
 > 　　　　　　　　　（ログイン不要で閲覧可能）
@@ -165,4 +166,4 @@ This software is provided "as is", without warranty of any kind.
 
 ## 著者
 
-- h-waji
+- h-waji (hamltail)
