@@ -5,7 +5,10 @@
 Pawth は、1日1投稿の小さな日記アプリです。  
 日々の歩みを可視化し、その日の記録にコミットするための制約設計を大切にしています。
 
+> 🌐 紹介サイト: <https://pawth-lp.hamltail.dev/>
+
 ⚠️ 現在、本番環境の公開は停止しています。
+
 > 🟢 本番: https://pawth.hamltail.dev <br>
 > 🟢 サンプルユーザー: https://pawth.hamltail.dev/user1 〜 /user10 <br>
 > 　　　　　　　　　（ログイン不要で閲覧可能）
@@ -15,7 +18,9 @@ Pawth は、1日1投稿の小さな日記アプリです。
 - [Pawth 🐾](#pawth-)
   - [〜日々の足あとを描く〜](#日々の足あとを描く)
   - [目次](#目次)
-  - [コンセプト / 非採用機能](#コンセプト--非採用機能)
+  - [コンセプト](#コンセプト)
+    - [1日1投稿まで](#1日1投稿まで)
+    - [SNS化しない](#sns化しない)
   - [技術スタック](#技術スタック)
   - [セットアップ（ローカル）](#セットアップローカル)
   - [Dockerで開発環境を立ち上げる場合](#dockerで開発環境を立ち上げる場合)
@@ -25,31 +30,41 @@ Pawth は、1日1投稿の小さな日記アプリです。
   - [クラウド構成](#クラウド構成)
   - [テストデータと画像の取り扱い](#テストデータと画像の取り扱い)
   - [ライセンス](#ライセンス)
-  - [著者](#著者)
+  - [Author](#author)
 
 ---
 
-## コンセプト / 非採用機能
+## コンセプト
 
-- **1日1投稿まで**
-  - 当日内は削除不可 / 編集は最大3回まで
-  - 翌日以降は削除可（ただし編集不可）
-  - 目的: その日の自分にコミット
-- **SNS化はしない**
-  - タイムライン、フォロー/フォロワーは未実装 / 非採用
-  - 日記は 非公開/公開 を選択可能。内省に最適化
+### 1日1投稿まで
+
+- 当日内は削除不可
+- 編集は最大3回まで
+- 翌日以降は削除可能（ただし編集不可）
+
+> その日の自分にコミットすること。
+
+### SNS化しない
+
+- タイムラインなし
+- フォロー / フォロワー機能なし
+- 日記は公開・非公開を選択可能
+
+> 他者との比較ではなく、内省に最適化すること。
 
 ---
 
 ## 技術スタック
 
-- **Backend**: Ruby 3.4.7 / Rails 8.1.1
-- **DB**: PostgreSQL 17
-- **Auth**: Devise
-- **Frontend**: Haml, Tailwind CSS, Turbo, GSAP
-- **Test**: RSpec, FactoryBot
-- **E2E**: Playwright (+ axe-core によるアクセシビリティ検査)
-- **Infra(本番)**: AWS（EC2 / RDS / SES）
+| Category       | Technology                      |
+| -------------- | ------------------------------- |
+| Backend        | Ruby 3.4, Rails 8               |
+| Database       | PostgreSQL 17                   |
+| Authentication | Devise                          |
+| Frontend       | Haml, Tailwind CSS, Turbo, GSAP |
+| Testing        | RSpec, FactoryBot               |
+| E2E Testing    | Playwright, axe-core            |
+| Infrastructure | AWS (EC2, RDS, SES)             |
 
 ---
 
@@ -124,8 +139,6 @@ npm run trace
 
 ## クラウド構成
 
-※現在は Lightsail で動かしています。
-
 AWS構成（EC2 / RDS / SES）
 
 ```mermaid
@@ -158,12 +171,15 @@ flowchart TD
 
 このリポジトリは、ポートフォリオ目的で公開しています。
 
-本ソフトウェアは無保証であり、使用により発生した問題について著者はいかなる責任も負いません。
+著作権は作者に帰属します。
+無断転載・再配布・商用利用はご遠慮ください。
 
-This repository is published **for portfolio purposes only**.
+This repository is published for portfolio purposes only.
 
-This software is provided "as is", without warranty of any kind.
+All rights to the content belong to the author.
 
-## 著者
+Please do not reproduce, redistribute, or use any part of this project for commercial purposes without permission.
+
+## Author
 
 - h-waji (hamltail)
