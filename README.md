@@ -24,12 +24,17 @@ Pawth は、1日1投稿の小さな日記アプリです。
   - [技術スタック](#技術スタック)
   - [セットアップ（ローカル）](#セットアップローカル)
   - [Dockerで開発環境を立ち上げる場合](#dockerで開発環境を立ち上げる場合)
+    - [初回ビルド \& 起動](#初回ビルド--起動)
+    - [DB のセットアップ](#db-のセットアップ)
+    - [初回ユーザー登録](#初回ユーザー登録)
+    - [ログの確認](#ログの確認)
+    - [停止](#停止)
   - [テスト（RSpec / E2E: Playwright）](#テストrspec--e2e-playwright)
     - [RSpec](#rspec)
     - [Playwright](#playwright)
   - [クラウド構成](#クラウド構成)
-  - [テストデータと画像の取り扱い](#テストデータと画像の取り扱い)
-  - [ライセンス](#ライセンス)
+  - [Assets](#assets)
+  - [License](#license)
   - [Author](#author)
 
 ---
@@ -58,7 +63,7 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 | Category       | Technology                      |
 | -------------- | ------------------------------- |
-| Backend        | Ruby 3.4, Rails 8               |
+| Backend        | Ruby 4.0.6, Rails 8.1.3         |
 | Database       | PostgreSQL 17                   |
 | Authentication | Devise                          |
 | Frontend       | Haml, Tailwind CSS, Turbo, GSAP |
@@ -80,27 +85,56 @@ bin/dev
 
 ## Dockerで開発環境を立ち上げる場合
 
-初回ビルド & 起動
+### 初回ビルド & 起動
 
 ```
 docker compose -f compose.dev.yml up --build -d
 ```
 
-DB準備（作成 + マイグレーション）
+### DB のセットアップ
 
-```
-docker compose -f compose.dev.yml exec web bash -lc "bin/rails db:setup"
+```bash
+# マイグレーション
+docker compose -f compose.dev.yml exec web bin/rails db:migrate
+
+# Seed データの投入
+docker compose -f compose.dev.yml exec web bin/rails db:seed
 ```
 
-ログ
+> NOTE
+>
+> 新規に Docker Volume を作成した場合は、`db:migrate` と `db:seed` の実行が必要です。
 
+### 初回ユーザー登録
+
+Pawth は Devise Confirmable を利用しています。
+Docker 開発環境では、確認メールを `letter_opener_web` を利用してブラウザから確認します。
+
+1. ユーザー登録を行う。
+2. 以下の URL にアクセスする。
+
+```text
+http://localhost:3000/letter_opener
 ```
+
+3. 確認メールを開く。
+4. メール内の認証リンクをクリックする。
+5. ログインする。
+
+> NOTE
+>
+> Docker 開発環境では、メールクライアントは使用しません。
+> すべての確認メールは `letter_opener_web` から確認できます。
+
+### ログの確認
+
+```bash
 docker compose -f compose.dev.yml logs -f web
 ```
 
-停止
+### 停止
 
-```
+```bash
 docker compose -f compose.dev.yml down
 ```
 
@@ -114,7 +148,8 @@ bundle exec rspec
 
 ### Playwright
 
-Pawth 直下に e2e/ を置いています。初回はブラウザ依存をインストールしてください。
+Pawth 直下の `e2e/` ディレクトリに Playwright のテストコードを配置しています。
+初回はブラウザ依存パッケージをインストールしてください。
 
 ```
 cd e2e
@@ -160,14 +195,11 @@ flowchart TD
     end
 ```
 
-## テストデータと画像の取り扱い
+## Assets
 
-本アプリでは、テストデータのプロフィール画像として以下を使用しています。
+本アプリでは、テスト用途のアセットとして、ACイラストの素材を使用しています。
 
-- ACイラスト
-- Sour式ミク / Sour式リン（著者が描いた絵を使用）
-
-## ライセンス
+## License
 
 このリポジトリは、ポートフォリオ目的で公開しています。
 
