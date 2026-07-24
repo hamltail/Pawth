@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 8.1.1'
+gem 'rails', '~> 8.1.3'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'devise-i18n'
@@ -35,6 +35,6 @@ group :development do
   gem 'foreman', require: false
   gem 'haml_lint', require: false
   gem 'html2haml', require: false
-  gem 'letter_opener'
+  gem 'letter_opener_web'
   gem 'web-console'
 end
