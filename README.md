@@ -9,14 +9,16 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 ⚠️ 現在、本番環境の公開は停止しています。
 
-> 🟢 本番: https://pawth.hamltail.dev <br>
-> 🟢 サンプルユーザー: https://pawth.hamltail.dev/user1 〜 /user10 <br>
-> 　　　　　　　　　（ログイン不要で閲覧可能）
+## Current Status
+
+- コア機能の開発は完了しています。
+- 現在は保守・メンテナンスを行っています。
 
 ## 目次
 
 - [Pawth 🐾](#pawth-)
   - [〜日々の足あとを描く〜](#日々の足あとを描く)
+  - [Current Status](#current-status)
   - [目次](#目次)
   - [コンセプト](#コンセプト)
     - [1日1投稿まで](#1日1投稿まで)
@@ -33,7 +35,6 @@ Pawth は、1日1投稿の小さな日記アプリです。
     - [RSpec](#rspec)
     - [Playwright](#playwright)
   - [クラウド構成](#クラウド構成)
-  - [Assets](#assets)
   - [License](#license)
   - [Author](#author)
 
@@ -194,10 +195,6 @@ flowchart TD
         Puma
     end
 ```
-
-## Assets
-
-本アプリでは、テスト用途のアセットとして、ACイラストの素材を使用しています。
 
 ## License
 
