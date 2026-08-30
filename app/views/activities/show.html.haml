@@ -1,28 +1,36 @@
-- page_title= t('.page_title', name: @user.display_name_or_username)
-.bg-white.shadow-md.rounded-lg.px-8.py-8.relative
-  %h1.text-2xl.font-bold.text-brand-dark.mb-8.text-center.neon-yellow-soft= page_title
-  .flex.flex-col.items-center
-    = avatar_for(@user, size: 80, css: 'mb-4')
-  - if user_signed_in? && current_user == @user
-    .mb-8.text-center
-      %strong.text-yellow-700.text-lg.neon-yellow-soft= t('.welcome', name: current_user.display_name_or_username)
-    .absolute.top-8.right-8
-      #new-post-button
-        = render 'activities/new_post_button', posted_today: current_user.posted_today?
-      = turbo_frame_tag 'modal'
-  = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
-    = render 'calendar',
-      user: @user,
-      calendar_days: @calendar_days,
-      posts_by_day: @posts_by_day,
-      prev_month: @prev_month,
-      next_month: @next_month,
-      month_label: @month_label
-  - can_view_posts = @user.profile.public_posts? || (user_signed_in? && current_user == @user)
-  = turbo_frame_tag 'current_post' do
-    - if can_view_posts
-      = render 'activities/current_post', post: @current_post
-    - else
-      .flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
-        %span.text-gray-400= t('.private')
-  .text-xs.text-gray-500.text-center.mt-8= t('.footer', year: Time.current.year)
+- page_title = t('.page_title', name: @user.display_name_or_username)
+- can_view_posts = @user.profile.public_posts? || (user_signed_in? && current_user == @user)
+
+.bg-white.min-h-screen.flex.flex-col.px-4.py-6.md:px-8.md:py-8
+  .flex.items-center.justify-center.gap-4.mb-6
+    = avatar_for(@user, size: 64)
+    %h1.text-xl.md:text-2xl.font-bold.text-brand-dark.neon-yellow-soft
+      = page_title
+
+  %div{ class: 'flex flex-col xl:grid xl:grid-cols-[minmax(0,5fr)_minmax(24rem,4fr)] xl:gap-8 xl:items-start' }
+    %div{ class: 'order-2 xl:order-1' }
+      = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
+        = render 'calendar',
+          user: @user,
+          calendar_days: @calendar_days,
+          posts_by_day: @posts_by_day,
+          prev_month: @prev_month,
+          next_month: @next_month
+
+    %div{ class: 'order-1 xl:order-2 mb-8 xl:mb-0' }
+      - if user_signed_in? && current_user == @user
+        .flex.justify-center.mb-6
+          #new-post-button
+            = render 'activities/new_post_button', posted_today: current_user.posted_today?
+          = turbo_frame_tag 'modal'
+
+      = turbo_frame_tag 'current_post' do
+        - if can_view_posts
+          = render 'activities/current_post', post: @current_post
+        - else
+          .flex.flex-col.items-center.justify-center.h-32.bg-gray-50.rounded-lg.shadow-inner
+            %span.text-gray-400
+              = t('.private')
+
+  .mt-auto.pt-8.pb-2.text-xs.text-gray-500.text-center
+    = t('.footer', year: Time.current.year)
