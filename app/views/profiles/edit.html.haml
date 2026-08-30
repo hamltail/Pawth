@@ -1,5 +1,6 @@
 .bg-white.shadow-md.rounded-lg.px-8.py-8
-  %h2.text-2xl.font-bold.text-brand-dark.neon-yellow-soft.mb-8.text-center= t('profiles.edit.title')
+  %h2.text-2xl.font-bold.text-gray-900.mb-8.text-center= t('profiles.edit.title')
+
   = form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|
     - if @profile.errors.any?
       .bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
@@ -10,43 +11,68 @@
           - sorted_errors.each do |attribute, messages|
             - messages.each do |msg|
               %li= @profile.class.human_attribute_name(attribute) + msg
+
     .mb-4{ data: { controller: 'avatar-preview' } }
       = f.label :avatar, t('activerecord.attributes.profile.avatar'), class: 'block text-gray-700 mb-2'
+
       - has_avatar = @profile.avatar.attached? && @profile.avatar.blob&.persisted?
       - default_src = asset_path('default_avatar.png')
-      %img.mt-2.mb-2.rounded.w-24.h-24.object-cover#avatar-preview{
+
+      %img.mt-2.mb-3.rounded.w-24.h-24.object-cover#avatar-preview{
         src: (has_avatar ? url_for(@profile.avatar) : default_src),
         alt: t('activerecord.attributes.profile.avatar'),
         data: { avatar_preview_target: 'img', default_src: default_src }
       }
+
       = f.file_field :avatar,
                      id: 'avatar-input',
                      data: { avatar_preview_target: 'input',
                              action: 'change->avatar-preview#update' },
-                     class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-brand file:text-white hover:file:bg-brand-light"
+                     class: 'sr-only'
+
+      %label.inline-flex.items-center.gap-2.bg-brand.hover:bg-brand-light.text-white.font-bold.py-2.px-4.rounded-full.cursor-pointer{
+        for: 'avatar-input'
+      }
+        %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+          %path{ d: 'm8.25 12.75 6.88-6.88a3 3 0 1 1 4.24 4.24l-8.66 8.66a4.5 4.5 0 0 1-6.36-6.36l8.31-8.31', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+        %span ファイルを選択
+
       - if @profile.errors[:avatar].any?
         %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
+
     .mb-4
       = f.label :display_name, t('activerecord.attributes.profile.display_name'), class: 'block mb-1'
       = f.text_field :display_name, class: 'border rounded w-full px-3 py-2'
+
     .mb-4{ data: { controller: 'public-posts-toggle' } }
       = f.label :public_posts, t('profiles.edit.public_posts_label'), class: 'block mb-1'
+
       .flex.items-center
         = f.check_box :public_posts,
                       class: 'sr-only',
                       id: 'toggle-public-profile',
                       data: { public_posts_toggle_target: 'checkbox',
                               action: 'change->public-posts-toggle#render' }
+
         %label{ for: 'toggle-public-profile', class: 'relative inline-block' }
           %span.block.w-16.h-8.rounded-full.transition-colors.duration-200.bg-gray-300#toggle-bar{
             data: {
-              public_posts_toggle_target: 'bar' }
+              public_posts_toggle_target: 'bar'
+            }
           }
+
           %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md.transition-transform.duration-200{
             data: {
-              public_posts_toggle_target: 'dot' }
+              public_posts_toggle_target: 'dot'
+            }
           }
+
         %span.ml-2#public-profile-label{ data: { public_posts_toggle_target: 'label' } }
           = @profile.public_posts? ? t('profiles.edit.public') : t('profiles.edit.private')
-    .mt-6.text-center
-      = f.submit t('profiles.edit.update'), class: 'bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded'
+
+    .mt-6.flex.justify-center
+      = f.button type: 'submit', class: 'inline-flex items-center gap-2 bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded-full' do
+        %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+          %path{ d: 'M20 11a8 8 0 1 0-2.34 5.66', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+          %path{ d: 'M20 5.5V11h-5.5', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+        %span= t('profiles.edit.update')

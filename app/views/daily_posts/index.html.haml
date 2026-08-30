@@ -1,31 +1,43 @@
 .bg-white.min-h-screen.shadow-md.rounded-lg.px-8.py-8.relative
-  %h1.text-2xl.font-bold.text-brand-dark.neon-yellow-soft.mb-8.text-center= t('.title')
-  .absolute.top-8.right-8
-    #new-post-button
-      = render 'activities/new_post_button', posted_today: current_user.posted_today?
+  .flex.flex-col.items-center.gap-4.mb-8.sm:grid.sm:grid-cols-3
+    %div.hidden.sm:block
+
+    %h1.text-2xl.font-bold.text-gray-900.text-center= t('.title')
+
+    .flex.justify-center.sm:justify-end
+      #new-post-button
+        = render 'activities/new_post_button', posted_today: current_user.posted_today?
+
   = turbo_frame_tag 'modal'
+
   = form_with url: daily_posts_path, method: :get, local: true,
               class: 'mb-4 flex flex-wrap justify-center space-x-2 gap-x-2 gap-y-3' do |f|
     = label_tag :q, t('.search_placeholder'), class: 'sr-only'
     = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q],
                    class: 'px-4 py-2 border border-gray-300 rounded-md w-full sm:w-64 basis-full sm:basis-auto'
+
     = label_tag :year, t('.year_prompt'), class: 'sr-only'
     = f.select :year,
                options_for_select((2025..Date.current.year).to_a.reverse, params[:year]),
                { prompt: t('.year_prompt') },
                class: 'px-2 py-2 border border-gray-300 rounded-md'
+
     = label_tag :month, t('.month_prompt'), class: 'sr-only'
     = f.select :month,
                options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]),
                { prompt: t('.month_prompt') },
                class: 'px-2 py-2 border border-gray-300 rounded-md'
+
     = f.submit t('.submit_search'),
                class: 'px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-light'
+
   %ul.posts.space-y-6.mt-8#posts
     - @daily_posts.each do |post|
       = render 'post', post: post
+
   .mt-6.flex.flex-col.items-center.gap-2
     %div.pagy-nav
       = pagy_nav(@pagy).html_safe
+
     .text-xs.text-gray-500
       = t('.page_label', page: @pagy.page, pages: @pagy.pages)

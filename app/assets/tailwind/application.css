@@ -4,9 +4,19 @@
   --color-brand: #6d28d9; /* purple-700 */
   --color-brand-light: #8b5cf6; /* purple-500 */
   --color-brand-dark: #4c1d95; /* purple-900 */
+
+  --color-secondary: #f97316; /* orange-500 */
+  --color-secondary-light: #fdba74; /* orange-300 */
+
+  --color-pawth-pink: #f472b6;
+  --color-sidebar: #f8f5ff;
 }
 
 @layer base {
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+
   input:not([type='hidden']),
   textarea,
   select,
@@ -20,13 +30,14 @@
   select:focus-visible,
   button:focus-visible,
   a:focus-visible {
-    @apply ring-2 ring-yellow-200 shadow-[0_0_10px_#facc15];
+    @apply ring-2 ring-purple-200 shadow-[0_0_10px_#e9d5ff];
   }
 
   dialog {
     border: 0;
     padding: 0;
   }
+
   dialog#confirm-modal {
     border: 0;
     padding: 0;
@@ -35,9 +46,11 @@
     margin: auto;
     transform: translate(0, 0);
   }
+
   dialog#confirm-modal::backdrop {
     background: rgba(0, 0, 0, 0.32);
   }
+
   dialog#confirm-modal:focus {
     outline: none;
   }
@@ -55,6 +68,7 @@
   .today-badge .today-char {
     @apply inline-block;
   }
+
   .today-badge {
     color: #ffe66d;
     text-shadow:
@@ -71,12 +85,70 @@
       0 0 32px rgba(255, 250, 205, 0.3);
   }
 
+  .pawth-surface-card {
+    @apply border border-purple-100 bg-white;
+    box-shadow: 0 24px 80px rgba(109, 40, 217, 0.08);
+  }
+
+  .cta-button {
+    @apply relative inline-flex items-center gap-2 overflow-hidden rounded-full border-2 border-brand bg-white px-4 py-2 font-bold text-brand;
+    transition: color 300ms ease;
+  }
+
+  .cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    background: #6d28d9;
+    transition: width 300ms ease-out;
+  }
+
+  .cta-button:hover::before {
+    width: 100%;
+  }
+
+  .cta-button:hover {
+    color: #ffffff;
+    animation: cta-glow 350ms ease-out 300ms forwards;
+  }
+
+  .cta-button > * {
+    @apply relative z-10;
+  }
+
+  @keyframes cta-glow {
+    0% {
+      box-shadow:
+        0 0 0 rgba(249, 115, 22, 0),
+        0 0 0 rgba(249, 115, 22, 0);
+    }
+
+    55% {
+      box-shadow:
+        0 0 12px rgba(249, 115, 22, 0.85),
+        0 0 30px rgba(249, 115, 22, 0.6),
+        0 0 42px rgba(251, 146, 60, 0.35);
+    }
+
+    100% {
+      box-shadow:
+        0 0 8px rgba(249, 115, 22, 0.65),
+        0 0 20px rgba(249, 115, 22, 0.4),
+        0 0 30px rgba(251, 146, 60, 0.2);
+    }
+  }
+
   .pagy.nav a {
     @apply px-3 py-1 mx-0.5 rounded-xl ring-1 ring-gray-300;
   }
+
   .pagy.nav a.current[aria-current='page'] {
     @apply bg-brand text-white ring-brand;
   }
+
   .pagy.nav a[aria-disabled='true']:not(.current) {
     @apply opacity-40 cursor-default;
   }

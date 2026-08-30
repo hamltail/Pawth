@@ -14,13 +14,14 @@
           emoji_target: 'button',
           action: 'emoji#open'
         },
-        class: 'bg-brand hover:bg-brand-light text-white px-3 py-1 rounded shadow',
+        class: 'bg-brand hover:bg-brand-light text-white px-4 py-2 rounded-full shadow',
         aria: {
           expanded: 'false',
           controls: 'emojiDialog'
         }
       }
         = t('daily_posts.shared.emoji_button')
+
     %dialog#emoji-dialog{
       data: {
         emoji_target: 'dialog'
@@ -34,6 +35,7 @@
             class: 'block w-[360px] h-[380px]'
           }
         }
+
     = f.text_area :content,
       rows: 12,
       placeholder: t('daily_posts.shared.content_placeholder'),
@@ -41,8 +43,15 @@
       data: { character_counter_target: 'input',
               action: 'input->character-counter#update paste->character-counter#paste',
               emoji_target: 'textarea' }
+
     .text-right.text-sm.text-gray-500{ data: { character_counter_target: 'counter' } }
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
+
   .flex.justify-end
-    = f.submit t('daily_posts.shared.submit'),
-      class: 'bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded shadow'
+    = f.button type: 'submit', class: 'cta-button' do
+      %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+        %path{ d: 'M6 3.75A2.25 2.25 0 0 1 8.25 1.5h7.5A2.25 2.25 0 0 1 18 3.75v16.5a.75.75 0 0 1-1.14.64L12 18.02l-4.86 2.87A.75.75 0 0 1 6 20.25V3.75Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+        %path{ d: 'M9 6.75h6M9 10.5h6M9 14.25h3.75', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
+        %path{ d: 'm15.75 13.5 2.25 2.25M17.36 12.64l.75-.75a1.06 1.06 0 0 1 1.5 1.5l-.75.75-4.24 4.24-2.12.62.62-2.12 4.24-4.24Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+
+      %span= t('daily_posts.shared.submit')
