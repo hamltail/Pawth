@@ -18,12 +18,12 @@ services:
     restart: always
 
   db:
-    image: postgres:17
+    image: postgres:18
     env_file:
       - .env.production
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - prod_db_data:/var/lib/postgresql
     restart: always
 
 volumes:
-  db_data:
+  prod_db_data:

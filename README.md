@@ -65,7 +65,7 @@ Pawth は、1日1投稿の小さな日記アプリです。
 | Category       | Technology                      |
 | -------------- | ------------------------------- |
 | Backend        | Ruby 4.0.6, Rails 8.1.3         |
-| Database       | PostgreSQL 17                   |
+| Database       | PostgreSQL 18                   |
 | Authentication | Devise                          |
 | Frontend       | Haml, Tailwind CSS, Turbo, GSAP |
 | Testing        | RSpec, FactoryBot               |
