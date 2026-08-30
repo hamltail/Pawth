@@ -1,4 +1,4 @@
-%aside.bg-white.shadow-md.w-64.h-screen.px-6.py-6.flex.flex-col.fixed.z-60.transform.transition-transform.duration-200.-translate-x-full.md:translate-x-0.md:flex{
+%aside.bg-sidebar.shadow-md.w-64.h-screen.px-6.py-6.flex.flex-col.fixed.z-60.transform.transition-transform.duration-200.-translate-x-full.md:translate-x-0.md:flex{
   id: 'sidebar',
   data: { menu_target: 'sidebar' }
 }
@@ -35,7 +35,8 @@
               %circle{ cx: '12', cy: '12.56', r: '2.3', 'stroke-width': '1.5' }
             %span= t('layout.sidebar.settings')
 
-          %span.transition-transform.duration-200{ data: { collapsible_target: 'icon' } } ▶
+          %span.transition-transform.duration-200{ data: { collapsible_target: 'icon' } }
+            ▶
 
         %ul.mt-2.pl-4.space-y-2.hidden#settings-submenu{ data: { collapsible_target: 'panel' } }
           %li

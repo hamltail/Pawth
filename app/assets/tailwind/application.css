@@ -7,6 +7,9 @@
 
   --color-secondary: #f97316; /* orange-500 */
   --color-secondary-light: #fdba74; /* orange-300 */
+
+  --color-pawth-pink: #f472b6;
+  --color-sidebar: #f8f5ff;
 }
 
 @layer base {
@@ -80,6 +83,11 @@
       0 0 6px rgba(255, 250, 205, 0.7),
       0 0 16px rgba(255, 250, 205, 0.5),
       0 0 32px rgba(255, 250, 205, 0.3);
+  }
+
+  .pawth-surface-card {
+    @apply border border-purple-100 bg-white;
+    box-shadow: 0 24px 80px rgba(109, 40, 217, 0.08);
   }
 
   .cta-button {
