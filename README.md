@@ -31,9 +31,11 @@ Pawth は、1日1投稿の小さな日記アプリです。
     - [初回ユーザー登録](#初回ユーザー登録)
     - [ログの確認](#ログの確認)
     - [停止](#停止)
-  - [テスト（RSpec / E2E: Playwright）](#テストrspec--e2e-playwright)
-    - [RSpec](#rspec)
-    - [Playwright](#playwright)
+  - [テスト・コードチェック](#テストコードチェック)
+    - [セットアップ](#セットアップ)
+    - [テストをまとめて実行](#テストをまとめて実行)
+    - [Unit Test（RSpec）](#unit-testrspec)
+    - [E2E Test（Playwright）](#e2e-testplaywright)
   - [クラウド構成](#クラウド構成)
   - [License](#license)
   - [Author](#author)
@@ -76,7 +78,7 @@ Pawth は、1日1投稿の小さな日記アプリです。
 
 ## セットアップ（ローカル）
 
-```
+```bash
 git clone https://github.com/hamltail/pawth.git
 cd pawth
 bundle install
@@ -88,7 +90,7 @@ bin/dev
 
 ### 初回ビルド & 起動
 
-```
+```bash
 docker compose -f compose.dev.yml up --build -d
 ```
 
@@ -139,38 +141,64 @@ docker compose -f compose.dev.yml logs -f web
 docker compose -f compose.dev.yml down
 ```
 
-## テスト（RSpec / E2E: Playwright）
+## テスト・コードチェック
 
-### RSpec
+テスト・Lint・フォーマットチェックは、Pawth のルートディレクトリから実行できます。
 
-```
-bundle exec rspec
-```
+### セットアップ
 
-### Playwright
+E2E テストでは Playwright を使用しています。
+初回のみ、E2E 用の依存パッケージとブラウザをインストールしてください。
 
-Pawth 直下の `e2e/` ディレクトリに Playwright のテストコードを配置しています。
-初回はブラウザ依存パッケージをインストールしてください。
-
-```
-cd e2e
-npm ci
-npm run install:browsers
+```bash
+npm run e2e:install
+npm run e2e:install:browsers
 ```
 
-E2E実行
+### テストをまとめて実行
 
-```
-cd e2e
-npm test           # ヘッドレス
-npm run headed     # 画面表示あり
-npm run debug      # Playwright Inspector
+```bash
+npm test
 ```
 
-直近のテストトレースを開く
+以下のチェックを順番に実行します。
 
+1. Prettier
+2. RuboCop
+3. ESLint
+4. RSpec
+5. Playwright
+
+### Unit Test（RSpec）
+
+```bash
+npm run test:unit
 ```
-npm run trace
+
+### E2E Test（Playwright）
+
+ヘッドレスで実行:
+
+```bash
+npm run test:e2e
+```
+
+画面を表示して実行:
+
+```bash
+npm run test:e2e:headed
+```
+
+Playwright Inspector を使用してデバッグ:
+
+```bash
+npm run test:e2e:debug
+```
+
+直近のテストトレースを開く:
+
+```bash
+npm run test:e2e:trace
 ```
 
 ## クラウド構成

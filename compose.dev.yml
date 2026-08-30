@@ -14,6 +14,41 @@ services:
     depends_on:
       - db
 
+  web-e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@db:5432/pawth_test
+    volumes:
+      - .:/app
+    command: >
+      bash -c "
+        bin/rails db:prepare &&
+        bin/rails e2e:ensure_user &&
+        bin/rails server -b 0.0.0.0 -p 3001
+      "
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    working_dir: /app/e2e
+    environment:
+      BASE_URL: http://web-e2e:3001
+    command: >
+      sh -c "
+        npx wait-on http://web-e2e:3001 &&
+        npm test
+      "
+    depends_on:
+      - web-e2e
+
   db:
     image: postgres:18
     environment:
