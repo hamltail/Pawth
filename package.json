@@ -3,10 +3,20 @@
     "fix:all": "npm run format && npm run lint:fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "npm run lint:ruby && npm run lint:js",
+    "lint:fix": "npm run lint:ruby:fix && npm run lint:js:fix",
+    "lint:ruby": "bundle exec rubocop",
+    "lint:ruby:fix": "bundle exec rubocop -A",
     "lint:js": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\"",
-    "lint:js:fix": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\" --fix"
+    "lint:js:fix": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\" --fix",
+    "test": "npm run format:check && npm run lint && npm run test:unit && npm run test:e2e",
+    "test:unit": "bundle exec rspec",
+    "test:e2e": "docker compose -f compose.dev.yml run --build --rm e2e",
+    "test:e2e:headed": "npm --prefix e2e run test:headed",
+    "test:e2e:debug": "npm --prefix e2e run test:debug",
+    "test:e2e:trace": "npm --prefix e2e run trace",
+    "e2e:install": "npm --prefix e2e ci",
+    "e2e:install:browsers": "npm --prefix e2e run install:browsers"
   },
   "dependencies": {
     "gsap": "^3.13.0"
