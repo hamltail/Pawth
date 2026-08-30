@@ -118,7 +118,7 @@ ja:
 
   profiles:
     edit:
-      title: 'プロフィール設定'
+      title: 'Profile Settings'
       update: '更新'
       public_posts_label: '日記の公開設定'
       public: '公開'
@@ -139,7 +139,7 @@ ja:
 
   users:
     edit:
-      title: 'アカウント設定'
+      title: 'Account Settings'
       update: '更新'
       back: '戻る'
       delete_section_title: '危険な操作'
