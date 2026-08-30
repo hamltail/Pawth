@@ -67,7 +67,7 @@ ja:
 
   daily_posts:
     index:
-      title: '日記一覧'
+      title: 'Diary Archive'
       new_button: '＋'
       posted_today_message: '今日はすでに日記をかいています。'
       search_placeholder: 'キーワード検索'
