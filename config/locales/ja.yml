@@ -43,7 +43,7 @@ ja:
 
   activities:
     show:
-      page_title: "%{name}'s Diary"
+      page_title: "%{name}'s Pawth"
       welcome: 'ようこそ、%{name}さん！'
       private: '日記は非公開です。'
       footer: 'Pawth © %{year}'
