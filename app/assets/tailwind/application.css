@@ -4,6 +4,9 @@
   --color-brand: #6d28d9; /* purple-700 */
   --color-brand-light: #8b5cf6; /* purple-500 */
   --color-brand-dark: #4c1d95; /* purple-900 */
+
+  --color-secondary: #f97316; /* orange-500 */
+  --color-secondary-light: #fdba74; /* orange-300 */
 }
 
 @layer base {
@@ -24,7 +27,7 @@
   select:focus-visible,
   button:focus-visible,
   a:focus-visible {
-    @apply ring-2 ring-yellow-200 shadow-[0_0_10px_#facc15];
+    @apply ring-2 ring-purple-200 shadow-[0_0_10px_#e9d5ff];
   }
 
   dialog {
