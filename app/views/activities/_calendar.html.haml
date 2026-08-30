@@ -19,11 +19,11 @@
               aria: { label: t('activities.calendar.next_month') } do
       = render 'shared/icon_arrow', direction: 'right', klass: 'text-gray-400 hover:text-gray-700'
 
-  .grid.grid-cols-7.gap-2.justify-center.mb-8
+  .grid.grid-cols-7.gap-2.justify-center.mb-4
     - meta[:weekdays].each do |wd|
       .text-xs.font-bold.text-center= wd
 
-  .grid.grid-cols-7.gap-2.justify-center.h-120
+  .grid.grid-cols-7.gap-2.justify-center
     - meta[:leading_empty].times do
       %div
 
