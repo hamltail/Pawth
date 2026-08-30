@@ -46,8 +46,12 @@
       - if resource.errors[:current_password].any?
         %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
 
-    .text-center
-      = f.submit t("users.edit.update"), class: "bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded"
+    .flex.justify-center
+      = f.button type: 'submit', class: 'inline-flex items-center gap-2 bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded-full' do
+        %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+          %path{ d: 'M20 11a8 8 0 1 0-2.34 5.66', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+          %path{ d: 'M20 5.5V11h-5.5', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+        %span= t('users.edit.update')
 
 %div.bg-white.shadow-md.rounded-lg.px-8.py-8.mt-24
   %section
@@ -64,5 +68,11 @@
         = f.label :current_password, t('users.edit.delete_label'), class: 'block text-gray-700 mb-2'
         = f.password_field :current_password, autocomplete: 'current-password', class: 'border rounded w-full px-3 py-2'
 
-      .text-center
-        = f.submit t('users.edit.delete_button'), class: 'bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded'
+      .flex.justify-center
+        = f.button type: 'submit', class: 'inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded-full' do
+          %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+            %path{ d: 'M4.5 6.75h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
+            %path{ d: 'M9 6.75V4.5h6v2.25', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+            %path{ d: 'M6.75 6.75 7.5 19.5h9l.75-12.75', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+            %path{ d: 'M10 10.5v5.25M14 10.5v5.25', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
+          %span= t('users.edit.delete_button')
