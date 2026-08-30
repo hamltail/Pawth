@@ -41,8 +41,8 @@ export default class extends Controller {
       gsap.killTweensOf(this.contentEl);
       gsap.fromTo(
         this.contentEl,
-        { y: -10, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: 'power1.out' },
+        { opacity: 0 },
+        { opacity: 1, duration: 1.618, ease: 'power1.out' },
       );
     }
   }
