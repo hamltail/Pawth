@@ -1,5 +1,5 @@
 - if !posted_today
-  = link_to new_daily_post_path, data: { turbo_frame: 'modal', controller: 'new-post-button', action: 'click->new-post-button#handle', new_post_button_posted_today_value: current_user.posted_today?, new_post_button_message_value: t('daily_posts.index.posted_today_message') }, class: 'inline-flex items-center gap-2 bg-brand hover:bg-brand-light text-white font-bold py-2 px-4 rounded-full' do
+  = link_to new_daily_post_path, data: { turbo_frame: 'modal', controller: 'new-post-button', action: 'click->new-post-button#handle', new_post_button_posted_today_value: current_user.posted_today?, new_post_button_message_value: t('daily_posts.index.posted_today_message') }, class: 'cta-button' do
     %svg.w-5.h-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
       %path{ d: 'M6 3.75A2.25 2.25 0 0 1 8.25 1.5h7.5A2.25 2.25 0 0 1 18 3.75v16.5a.75.75 0 0 1-1.14.64L12 18.02l-4.86 2.87A.75.75 0 0 1 6 20.25V3.75Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
       %path{ d: 'M9 6.75h6M9 10.5h6M9 14.25h3.75', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
