@@ -137,6 +137,14 @@
       0 0 24px rgba(167, 139, 250, 0.4);
   }
 
+  .sidebar-logout {
+    color: #dc2626;
+  }
+
+  :root[data-theme='dark'] .sidebar-logout {
+    color: #f87171;
+  }
+
   .toggle-dot {
     @apply motion-safe:transition-transform duration-200;
   }
