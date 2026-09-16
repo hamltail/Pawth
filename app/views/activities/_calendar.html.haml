@@ -23,8 +23,9 @@
         = render 'shared/icon_arrow', direction: 'right', klass: 'text-muted hover:text-primary transition-colors'
 
     .grid.grid-cols-7.gap-2.justify-center.mb-4
-      - meta[:weekdays].each do |wd|
-        .text-xs.font-bold.text-center.text-secondary-text= wd
+      - meta[:weekdays].each_with_index do |wd, index|
+        - weekday_class = index == 5 ? 'calendar-saturday' : (index == 6 ? 'calendar-sunday' : 'text-secondary-text')
+        %div{ class: "text-xs font-bold text-center #{weekday_class}" }= wd
 
     .grid.grid-cols-7.gap-2.justify-center{ class: 'auto-rows-[4rem]' }
       - meta[:leading_empty].times do
@@ -32,9 +33,12 @@
 
       - calendar_days.each do |date|
         - post = post_for(date, posts_by_day)
+        - date_class = date.saturday? ? 'calendar-saturday' : (date.sunday? ? 'calendar-sunday' : 'text-secondary-text')
+
         %div{ class: day_cell_classes(date) }
-          %span.text-xs.text-secondary-text= date.day
+          %span{ class: "text-xs #{date_class}" }= date.day
           = paw_icon_for(date, post)
+
           - if calendar_today?(date)
             = today_badge
 

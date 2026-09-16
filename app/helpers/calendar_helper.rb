@@ -22,8 +22,8 @@ module CalendarHelper
     base = 'relative flex h-16 flex-col items-center'
 
     case date.wday
-    when 6 then "#{base} text-blue-600"
-    when 0 then "#{base} text-red-600"
+    when 6 then "#{base} calendar-saturday"
+    when 0 then "#{base} calendar-sunday"
     else base
     end
   end
