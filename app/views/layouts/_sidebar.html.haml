@@ -3,8 +3,10 @@
   data: { menu_target: 'sidebar' }
 }
   %div
-    .text-lg.font-bold.text-brand.mb-8
-      = link_to t('layout.sidebar.app_name'), root_path
+    .text-lg.font-bold.mb-8
+      = link_to t('layout.sidebar.app_name'),
+                root_path,
+                class: 'sidebar-brand'
 
     %nav.flex.flex-col.space-y-6
       = link_to root_path, class: 'flex items-center gap-3 text-gray-700 hover:text-brand-light font-medium' do
@@ -52,6 +54,60 @@
                 %path{ d: 'M9.6 3.75h4.8l.55 2.05a7 7 0 0 1 1.47.85l2.04-.58 2.4 4.16-1.5 1.48a7.3 7.3 0 0 1 0 1.7l1.5 1.48-2.4 4.16-2.04-.58a7 7 0 0 1-1.47.85l-.55 2.05H9.6l-.55-2.05a7 7 0 0 1-1.47-.85l-2.04.58-2.4-4.16 1.5-1.48a7.3 7.3 0 0 1 0-1.7l-1.5-1.48 2.4-4.16 2.04.58a7 7 0 0 1 1.47-.85l.55-2.05Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
                 %circle{ cx: '12', cy: '12.56', r: '2.3', 'stroke-width': '1.5' }
               %span= t('layout.sidebar.account_settings')
+
+      %div.relative{ data: { controller: 'theme' } }
+        %button.w-full.flex.items-center.justify-between.text-gray-700.font-medium.hover:text-brand-light{
+          type: 'button',
+          data: { action: 'click->theme#toggleMenu' },
+          aria: { haspopup: 'true', expanded: 'false' }
+        }
+          .flex.items-center.gap-3
+            %svg.w-5.h-5.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+              %path{ d: 'M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+
+            %span テーマ
+
+          %span.text-xs.text-gray-500{ data: { theme_target: 'label' } }
+            システム
+
+        .hidden.absolute.left-0.right-0.mt-2.rounded-xl.bg-white.p-2.shadow-lg.ring-1.ring-gray-200.z-70{
+          data: { theme_target: 'menu' }
+        }
+          %button.w-full.flex.items-center.justify-between.rounded-lg.px-3.py-2.text-sm.text-gray-700.hover:bg-purple-50{
+            type: 'button',
+            role: 'menuitemradio',
+            data: {
+              action: 'click->theme#select',
+              theme: 'light',
+              theme_target: 'option'
+            }
+          }
+            %span ライト
+            %span ☀️
+
+          %button.w-full.flex.items-center.justify-between.rounded-lg.px-3.py-2.text-sm.text-gray-700.hover:bg-purple-50{
+            type: 'button',
+            role: 'menuitemradio',
+            data: {
+              action: 'click->theme#select',
+              theme: 'dark',
+              theme_target: 'option'
+            }
+          }
+            %span ダーク
+            %span 🌙
+
+          %button.w-full.flex.items-center.justify-between.rounded-lg.px-3.py-2.text-sm.text-gray-700.hover:bg-purple-50{
+            type: 'button',
+            role: 'menuitemradio',
+            data: {
+              action: 'click->theme#select',
+              theme: 'system',
+              theme_target: 'option'
+            }
+          }
+            %span システム
+            %span 💻
 
       = link_to destroy_user_session_path,
           data: { turbo_method: :delete },

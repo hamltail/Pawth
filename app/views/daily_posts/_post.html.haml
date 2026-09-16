@@ -1,11 +1,12 @@
-%li.group.relative.mb-4.rounded-2xl.bg-white.p-5.shadow-sm.ring-1.ring-gray-300.transition.transform.hover:-translate-y-1.hover:shadow-lg{
+%li.group.relative.mb-4.rounded-2xl.bg-surface.p-5.shadow-sm.ring-1.ring-default-border.transition.transform.hover:-translate-y-1.hover:shadow-lg{
   id: "post_#{post.id}"
 }
   .flex.items-center.justify-between.gap-3
-    .inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-gray-700.bg-gray-100.ring-1.ring-gray-200{
-      class: 'text-[12px] shadow-[inset_0_-1px_0_rgba(255,255,255,.6)]'
+    .inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-secondary-text.bg-surface-muted.ring-1.ring-default-border{
+      class: 'text-[12px]'
     }
       = l(post.posted_on, format: :default)
+
     - if post.posted_on == Date.current
       - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
         = link_to t('daily_posts.shared.edit'),
@@ -13,7 +14,7 @@
           data: { turbo_frame: 'modal' },
           class: 'text-brand hover:underline font-semibold text-sm'
       - else
-        %button.text-gray-500.font-semibold.text-sm.cursor-not-allowed{
+        %button.text-muted.font-semibold.text-sm.cursor-not-allowed{
           type: 'button',
           data: {
             controller: 'alert',
@@ -21,7 +22,8 @@
             alert_message_value: t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT)
           }
         }= t('daily_posts.shared.edit')
-      %button.text-gray-500.font-semibold.text-sm.ml-3.cursor-not-allowed{
+
+      %button.text-muted.font-semibold.text-sm.ml-3.cursor-not-allowed{
         type: 'button',
         data: {
           controller: 'alert',
@@ -29,6 +31,7 @@
           alert_message_value: t('daily_posts.shared.delete_today_alert')
         }
       }= t('daily_posts.shared.delete')
+
     - else
       = link_to t('daily_posts.shared.delete'),
         daily_post_path(post),
@@ -39,4 +42,5 @@
           confirm_method_value: 'delete',
           confirm_requires_text_value: true,
           confirm_expected_text_value: '削除する' }
-  .mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words= h(post.content)
+
+  .mt-3.leading-relaxed.text-primary.whitespace-pre-wrap.break-words= h(post.content)

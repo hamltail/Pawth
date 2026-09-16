@@ -28,7 +28,7 @@
       },
       class: 'p-0 border-0 bg-transparent'
     }
-      .rounded-2xl.shadow-xl.bg-white.p-2.overflow-hidden
+      .rounded-2xl.shadow-xl.bg-surface.p-2.overflow-hidden
         %emoji-picker{
           data: {
             emoji_target: 'picker',
@@ -39,12 +39,12 @@
     = f.text_area :content,
       rows: 12,
       placeholder: t('daily_posts.shared.content_placeholder'),
-      class: 'border border-gray-300 rounded w-full p-3 text-base resize-none',
+      class: 'border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full p-3 text-base resize-none',
       data: { character_counter_target: 'input',
               action: 'input->character-counter#update paste->character-counter#paste',
               emoji_target: 'textarea' }
 
-    .text-right.text-sm.text-gray-500{ data: { character_counter_target: 'counter' } }
+    .text-right.text-sm.text-muted{ data: { character_counter_target: 'counter' } }
       = t('daily_posts.shared.remaining_chars', max: DailyPost::CONTENT_MAX_LENGTH)
 
   .flex.justify-end
