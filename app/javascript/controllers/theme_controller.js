@@ -4,7 +4,7 @@ const STORAGE_KEY = 'pawth-theme';
 const THEMES = ['light', 'dark', 'system'];
 
 export default class extends Controller {
-  static targets = ['menu', 'label', 'option'];
+  static targets = ['option'];
 
   connect() {
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -22,12 +22,6 @@ export default class extends Controller {
     );
   }
 
-  toggleMenu() {
-    if (!this.hasMenuTarget) return;
-
-    this.menuTarget.classList.toggle('hidden');
-  }
-
   select(event) {
     const theme = event.currentTarget.dataset.theme;
 
@@ -35,10 +29,6 @@ export default class extends Controller {
 
     localStorage.setItem(STORAGE_KEY, theme);
     this.apply(theme);
-
-    if (this.hasMenuTarget) {
-      this.menuTarget.classList.add('hidden');
-    }
   }
 
   currentTheme() {
@@ -54,7 +44,6 @@ export default class extends Controller {
     document.documentElement.dataset.theme = resolvedTheme;
     document.documentElement.dataset.themePreference = theme;
 
-    this.updateLabel(theme);
     this.updateOptions(theme);
   }
 
@@ -64,27 +53,19 @@ export default class extends Controller {
     this.apply('system');
   }
 
-  updateLabel(theme) {
-    if (!this.hasLabelTarget) return;
-
-    const labels = {
-      light: 'ライト',
-      dark: 'ダーク',
-      system: 'システム',
-    };
-
-    this.labelTarget.textContent = labels[theme];
-  }
-
   updateOptions(theme) {
     if (!this.hasOptionTarget) return;
 
     this.optionTargets.forEach((option) => {
       const selected = option.dataset.theme === theme;
 
-      option.setAttribute('aria-checked', String(selected));
-      option.classList.toggle('text-brand', selected);
-      option.classList.toggle('font-bold', selected);
+      option.setAttribute('aria-pressed', String(selected));
+
+      option.classList.toggle('bg-brand', selected);
+      option.classList.toggle('text-white', selected);
+
+      option.classList.toggle('text-muted', !selected);
+      option.classList.toggle('hover:bg-surface-muted', !selected);
     });
   }
 }
