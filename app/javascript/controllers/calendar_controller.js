@@ -34,10 +34,12 @@ export default class extends Controller {
     const el = e.target.closest('.paw.paw--posted');
     if (!el || !this.element.contains(el)) return;
 
-    gsap.killTweensOf(el, 'y,filter');
+    gsap.killTweensOf(el, 'y,rotation,filter');
 
     gsap.to(el, {
       y: -1,
+      rotation: 6,
+      scale: 1.1,
       filter: 'drop-shadow(0 3px 3px rgb(196 181 253 / 0.55))',
       duration: 0.18,
       ease: 'power1.out',
@@ -49,10 +51,12 @@ export default class extends Controller {
     const el = e.target.closest('.paw.paw--posted');
     if (!el || !this.element.contains(el)) return;
 
-    gsap.killTweensOf(el, 'y,filter');
+    gsap.killTweensOf(el, 'y,rotation,filter');
 
     gsap.to(el, {
       y: 0,
+      rotation: 0,
+      scale: 1,
       filter: 'drop-shadow(0 0 0 rgb(0 0 0 / 0))',
       duration: 0.18,
       ease: 'power1.out',
