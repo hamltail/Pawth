@@ -3,60 +3,289 @@
   data: { menu_target: 'sidebar' }
 }
   %div
-    .text-lg.font-bold.text-brand.mb-8
-      = link_to t('layout.sidebar.app_name'), root_path
+    .text-lg.font-bold.mb-8
+      = link_to t('layout.sidebar.app_name'),
+                root_path,
+                class: 'sidebar-brand'
 
     %nav.flex.flex-col.space-y-6
-      = link_to root_path, class: 'flex items-center gap-3 text-gray-700 hover:text-brand-light font-medium' do
-        %svg.w-5.h-5.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-          %ellipse{ cx: '12', cy: '16.5', rx: '4.5', ry: '3.75', 'stroke-width': '1.5' }
-          %ellipse{ cx: '6.75', cy: '10', rx: '1.75', ry: '2.25', transform: 'rotate(-25 6.75 10)', 'stroke-width': '1.5' }
-          %ellipse{ cx: '10.25', cy: '6.75', rx: '1.75', ry: '2.25', transform: 'rotate(-8 10.25 6.75)', 'stroke-width': '1.5' }
-          %ellipse{ cx: '13.75', cy: '6.75', rx: '1.75', ry: '2.25', transform: 'rotate(8 13.75 6.75)', 'stroke-width': '1.5' }
-          %ellipse{ cx: '17.25', cy: '10', rx: '1.75', ry: '2.25', transform: 'rotate(25 17.25 10)', 'stroke-width': '1.5' }
+      = link_to root_path, class: 'theme-link flex items-center gap-3 font-medium' do
+        %svg.w-5.h-5.shrink-0{
+          fill: 'none',
+          stroke: 'currentColor',
+          viewBox: '0 0 24 24',
+          aria: { hidden: 'true' }
+        }
+          %ellipse{
+            cx: '12',
+            cy: '16.5',
+            rx: '4.5',
+            ry: '3.75',
+            'stroke-width': '1.5'
+          }
+          %ellipse{
+            cx: '6.75',
+            cy: '10',
+            rx: '1.75',
+            ry: '2.25',
+            transform: 'rotate(-25 6.75 10)',
+            'stroke-width': '1.5'
+          }
+          %ellipse{
+            cx: '10.25',
+            cy: '6.75',
+            rx: '1.75',
+            ry: '2.25',
+            transform: 'rotate(-8 10.25 6.75)',
+            'stroke-width': '1.5'
+          }
+          %ellipse{
+            cx: '13.75',
+            cy: '6.75',
+            rx: '1.75',
+            ry: '2.25',
+            transform: 'rotate(8 13.75 6.75)',
+            'stroke-width': '1.5'
+          }
+          %ellipse{
+            cx: '17.25',
+            cy: '10',
+            rx: '1.75',
+            ry: '2.25',
+            transform: 'rotate(25 17.25 10)',
+            'stroke-width': '1.5'
+          }
+
         %span= t('layout.sidebar.calendar')
 
-      = link_to daily_posts_path, class: 'flex items-center gap-3 text-gray-700 hover:text-brand-light font-medium' do
-        %svg.w-5.h-5.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-          %path{ d: 'M4.5 7.5h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
-          %path{ d: 'M6.75 4.5h10.5A2.25 2.25 0 0 1 19.5 6.75v12A2.25 2.25 0 0 1 17.25 21H6.75A2.25 2.25 0 0 1 4.5 18.75v-12A2.25 2.25 0 0 1 6.75 4.5Z', 'stroke-width': '1.5', 'stroke-linejoin': 'round' }
-          %path{ d: 'M9 11.25h6M9 15h4.5', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
+      = link_to daily_posts_path, class: 'theme-link flex items-center gap-3 font-medium' do
+        %svg.w-5.h-5.shrink-0{
+          fill: 'none',
+          stroke: 'currentColor',
+          viewBox: '0 0 24 24',
+          aria: { hidden: 'true' }
+        }
+          %path{
+            d: 'M4.5 7.5h15',
+            'stroke-width': '1.5',
+            'stroke-linecap': 'round'
+          }
+          %path{
+            d: 'M6.75 4.5h10.5A2.25 2.25 0 0 1 19.5 6.75v12A2.25 2.25 0 0 1 17.25 21H6.75A2.25 2.25 0 0 1 4.5 18.75v-12A2.25 2.25 0 0 1 6.75 4.5Z',
+            'stroke-width': '1.5',
+            'stroke-linejoin': 'round'
+          }
+          %path{
+            d: 'M9 11.25h6M9 15h4.5',
+            'stroke-width': '1.5',
+            'stroke-linecap': 'round'
+          }
+
         %span= t('layout.sidebar.daily_posts')
 
       %div{ data: { controller: 'collapsible', open: 'false' } }
-        %button.w-full.flex.items-center.justify-between.text-gray-700.font-medium.hover:text-brand-light{
+        %button.theme-link.w-full.flex.items-center.justify-between.font-medium{
           type: 'button',
           data: { action: 'click->collapsible#toggle' },
-          aria: { expanded: 'false', controls: 'settings-submenu' }
+          aria: {
+            expanded: 'false',
+            controls: 'settings-submenu'
+          }
         }
           .flex.items-center.gap-3
-            %svg.w-5.h-5.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-              %path{ d: 'M9.6 3.75h4.8l.55 2.05a7 7 0 0 1 1.47.85l2.04-.58 2.4 4.16-1.5 1.48a7.3 7.3 0 0 1 0 1.7l1.5 1.48-2.4 4.16-2.04-.58a7 7 0 0 1-1.47.85l-.55 2.05H9.6l-.55-2.05a7 7 0 0 1-1.47-.85l-2.04.58-2.4-4.16 1.5-1.48a7.3 7.3 0 0 1 0-1.7l-1.5-1.48 2.4-4.16 2.04.58a7 7 0 0 1 1.47-.85l.55-2.05Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
-              %circle{ cx: '12', cy: '12.56', r: '2.3', 'stroke-width': '1.5' }
+            %svg.w-5.h-5.shrink-0{
+              fill: 'none',
+              stroke: 'currentColor',
+              viewBox: '0 0 24 24',
+              aria: { hidden: 'true' }
+            }
+              %path{
+                d: 'M9.6 3.75h4.8l.55 2.05a7 7 0 0 1 1.47.85l2.04-.58 2.4 4.16-1.5 1.48a7.3 7.3 0 0 1 0 1.7l1.5 1.48-2.4 4.16-2.04-.58a7 7 0 0 1-1.47.85l-.55 2.05H9.6l-.55-2.05a7 7 0 0 1-1.47-.85l-2.04.58-2.4-4.16 1.5-1.48a7.3 7.3 0 0 1 0-1.7l-1.5-1.48 2.4-4.16 2.04.58a7 7 0 0 1 1.47-.85l.55-2.05Z',
+                'stroke-width': '1.5',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round'
+              }
+              %circle{
+                cx: '12',
+                cy: '12.56',
+                r: '2.3',
+                'stroke-width': '1.5'
+              }
+
             %span= t('layout.sidebar.settings')
 
-          %span.transition-transform.duration-200{ data: { collapsible_target: 'icon' } }
+          %span.transition-transform.duration-200{
+            data: { collapsible_target: 'icon' }
+          }
             ▶
 
-        %ul.mt-2.pl-4.space-y-2.hidden#settings-submenu{ data: { collapsible_target: 'panel' } }
+        %ul.mt-2.pl-4.space-y-2.hidden#settings-submenu{
+          data: { collapsible_target: 'panel' }
+        }
           %li
-            = link_to edit_profile_path, class: 'flex items-center gap-2 text-gray-700 hover:text-brand-light font-medium' do
-              %svg.w-4.h-4.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-                %circle{ cx: '12', cy: '8', r: '3', 'stroke-width': '1.5' }
-                %path{ d: 'M6.5 19c.8-3.1 2.65-4.75 5.5-4.75S16.7 15.9 17.5 19', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
+            = link_to edit_profile_path, class: 'theme-link flex items-center gap-2 font-medium' do
+              %svg.w-4.h-4.shrink-0{
+                fill: 'none',
+                stroke: 'currentColor',
+                viewBox: '0 0 24 24',
+                aria: { hidden: 'true' }
+              }
+                %circle{
+                  cx: '12',
+                  cy: '8',
+                  r: '3',
+                  'stroke-width': '1.5'
+                }
+                %path{
+                  d: 'M6.5 19c.8-3.1 2.65-4.75 5.5-4.75S16.7 15.9 17.5 19',
+                  'stroke-width': '1.5',
+                  'stroke-linecap': 'round'
+                }
+
               %span= t('layout.sidebar.profile_settings')
 
           %li
-            = link_to edit_user_registration_path, class: 'flex items-center gap-2 text-gray-700 hover:text-brand-light font-medium' do
-              %svg.w-4.h-4.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-                %path{ d: 'M9.6 3.75h4.8l.55 2.05a7 7 0 0 1 1.47.85l2.04-.58 2.4 4.16-1.5 1.48a7.3 7.3 0 0 1 0 1.7l1.5 1.48-2.4 4.16-2.04-.58a7 7 0 0 1-1.47.85l-.55 2.05H9.6l-.55-2.05a7 7 0 0 1-1.47-.85l-2.04.58-2.4-4.16 1.5-1.48a7.3 7.3 0 0 1 0-1.7l-1.5-1.48 2.4-4.16 2.04.58a7 7 0 0 1 1.47-.85l.55-2.05Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
-                %circle{ cx: '12', cy: '12.56', r: '2.3', 'stroke-width': '1.5' }
+            = link_to edit_user_registration_path, class: 'theme-link flex items-center gap-2 font-medium' do
+              %svg.w-4.h-4.shrink-0{
+                fill: 'none',
+                stroke: 'currentColor',
+                viewBox: '0 0 24 24',
+                aria: { hidden: 'true' }
+              }
+                %path{
+                  d: 'M9.6 3.75h4.8l.55 2.05a7 7 0 0 1 1.47.85l2.04-.58 2.4 4.16-1.5 1.48a7.3 7.3 0 0 1 0 1.7l1.5 1.48-2.4 4.16-2.04-.58a7 7 0 0 1-1.47.85l-.55 2.05H9.6l-.55-2.05a7 7 0 0 1-1.47-.85l-2.04.58-2.4-4.16 1.5-1.48a7.3 7.3 0 0 1 0-1.7l-1.5-1.48 2.4-4.16 2.04.58a7 7 0 0 1 1.47-.85l.55-2.05Z',
+                  'stroke-width': '1.5',
+                  'stroke-linecap': 'round',
+                  'stroke-linejoin': 'round'
+                }
+                %circle{
+                  cx: '12',
+                  cy: '12.56',
+                  r: '2.3',
+                  'stroke-width': '1.5'
+                }
+
               %span= t('layout.sidebar.account_settings')
+
+      %div{ data: { controller: 'theme' } }
+        %div.inline-flex.shrink-0.gap-1.rounded-full.border.border-default-border.bg-surface.p-1
+          %button.grid.size-8.place-items-center.rounded-full.text-muted.hover:bg-surface-muted.transition-colors{
+            type: 'button',
+            aria: {
+              label: 'ライト',
+              pressed: 'false'
+            },
+            title: 'ライト',
+            data: {
+              action: 'click->theme#select',
+              theme: 'light',
+              theme_target: 'option'
+            }
+          }
+            %span.block.size-4
+              %svg.w-full.h-full{
+                viewBox: '0 0 24 24',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '2',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+                aria: { hidden: 'true' }
+              }
+                %circle{
+                  cx: '12',
+                  cy: '12',
+                  r: '4'
+                }
+                %path{ d: 'M12 2v2' }
+                %path{ d: 'M12 20v2' }
+                %path{ d: 'm4.93 4.93 1.41 1.41' }
+                %path{ d: 'm17.66 17.66 1.41 1.41' }
+                %path{ d: 'M2 12h2' }
+                %path{ d: 'M20 12h2' }
+                %path{ d: 'm6.34 17.66-1.41 1.41' }
+                %path{ d: 'm19.07 4.93-1.41 1.41' }
+
+          %button.grid.size-8.place-items-center.rounded-full.text-muted.hover:bg-surface-muted.transition-colors{
+            type: 'button',
+            aria: {
+              label: 'ダーク',
+              pressed: 'false'
+            },
+            title: 'ダーク',
+            data: {
+              action: 'click->theme#select',
+              theme: 'dark',
+              theme_target: 'option'
+            }
+          }
+            %span.block.size-4
+              %svg.w-full.h-full{
+                viewBox: '0 0 24 24',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '2',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+                aria: { hidden: 'true' }
+              }
+                %path{
+                  d: 'M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36A7 7 0 0 1 12 3Z'
+                }
+
+          %button.grid.size-8.place-items-center.rounded-full.text-muted.hover:bg-surface-muted.transition-colors{
+            type: 'button',
+            aria: {
+              label: 'システム',
+              pressed: 'false'
+            },
+            title: 'システム',
+            data: {
+              action: 'click->theme#select',
+              theme: 'system',
+              theme_target: 'option'
+            }
+          }
+            %span.block.size-4
+              %svg.w-full.h-full{
+                viewBox: '0 0 24 24',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '2',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+                aria: { hidden: 'true' }
+              }
+                %rect{
+                  x: '3',
+                  y: '4',
+                  width: '18',
+                  height: '12',
+                  rx: '2'
+                }
+                %path{ d: 'M8 20h8' }
+                %path{ d: 'M12 16v4' }
 
       = link_to destroy_user_session_path,
           data: { turbo_method: :delete },
-          class: 'sidebar-no-close flex items-center gap-3 text-red-600 font-medium' do
-        %svg.w-5.h-5.shrink-0{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
-          %path{ d: 'M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
-          %path{ d: 'M13 8.5 16.5 12 13 15.5M8.5 12h8', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+          class: 'sidebar-no-close sidebar-logout flex items-center gap-3 font-medium' do
+        %svg.w-5.h-5.shrink-0{
+          fill: 'none',
+          stroke: 'currentColor',
+          viewBox: '0 0 24 24',
+          aria: { hidden: 'true' }
+        }
+          %path{
+            d: 'M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10',
+            'stroke-width': '1.5',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+          }
+          %path{
+            d: 'M13 8.5 16.5 12 13 15.5M8.5 12h8',
+            'stroke-width': '1.5',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+          }
+
         %span= t('layout.sidebar.logout')

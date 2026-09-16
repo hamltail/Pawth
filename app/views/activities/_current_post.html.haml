@@ -5,8 +5,8 @@
       action: 'pointerdown->post-navigator#handlePointerDown pointerup->post-navigator#handlePointerUp pointercancel->post-navigator#handlePointerCancel'
     }
   }
-    .flex.items-center.gap-2
-      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-gray-400.transition-colors{
+    .flex.items-start.gap-2
+      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-muted.hover:text-primary.transition-colors{
         type: 'button',
         aria: { label: '前の日記' },
         data: {
@@ -16,15 +16,15 @@
       }
         = render 'shared/icon_arrow', direction: 'left', klass: 'w-5 h-5'
 
-      .daily-post-card.relative.flex-1.min-w-0.rounded-2xl.p-5.bg-white.shadow-sm.ring-1.ring-gray-300.hover:-translate-y-1.hover:shadow-lg.active:translate-y-1.active:scale-x-105.active:scale-y-90{
+      .daily-post-card.relative.flex-1.min-w-0.rounded-2xl.p-5.bg-surface.shadow-sm.ring-1.ring-default-border.hover:-translate-y-1.hover:shadow-lg.active:translate-y-1.active:scale-x-105.active:scale-y-90{
         class: 'transform transition-transform duration-350 ease-[cubic-bezier(0.34,2.2,0.64,1)]'
       }
-        .inline-flex.items-center.gap-2.rounded-full.bg-gray-100.px-3.py-1.text-xs.font-semibold.text-gray-600
+        .inline-flex.items-center.gap-2.rounded-full.bg-surface-muted.px-3.py-1.text-xs.font-semibold.text-secondary-text
           %span#daily-post-date= post.posted_on
 
-        .mt-3.leading-relaxed.text-gray-800.whitespace-pre-wrap.break-words#daily-post-content= h(post.content)
+        .mt-3.leading-relaxed.text-primary.whitespace-pre-wrap.break-words#daily-post-content= h(post.content)
 
-      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-gray-400.transition-colors{
+      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-muted.hover:text-primary.transition-colors{
         type: 'button',
         aria: { label: '次の日記' },
         data: {
@@ -35,5 +35,5 @@
         = render 'shared/icon_arrow', direction: 'right', klass: 'w-5 h-5'
 
 - else
-  .mb-6.rounded-2xl.p-6.bg-gray-50.text-gray-400.text-center.ring-1.ring-gray-100
+  .mb-6.rounded-2xl.p-6.bg-surface-muted.text-muted.text-center.ring-1.ring-default-border
     = t('activities.current_post.empty')

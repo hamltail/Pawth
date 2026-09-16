@@ -1,5 +1,6 @@
 module CalendarHelper
   TOTAL_CELLS = 7 * 6 # 42
+
   def calendar_meta(calendar_days)
     first_day = calendar_days.first
     leading_empty = ((first_day.wday - 1) % 7)
@@ -17,14 +18,15 @@ module CalendarHelper
     I18n.t('date.abbr_day_names', locale: :en).rotate(1) # 英語固定（月曜始まり）
   end
 
-def day_cell_classes(date)
-  base = 'relative flex h-16 flex-col items-center'
-  case date.wday
-  when 6 then "#{base} text-blue-600"
-  when 0 then "#{base} text-red-600"
-  else base
+  def day_cell_classes(date)
+    base = 'relative flex h-16 flex-col items-center'
+
+    case date.wday
+    when 6 then "#{base} calendar-saturday"
+    when 0 then "#{base} calendar-sunday"
+    else base
+    end
   end
-end
 
   def post_for(date, posts_by_day)
     posts_by_day[date]
@@ -42,7 +44,7 @@ end
              grad: true
     else
       render 'shared/paw',
-             klass: 'text-gray-300 opacity-50',
+             klass: 'text-muted opacity-50',
              grad: false
     end
   end
