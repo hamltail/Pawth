@@ -12,7 +12,7 @@
       %h1.text-xl.md:text-2xl.font-bold.text-gray-900
         = page_title
 
-  %div{ class: 'flex flex-col xl:grid xl:grid-cols-[minmax(0,5fr)_minmax(24rem,4fr)] xl:gap-8 xl:items-start' }
+  %div{ class: 'flex flex-col xl:grid xl:grid-cols-2 xl:gap-8 xl:items-start' }
     %div
       = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
         = render 'calendar',
