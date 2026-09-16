@@ -1,7 +1,7 @@
 .mb-8#calendar{
   data: {
     controller: 'calendar',
-    action: 'mouseover->calendar#handleMouseover click->calendar#handleClick pointerdown->calendar#handlePointerDown pointerup->calendar#handlePointerUp pointercancel->calendar#handlePointerCancel'
+    action: 'mouseover->calendar#handleMouseover mouseout->calendar#handleMouseout click->calendar#handleClick pointerdown->calendar#handlePointerDown pointerup->calendar#handlePointerUp pointercancel->calendar#handlePointerCancel'
   }
 }
   - meta = calendar_meta(calendar_days)

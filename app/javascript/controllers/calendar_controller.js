@@ -29,7 +29,31 @@ export default class extends Controller {
   handleMouseover(e) {
     const el = e.target.closest('.paw.paw--posted');
     if (!el || !this.element.contains(el)) return;
-    this.squish(el);
+
+    gsap.killTweensOf(el, 'y,filter');
+
+    gsap.to(el, {
+      y: -1,
+      filter: 'drop-shadow(0 3px 3px rgb(196 181 253 / 0.55))',
+      duration: 0.18,
+      ease: 'power1.out',
+      overwrite: 'auto',
+    });
+  }
+
+  handleMouseout(e) {
+    const el = e.target.closest('.paw.paw--posted');
+    if (!el || !this.element.contains(el)) return;
+
+    gsap.killTweensOf(el, 'y,filter');
+
+    gsap.to(el, {
+      y: 0,
+      filter: 'drop-shadow(0 0 0 rgb(0 0 0 / 0))',
+      duration: 0.18,
+      ease: 'power1.out',
+      overwrite: 'auto',
+    });
   }
 
   handleClick(e) {
@@ -113,17 +137,25 @@ export default class extends Controller {
   }
 
   squish(el, { scale = 1.5, duration = 0.15 } = {}) {
-    gsap.fromTo(
-      el,
-      { scale: 1 },
-      {
-        scale,
-        duration,
-        yoyo: true,
-        repeat: 1,
-        ease: 'power1.inOut',
+    // 連打された場合は、進行中のscaleアニメーションだけを破棄する
+    gsap.killTweensOf(el, 'scale');
+
+    // 前回の途中状態を引き継がず、必ず等倍から開始する
+    gsap.set(el, { scale: 1 });
+
+    gsap.to(el, {
+      scale,
+      duration,
+      yoyo: true,
+      repeat: 1,
+      ease: 'power1.inOut',
+      overwrite: 'auto',
+
+      // アニメーション終了後も必ず等倍へ戻す
+      onComplete: () => {
+        gsap.set(el, { scale: 1 });
       },
-    );
+    });
   }
 
   fadeInPaws() {
