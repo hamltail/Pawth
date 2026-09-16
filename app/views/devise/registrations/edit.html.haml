@@ -3,7 +3,7 @@
 
   = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true, data: { turbo: "false" } }) do |f|
     - if resource.errors.any?
-      %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
+      %div.status-error.border.px-4.py-4.rounded.mb-6
         %p.font-bold= "#{resource.errors.count}件のエラーがあります。"
         %ul.ml-4.list-disc
           - priority = [:email, :password, :password_confirmation, :current_password]
@@ -20,7 +20,7 @@
                       class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
       - if resource.errors[:email].any?
-        %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:email).first
+        %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:email).first
 
     .mb-4
       = f.label :password, class: "block text-secondary-text"
@@ -37,7 +37,7 @@
                          class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
       - if resource.errors[:password].any?
-        %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password).first
+        %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:password).first
 
     .mb-4
       = f.label :password_confirmation, class: "block text-secondary-text mb-2"
@@ -47,7 +47,7 @@
                          class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
       - if resource.errors[:password_confirmation].any?
-        %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:password_confirmation).first
+        %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:password_confirmation).first
 
     .mb-4
       = f.label :current_password, class: "block text-secondary-text"
@@ -60,7 +60,7 @@
                          class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
       - if resource.errors[:current_password].any?
-        %p.text-red-500.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
+        %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:current_password).first
 
     .flex.justify-center
       = f.button type: 'submit', class: 'inline-flex items-center gap-2 bg-brand hover:bg-brand-light text-white font-bold py-2 px-8 rounded-full' do
@@ -77,7 +77,7 @@
       = t('users.edit.delete_section_description')
 
     - if flash[:alert].present?
-      %p.bg-red-50.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6{ role: 'alert', 'aria-live': 'polite' }
+      %p.status-error.border.px-4.py-4.rounded.mb-6{ role: 'alert', 'aria-live': 'polite' }
         = flash[:alert]
 
     = form_with scope: resource_name, url: registration_path(resource_name),

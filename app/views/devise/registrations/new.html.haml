@@ -11,7 +11,7 @@
       = t("devise.shared.sign_up")
 
     - if resource.errors.any?
-      %div.bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
+      %div.status-error.border.px-4.py-4.rounded.mb-6
         %p.font-bold= "#{resource.errors.count}件のエラーがあります。"
         %ul.ml-4.list-disc
           - priority = [:username, :email, :password, :password_confirmation]
@@ -31,7 +31,7 @@
                        class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
         - if resource.errors[:username].any?
-          %p.text-red-500.text-sm.mt-1
+          %p.field-error.text-sm.mt-1
             = resource.errors.full_messages_for(:username).first
 
       .mb-4
@@ -43,7 +43,7 @@
                         class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
         - if resource.errors[:email].any?
-          %p.text-red-500.text-sm.mt-1
+          %p.field-error.text-sm.mt-1
             = resource.errors.full_messages_for(:email).first
 
       .mb-4
@@ -59,7 +59,7 @@
                            class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
         - if resource.errors[:password].any?
-          %p.text-red-500.text-sm.mt-1
+          %p.field-error.text-sm.mt-1
             = resource.errors.full_messages_for(:password).first
 
       .mb-4
@@ -71,7 +71,7 @@
                            class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
 
         - if resource.errors[:password_confirmation].any?
-          %p.text-red-500.text-sm.mt-1
+          %p.field-error.text-sm.mt-1
             = resource.errors.full_messages_for(:password_confirmation).first
 
       .mb-6
