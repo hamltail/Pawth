@@ -8,7 +8,14 @@ export default class extends Controller {
     this.pointerStartY = null;
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
+    this.handleCalendarChanged = this.handleCalendarChanged.bind(this);
+
     document.addEventListener('pawth:post-selected', this.handlePostSelected);
+
+    document.addEventListener(
+      'pawth:calendar-changed',
+      this.handleCalendarChanged,
+    );
 
     this.refresh();
   }
@@ -18,6 +25,12 @@ export default class extends Controller {
       'pawth:post-selected',
       this.handlePostSelected,
     );
+
+    document.removeEventListener(
+      'pawth:calendar-changed',
+      this.handleCalendarChanged,
+    );
+
     this.resetPointer();
   }
 
@@ -27,6 +40,12 @@ export default class extends Controller {
     if (!date) return;
 
     this.refresh(date);
+  }
+
+  handleCalendarChanged() {
+    // 月が変わった時点では、表示中の日記が
+    // 新しい月の日記とは限らないため一度無効化する
+    this.disableNavigation();
   }
 
   previous() {
@@ -95,6 +114,7 @@ export default class extends Controller {
 
   currentIndex(posts) {
     const dateEl = document.getElementById('daily-post-date');
+
     if (!dateEl) return -1;
 
     return posts.findIndex((post) => post.dataset.date === dateEl.textContent);
@@ -120,8 +140,7 @@ export default class extends Controller {
     const posts = this.posts();
 
     if (!posts.length) {
-      this.setDisabled(this.prevButtonTarget, true);
-      this.setDisabled(this.nextButtonTarget, true);
+      this.disableNavigation();
       return;
     }
 
@@ -132,12 +151,20 @@ export default class extends Controller {
       (post) => post.dataset.date === currentDate,
     );
 
-    this.setDisabled(this.prevButtonTarget, currentIndex <= 0);
+    // 表示中の日記が現在のカレンダー月に存在しない
+    if (currentIndex === -1) {
+      this.disableNavigation();
+      return;
+    }
 
-    this.setDisabled(
-      this.nextButtonTarget,
-      currentIndex === -1 || currentIndex >= posts.length - 1,
-    );
+    this.setDisabled(this.prevButtonTarget, currentIndex === 0);
+
+    this.setDisabled(this.nextButtonTarget, currentIndex === posts.length - 1);
+  }
+
+  disableNavigation() {
+    this.setDisabled(this.prevButtonTarget, true);
+    this.setDisabled(this.nextButtonTarget, true);
   }
 
   setDisabled(button, disabled) {

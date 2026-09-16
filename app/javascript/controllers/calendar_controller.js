@@ -15,6 +15,10 @@ export default class extends Controller {
       this.fadeInPaws();
       this.animateTodayBadge();
     }, this.element);
+
+    // Turbo Frameによって月が切り替わったとき、
+    // 日記ナビゲーションの状態を現在月に合わせて更新する
+    document.dispatchEvent(new CustomEvent('pawth:calendar-changed'));
   }
 
   refreshCurrentPostRefs() {
@@ -86,8 +90,8 @@ export default class extends Controller {
       );
     }
 
-    // 日記ナビゲーションへ選択した日記を通知する
-    // 月を切り替えたあとでも、矢印の活性状態を正しく更新する
+    // 肉球から日記を選択したら、
+    // 日記ナビゲーションの矢印状態を更新する
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
         detail: { date },
