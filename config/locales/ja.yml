@@ -69,6 +69,7 @@ ja:
     index:
       title: 'Diary Archive'
       posted_today_message: '今日はすでに日記をかいています。'
+      new_button: '今日の日記をかく'
       search_placeholder: 'キーワード検索'
       year_prompt: '年'
       month_prompt: '月'

@@ -12,8 +12,8 @@
       %h1.text-xl.md:text-2xl.font-bold.text-gray-900
         = page_title
 
-  %div{ class: 'flex flex-col xl:grid xl:grid-cols-[minmax(0,5fr)_minmax(24rem,4fr)] xl:gap-8 xl:items-start' }
-    %div{ class: 'order-2 xl:order-1' }
+  %div{ class: 'flex flex-col xl:grid xl:grid-cols-2 xl:gap-8 xl:items-start' }
+    %div
       = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
         = render 'calendar',
           user: @user,
@@ -22,7 +22,7 @@
           prev_month: @prev_month,
           next_month: @next_month
 
-    %div{ class: 'order-1 xl:order-2 mb-8 xl:mb-0' }
+    %div{ class: 'mb-8 xl:mb-0' }
       - if user_signed_in? && current_user == @user
         .flex.justify-center.mb-6
           #new-post-button
