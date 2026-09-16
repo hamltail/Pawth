@@ -3,7 +3,7 @@
 
   = form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|
     - if @profile.errors.any?
-      .bg-red-100.border.border-red-400.text-red-700.px-4.py-4.rounded.mb-6
+      .status-error.border.px-4.py-4.rounded.mb-6
         %p.font-bold= t('shared.errors.title', count: @profile.errors.count)
         %ul.ml-4.list-disc
           - priority = [:avatar, :display_name]
@@ -38,7 +38,7 @@
         %span ファイルを選択
 
       - if @profile.errors[:avatar].any?
-        %p.text-red-500.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
+        %p.field-error.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
 
     .mb-4
       = f.label :display_name, t('activerecord.attributes.profile.display_name'), class: 'block text-secondary-text mb-1'
