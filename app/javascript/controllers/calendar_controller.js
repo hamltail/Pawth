@@ -85,6 +85,14 @@ export default class extends Controller {
         },
       );
     }
+
+    // 日記ナビゲーションへ選択した日記を通知する
+    // 月を切り替えたあとでも、矢印の活性状態を正しく更新する
+    document.dispatchEvent(
+      new CustomEvent('pawth:post-selected', {
+        detail: { date },
+      }),
+    );
   }
 
   handlePointerDown(e) {
