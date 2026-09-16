@@ -17,14 +17,14 @@ module CalendarHelper
     I18n.t('date.abbr_day_names', locale: :en).rotate(1) # 英語固定（月曜始まり）
   end
 
-  def day_cell_classes(date)
-    base = 'relative flex flex-col items-center'
-    case date.wday
-    when 6 then "#{base} text-blue-600"
-    when 0 then "#{base} text-red-600"
-    else base
-    end
+def day_cell_classes(date)
+  base = 'relative flex h-16 flex-col items-center'
+  case date.wday
+  when 6 then "#{base} text-blue-600"
+  when 0 then "#{base} text-red-600"
+  else base
   end
+end
 
   def post_for(date, posts_by_day)
     posts_by_day[date]
