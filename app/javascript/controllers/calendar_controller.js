@@ -9,11 +9,17 @@ export default class extends Controller {
 
     this.pointerStartX = null;
     this.pointerStartY = null;
+    this.selectedMark = null;
+
+    this.handlePostSelected = this.handlePostSelected.bind(this);
+
+    document.addEventListener('pawth:post-selected', this.handlePostSelected);
 
     this.ctx = gsap.context(() => {
       this.refreshCurrentPostRefs();
       this.fadeInMarks();
       this.animateTodayBadge();
+      this.syncSelectedMark();
     }, this.element);
 
     // Turbo Frameによって月が切り替わったとき、
@@ -34,7 +40,25 @@ export default class extends Controller {
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    gsap.killTweensOf(el, 'y,rotation,filter');
+    // 選択中のマークはCSS側でネオンを管理しているため、
+    // GSAPでは位置・回転・拡大だけを操作する
+    if (el.classList.contains('calendar-mark--selected')) {
+      gsap.killTweensOf(el, 'y,rotation,scale');
+
+      gsap.to(el, {
+        y: -1,
+        rotation: 6,
+        scale: 1.1,
+        duration: 0.18,
+        ease: 'power1.out',
+        overwrite: 'auto',
+      });
+
+      return;
+    }
+
+    // 通常のマークは従来どおりホバー時にシャドウを付ける
+    gsap.killTweensOf(el, 'y,rotation,scale,filter');
 
     gsap.to(el, {
       y: -1,
@@ -51,7 +75,23 @@ export default class extends Controller {
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    gsap.killTweensOf(el, 'y,rotation,filter');
+    // 選択中のマークはCSSネオンを壊さない
+    if (el.classList.contains('calendar-mark--selected')) {
+      gsap.killTweensOf(el, 'y,rotation,scale');
+
+      gsap.to(el, {
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        duration: 0.18,
+        ease: 'power1.out',
+        overwrite: 'auto',
+      });
+
+      return;
+    }
+
+    gsap.killTweensOf(el, 'y,rotation,scale,filter');
 
     gsap.to(el, {
       y: 0,
@@ -93,12 +133,58 @@ export default class extends Controller {
     }
 
     // カレンダーマークから日記を選択したら、
-    // 日記ナビゲーションの矢印状態を更新する
+    // 日記ナビゲーションと選択中マークの状態を更新する
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
         detail: { date },
       }),
     );
+  }
+
+  handlePostSelected(event) {
+    const { date } = event.detail;
+
+    if (!date) return;
+
+    this.selectMark(date);
+  }
+
+  syncSelectedMark() {
+    this.refreshCurrentPostRefs();
+
+    const date = this.dateEl?.textContent;
+
+    if (!date) return;
+
+    this.selectMark(date);
+  }
+
+  selectMark(date) {
+    const nextMark = Array.from(
+      this.element.querySelectorAll('.calendar-mark.calendar-mark--posted'),
+    ).find((mark) => mark.dataset.date === date);
+
+    this.clearSelectedMark();
+
+    if (!nextMark) return;
+
+    // CSSアニメーションはクラス追加直後から開始する
+    nextMark.classList.add('calendar-mark--selected');
+    this.selectedMark = nextMark;
+  }
+
+  clearSelectedMark() {
+    if (!this.selectedMark) return;
+
+    this.selectedMark.classList.remove('calendar-mark--selected');
+
+    // 通常マークへ戻ったときに、
+    // 選択中ネオンのfilterをインラインへ残さない
+    gsap.set(this.selectedMark, {
+      clearProps: 'filter',
+    });
+
+    this.selectedMark = null;
   }
 
   handlePointerDown(e) {
@@ -184,7 +270,8 @@ export default class extends Controller {
 
     if (!marks.length) return;
 
-    gsap.killTweensOf(marks);
+    // 選択ネオンで使うfilterには触らない
+    gsap.killTweensOf(marks, 'opacity,y');
 
     gsap.fromTo(
       marks,
@@ -234,8 +321,15 @@ export default class extends Controller {
   }
 
   teardown() {
+    this.clearSelectedMark();
+
     this.tl?.kill();
     this.tl = null;
+
+    document.removeEventListener(
+      'pawth:post-selected',
+      this.handlePostSelected,
+    );
 
     gsap.killTweensOf([
       this.contentEl,
