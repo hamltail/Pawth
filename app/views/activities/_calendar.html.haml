@@ -37,7 +37,7 @@
 
         %div{ class: day_cell_classes(date) }
           %span{ class: "text-xs #{date_class}" }= date.day
-          = paw_icon_for(date, post)
+          = calendar_mark_for(date, post, icon: user.profile.calendar_icon)
 
           - if calendar_today?(date)
             = today_badge

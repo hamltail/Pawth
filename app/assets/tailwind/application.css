@@ -137,11 +137,11 @@
       0 0 24px rgba(167, 139, 250, 0.4);
   }
 
-  .sidebar-logout {
+  .danger-link {
     color: #dc2626;
   }
 
-  :root[data-theme='dark'] .sidebar-logout {
+  :root[data-theme='dark'] .danger-link {
     color: #f87171;
   }
 
@@ -149,7 +149,11 @@
     @apply motion-safe:transition-transform duration-200;
   }
 
-  .paw--posted {
+  .toggle-bar--on {
+    background-color: var(--pawth-success-border);
+  }
+
+  .calendar-mark--posted {
     @apply opacity-0 -translate-y-2;
   }
 
@@ -283,6 +287,7 @@
   }
 
   :root[data-theme='dark'] .cta-button:hover {
+    color: #ffffff;
     animation-name: cta-glow-dark;
   }
 

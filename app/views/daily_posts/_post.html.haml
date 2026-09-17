@@ -35,7 +35,7 @@
     - else
       = link_to t('daily_posts.shared.delete'),
         daily_post_path(post),
-        class: 'text-red-600 hover:underline font-semibold text-sm',
+        class: 'danger-link hover:underline font-semibold text-sm',
         data: { controller: 'confirm',
           action: 'click->confirm#click',
           confirm_message_value: t('daily_posts.shared.delete_confirm'),

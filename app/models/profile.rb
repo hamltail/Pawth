@@ -1,8 +1,11 @@
 class Profile < ApplicationRecord
+  CALENDAR_ICONS = %w[paw star].freeze
+
   belongs_to :user
   has_one_attached :avatar
 
   validates :display_name, length: { maximum: 20 }, allow_blank: true
+  validates :calendar_icon, inclusion: { in: CALENDAR_ICONS }
   validate :avatar_size_within_limit
   validate :avatar_type_allowed
 

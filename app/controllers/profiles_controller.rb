@@ -19,6 +19,11 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:display_name, :public_posts, :avatar)
+    params.require(:profile).permit(
+      :display_name,
+      :public_posts,
+      :avatar,
+      :calendar_icon
+    )
   end
 end
