@@ -149,6 +149,10 @@
     @apply motion-safe:transition-transform duration-200;
   }
 
+  .toggle-bar--on {
+    background-color: var(--pawth-success-border);
+  }
+
   .calendar-mark--posted {
     @apply opacity-0 -translate-y-2;
   }
