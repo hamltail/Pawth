@@ -7,7 +7,8 @@ module CalendarHelper
     filled = leading_empty + calendar_days.size
 
     {
-      month_label: first_day.strftime(t('date.formats.month_year')),
+      month_number: first_day.month,
+      month_year_label: first_day.strftime('%b %Y'),
       weekdays: weekdays_labels,
       leading_empty:,
       trailing_empty: TOTAL_CELLS - filled

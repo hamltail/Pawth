@@ -8,8 +8,12 @@ module DailyPostsHelper
            grad: true
   end
 
-  def timeline_month_label(date)
-    date.strftime(t('date.formats.month_year'))
+  def timeline_month_number(date)
+    date.month
+  end
+
+  def timeline_month_year_label(date)
+    date.strftime('%b %Y')
   end
 
   def timeline_weekday_label(date)

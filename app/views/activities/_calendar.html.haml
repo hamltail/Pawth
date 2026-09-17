@@ -14,7 +14,11 @@
                 aria: { label: t('activities.calendar.prev_month') } do
         = render 'shared/icon_arrow', direction: 'left', klass: 'text-muted hover:text-primary transition-colors'
 
-      %h2.text-lg.font-bold.mx-4.flex-1.text-center.text-primary{ aria: { live: 'polite' } }= meta[:month_label]
+      %h2.mx-4.flex-1.flex.items-baseline.justify-center.gap-5{ aria: { live: 'polite' } }
+        %span.text-5xl.font-bold.text-primary
+          = meta[:month_number]
+        %span.text-lg.font-semibold.text-muted
+          = meta[:month_year_label]
 
       = link_to activity_path(username: user.username, year: next_month.year, month: next_month.month),
                 class: 'mx-2',

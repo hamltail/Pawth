@@ -7,8 +7,14 @@
     %li{ class: previous_month.present? ? 'pb-6 pt-4' : 'pb-6', data: { timeline_month: current_month.strftime('%Y-%m') } }
       .flex.items-center.gap-4
         .h-px.flex-1.bg-default-border
-        %h2.text-lg.font-bold.text-primary
-          = timeline_month_label(post.posted_on)
+
+        .flex.items-baseline.gap-5
+          %span.text-4xl.font-bold.text-primary
+            = timeline_month_number(post.posted_on)
+
+          %span.text-base.font-semibold.text-muted
+            = timeline_month_year_label(post.posted_on)
+
         .h-px.flex-1.bg-default-border
 
   = render 'post', post: post
