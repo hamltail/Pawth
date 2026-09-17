@@ -1,46 +1,31 @@
-%li.group.relative.mb-4.rounded-2xl.bg-surface.p-5.shadow-sm.ring-1.ring-default-border.transition.transform.hover:-translate-y-1.hover:shadow-lg{
-  id: "post_#{post.id}"
-}
-  .flex.items-center.justify-between.gap-3
-    .inline-flex.items-center.gap-1.px-2.5.py-1.rounded-full.font-semibold.text-secondary-text.bg-surface-muted.ring-1.ring-default-border{
-      class: 'text-[12px]'
-    }
-      = l(post.posted_on, format: :default)
+%li{ id: "post_#{post.id}", class: 'grid grid-cols-[4rem_2rem_minmax(0,1fr)] gap-x-4 sm:grid-cols-[5rem_2rem_minmax(0,1fr)]' }
+  .pt-1.text-right
+    .text-sm.font-bold.leading-none.text-secondary-text
+      = post.posted_on.day
+    .mt-1.text-xs.font-bold.text-secondary-text
+      = timeline_weekday_label(post.posted_on)
 
-    - if post.posted_on == Date.current
-      - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
-        = link_to t('daily_posts.shared.edit'),
-          edit_daily_post_path(post),
-          data: { turbo_frame: 'modal' },
-          class: 'theme-link hover:underline font-semibold text-sm'
+  .relative
+    %div{ class: 'absolute bottom-0 left-[15.5px] top-0 w-px bg-default-border' }
+    .relative.z-10.h-8.w-8.bg-page
+      = timeline_mark_for(icon: current_user.profile.calendar_icon)
+
+  .min-w-0.pb-8
+    %div{ class: 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-start gap-x-4 rounded-2xl bg-surface px-5 py-4 ring-1 ring-default-border' }
+      .min-w-0.leading-relaxed.text-primary.break-words
+        = h(post.content)
+
+      - if post.posted_on == Date.current
+        - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
+          = link_to edit_daily_post_path(post), data: { turbo_frame: 'modal' }, class: 'theme-link whitespace-nowrap text-sm font-semibold leading-relaxed hover:underline' do
+            = t('daily_posts.shared.edit')
+        - else
+          %button.text-muted.cursor-not-allowed.whitespace-nowrap.text-sm.font-semibold.leading-relaxed{ type: 'button', data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT) } }
+            = t('daily_posts.shared.edit')
+
+        %button.text-muted.cursor-not-allowed.whitespace-nowrap.text-sm.font-semibold.leading-relaxed{ type: 'button', data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.delete_today_alert') } }
+          = t('daily_posts.shared.delete')
       - else
-        %button.text-muted.font-semibold.text-sm.cursor-not-allowed{
-          type: 'button',
-          data: {
-            controller: 'alert',
-            action: 'click->alert#click',
-            alert_message_value: t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT)
-          }
-        }= t('daily_posts.shared.edit')
-
-      %button.text-muted.font-semibold.text-sm.ml-3.cursor-not-allowed{
-        type: 'button',
-        data: {
-          controller: 'alert',
-          action: 'click->alert#click',
-          alert_message_value: t('daily_posts.shared.delete_today_alert')
-        }
-      }= t('daily_posts.shared.delete')
-
-    - else
-      = link_to t('daily_posts.shared.delete'),
-        daily_post_path(post),
-        class: 'danger-link hover:underline font-semibold text-sm',
-        data: { controller: 'confirm',
-          action: 'click->confirm#click',
-          confirm_message_value: t('daily_posts.shared.delete_confirm'),
-          confirm_method_value: 'delete',
-          confirm_requires_text_value: true,
-          confirm_expected_text_value: '削除する' }
-
-  .mt-3.leading-relaxed.text-primary.whitespace-pre-wrap.break-words= h(post.content)
+        %span
+        = link_to daily_post_path(post), class: 'danger-link whitespace-nowrap text-sm font-semibold leading-relaxed hover:underline', data: { controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する' } do
+          = t('daily_posts.shared.delete')
