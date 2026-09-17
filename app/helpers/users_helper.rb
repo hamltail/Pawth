@@ -5,8 +5,10 @@ module UsersHelper
 
     image_tag(
       avatar&.attached? ? avatar : 'default_avatar.png',
-      width: size, height: size,
-      class: "rounded-full object-cover #{css}",
+      width: size,
+      height: size,
+      class: "aspect-square shrink-0 rounded-full object-cover #{css}",
+      style: "width: #{size}px; height: #{size}px;",
       alt: alt_text
     )
   end

@@ -18,7 +18,7 @@
       - has_avatar = @profile.avatar.attached? && @profile.avatar.blob&.persisted?
       - default_src = asset_path('default_avatar.png')
 
-      %img.mt-2.mb-3.rounded.w-24.h-24.object-cover#avatar-preview{
+      %img.mt-2.mb-3.aspect-square.shrink-0.rounded-full.w-24.h-24.object-cover#avatar-preview{
         src: (has_avatar ? url_for(@profile.avatar) : default_src),
         alt: t('activerecord.attributes.profile.avatar'),
         data: { avatar_preview_target: 'img', default_src: default_src }
