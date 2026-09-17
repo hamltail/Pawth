@@ -82,15 +82,15 @@ class DailyPostsController < ApplicationController
   end
 
   def month_context_for(date)
-    range  = date.all_month
-    posts  = current_user.daily_posts.where(posted_on: range).to_a
+    range = date.all_month
+    posts = current_user.daily_posts.where(posted_on: range).to_a
 
     {
       user: current_user,
-      calendar_days:       range.to_a,
+      calendar_days: range.to_a,
       posts_by_day: posts.index_by(&:posted_on),
-      prev_month:          date.prev_month,
-      next_month:          date.next_month
+      prev_month: date.prev_month,
+      next_month: date.next_month
     }
   end
 
