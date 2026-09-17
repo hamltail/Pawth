@@ -1,8 +1,8 @@
-.bg-page.min-h-screen.shadow-md.rounded-lg.px-8.py-8.relative
+.bg-page.min-h-screen.shadow-md.rounded-lg.px-4.py-8.relative.sm:px-8
   .flex.flex-col.items-center.gap-4.mb-8.sm:grid.sm:grid-cols-3
     %div.hidden.sm:block
 
-    %h1.text-2xl.font-bold.text-primary.text-center= t('.title')
+    %h1.page-title-glow.text-2xl.font-bold.text-primary.text-center= t('.title')
 
     .flex.justify-center.sm:justify-end
       #new-post-button
@@ -10,34 +10,31 @@
 
   = turbo_frame_tag 'modal'
 
-  = form_with url: daily_posts_path, method: :get, local: true,
-              class: 'mb-4 flex flex-wrap justify-center space-x-2 gap-x-2 gap-y-3' do |f|
-    = label_tag :q, t('.search_placeholder'), class: 'sr-only'
-    = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q],
-                   class: 'px-4 py-2 border border-default-border bg-surface text-primary placeholder:text-muted rounded-md w-full sm:w-64 basis-full sm:basis-auto'
+  %div.mb-8{ data: { controller: 'collapsible', open: 'false' } }
+    .flex.justify-center
+      %button.theme-link.inline-flex.items-center.gap-2.rounded-full.border.border-default-border.bg-surface.px-4.py-2.text-sm.font-semibold.transition-colors.hover:bg-surface-muted{ type: 'button', data: { action: 'click->collapsible#toggle' }, aria: { expanded: 'false', controls: 'timeline-search' } }
+        %svg.w-4.h-4{ viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.8', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', aria: { hidden: 'true' } }
+          %circle{ cx: '11', cy: '11', r: '7' }
+          %path{ d: 'm20 20-3.5-3.5' }
+        %span= t('.open_search')
 
-    = label_tag :year, t('.year_prompt'), class: 'sr-only'
-    = f.select :year,
-               options_for_select((2025..Date.current.year).to_a.reverse, params[:year]),
-               { prompt: t('.year_prompt') },
-               class: 'px-2 py-2 border border-default-border bg-surface text-primary rounded-md'
+    .hidden.mt-4#timeline-search{ data: { collapsible_target: 'panel' } }
+      = form_with url: daily_posts_path, method: :get, local: true, class: 'mx-auto flex max-w-2xl flex-wrap justify-center gap-2 rounded-2xl border border-default-border bg-surface p-4' do |f|
+        = label_tag :q, t('.search_placeholder'), class: 'sr-only'
+        = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q], class: 'px-4 py-2 border border-default-border bg-page text-primary placeholder:text-muted rounded-md w-full sm:flex-1 sm:min-w-64'
 
-    = label_tag :month, t('.month_prompt'), class: 'sr-only'
-    = f.select :month,
-               options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]),
-               { prompt: t('.month_prompt') },
-               class: 'px-2 py-2 border border-default-border bg-surface text-primary rounded-md'
+        = label_tag :year, t('.year_prompt'), class: 'sr-only'
+        = f.select :year, options_for_select((2025..Date.current.year).to_a.reverse, params[:year]), { prompt: t('.year_prompt') }, class: 'px-3 py-2 border border-default-border bg-page text-primary rounded-md'
 
-    = f.submit t('.submit_search'),
-               class: 'px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-light'
+        = label_tag :month, t('.month_prompt'), class: 'sr-only'
+        = f.select :month, options_for_select((1..12).to_a.map { |m| [m, m] }, params[:month]), { prompt: t('.month_prompt') }, class: 'px-3 py-2 border border-default-border bg-page text-primary rounded-md'
 
-  %ul.posts.space-y-6.mt-8#posts
-    - @daily_posts.each do |post|
-      = render 'post', post: post
+        = f.submit t('.submit_search'), class: 'px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-light cursor-pointer'
 
-  .mt-6.flex.flex-col.items-center.gap-2
-    %div.pagy-nav
-      = pagy_nav(@pagy).html_safe
+  - if @daily_posts.any?
+    .mx-auto.max-w-4xl{ data: { controller: 'infinite-scroll' } }
+      %ul.posts#posts{ data: { infinite_scroll_target: 'posts' } }
+        = render 'timeline_posts', posts: @daily_posts, previous_month: nil
 
-    .text-xs.text-muted
-      = t('.page_label', page: @pagy.page, pages: @pagy.pages)
+      - if @pagy.next
+        #infinite-scroll-sentinel.h-4{ data: { infinite_scroll_target: 'sentinel', next_url: daily_posts_path(request.query_parameters.merge(page: @pagy.next)) } }

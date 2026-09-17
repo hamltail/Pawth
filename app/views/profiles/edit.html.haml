@@ -1,4 +1,4 @@
-.bg-surface.shadow-md.rounded-lg.px-8.py-8.ring-1.ring-default-border
+.bg-surface.shadow-md.rounded-lg.px-8.py-8.ring-1.ring-default-border.max-w-5xl.mx-auto
   %h2.text-2xl.font-bold.text-primary.mb-8.text-center= t('profiles.edit.title')
 
   = form_with model: @profile, url: profile_path, method: :put, html: { multipart: true } do |f|

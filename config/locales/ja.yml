@@ -68,9 +68,10 @@ ja:
 
   daily_posts:
     index:
-      title: 'Diary Archive'
+      title: 'タイムライン'
       posted_today_message: '今日はすでに日記をかいています。'
       new_button: '今日の日記をかく'
+      open_search: '記録を検索'
       search_placeholder: 'キーワード検索'
       year_prompt: '年'
       month_prompt: '月'
@@ -109,7 +110,7 @@ ja:
     sidebar:
       app_name: 'Pawth'
       calendar: 'カレンダー'
-      daily_posts: '日記一覧'
+      daily_posts: 'タイムライン'
       settings: '設定'
       profile_settings: 'プロフィール設定'
       account_settings: 'アカウント設定'
@@ -119,7 +120,7 @@ ja:
 
   profiles:
     edit:
-      title: 'Profile Settings'
+      title: 'プロフィール設定'
       update: '更新'
       calendar_icon_label: 'カレンダーアイコン'
       public_posts_label: '日記の公開設定'
@@ -141,7 +142,7 @@ ja:
 
   users:
     edit:
-      title: 'Account Settings'
+      title: 'アカウント設定'
       update: '更新'
       back: '戻る'
       delete_section_title: '危険な操作'

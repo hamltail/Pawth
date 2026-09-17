@@ -1,0 +1,22 @@
+- previous_month = local_assigns[:previous_month]
+
+- posts.each do |post|
+  - current_month = post.posted_on.beginning_of_month
+
+  - if previous_month != current_month
+    %li{ class: previous_month.present? ? 'pb-6 pt-4' : 'pb-6', data: { timeline_month: current_month.strftime('%Y-%m') } }
+      .flex.items-center.gap-4
+        .h-px.flex-1.bg-default-border
+
+        .flex.items-baseline.gap-5
+          %span.calendar-month-glow.text-4xl.font-bold.text-primary
+            = timeline_month_number(post.posted_on)
+
+          %span.text-base.font-semibold.text-muted
+            = timeline_month_year_label(post.posted_on)
+
+        .h-px.flex-1.bg-default-border
+
+  = render 'post', post: post
+
+  - previous_month = current_month

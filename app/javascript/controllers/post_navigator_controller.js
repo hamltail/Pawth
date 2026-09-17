@@ -130,12 +130,21 @@ export default class extends Controller {
 
     if (!dateEl || !contentEl) return;
 
-    dateEl.textContent = post.dataset.date || '';
+    const date = post.dataset.date || '';
+
+    dateEl.textContent = date;
     contentEl.textContent =
       post.dataset.content || 'まだ日記をかいていません。';
 
     // スワイプ・矢印移動ではボヨヨーン等のアニメーションを入れない
-    this.refresh(post.dataset.date);
+    this.refresh(date);
+
+    // 右側の日記移動とカレンダーの選択中マークを同期する
+    document.dispatchEvent(
+      new CustomEvent('pawth:post-selected', {
+        detail: { date },
+      }),
+    );
   }
 
   refresh(selectedDate = null) {
