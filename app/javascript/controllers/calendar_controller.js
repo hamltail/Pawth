@@ -70,8 +70,6 @@ export default class extends Controller {
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    this.squish(el, { scale: 1.55, duration: 0.16 });
-
     const { date, content } = el.dataset;
 
     if (this.dateEl) {
@@ -108,6 +106,11 @@ export default class extends Controller {
 
     this.pointerStartX = e.clientX;
     this.pointerStartY = e.clientY;
+
+    const el = e.target.closest('.calendar-mark.calendar-mark--posted');
+    if (!el || !this.element.contains(el)) return;
+
+    this.squish(el, { scale: 1.4 });
   }
 
   handlePointerUp(e) {
@@ -152,7 +155,7 @@ export default class extends Controller {
     this.pointerStartY = null;
   }
 
-  squish(el, { scale = 1.5, duration = 0.15 } = {}) {
+  squish(el, { scale = 1.3, duration = 0.1 } = {}) {
     // 連打された場合は、進行中のscaleアニメーションだけを破棄する
     gsap.killTweensOf(el, 'scale');
 
@@ -164,7 +167,7 @@ export default class extends Controller {
       duration,
       yoyo: true,
       repeat: 1,
-      ease: 'power1.inOut',
+      ease: 'power2.out',
       overwrite: 'auto',
 
       // アニメーション終了後も必ず等倍へ戻す
