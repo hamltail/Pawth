@@ -46,6 +46,26 @@
       = f.text_field :display_name,
                      class: 'border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2'
 
+    .mb-4
+      = f.label :calendar_icon, t('profiles.edit.calendar_icon_label'), class: 'block text-secondary-text mb-2'
+
+      .flex.gap-3
+        %label.cursor-pointer
+          = f.radio_button :calendar_icon, 'paw', class: 'sr-only peer'
+
+          .flex.items-center.justify-center.w-20.h-16.rounded-lg.bg-surface-muted.ring-1.ring-default-border.peer-checked:ring-2.peer-checked:ring-brand.transition
+            = render 'shared/paw',
+                     klass: '',
+                     grad: true
+
+        %label.cursor-pointer
+          = f.radio_button :calendar_icon, 'star', class: 'sr-only peer'
+
+          .flex.items-center.justify-center.w-20.h-16.rounded-lg.bg-surface-muted.ring-1.ring-default-border.peer-checked:ring-2.peer-checked:ring-brand.transition
+            = render 'shared/star',
+                     klass: '',
+                     grad: true
+
     .mb-4{ data: { controller: 'public-posts-toggle' } }
       = f.label :public_posts, t('profiles.edit.public_posts_label'), class: 'block text-secondary-text mb-1'
 
