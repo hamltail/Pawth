@@ -236,6 +236,32 @@
       0 0 24px rgba(168, 85, 247, 0.22);
   }
 
+  .page-title-glow {
+    text-shadow:
+      0 2px 4px rgba(15, 23, 42, 0.14),
+      0 4px 10px rgba(15, 23, 42, 0.08);
+  }
+
+  .calendar-month-glow {
+    text-shadow:
+      0 2px 4px rgba(15, 23, 42, 0.16),
+      0 5px 12px rgba(15, 23, 42, 0.1);
+  }
+
+  :root[data-theme='dark'] .page-title-glow {
+    text-shadow:
+      0 0 5px rgba(236, 72, 153, 0.58),
+      0 0 12px rgba(236, 72, 153, 0.38),
+      0 0 22px rgba(168, 85, 247, 0.26);
+  }
+
+  :root[data-theme='dark'] .calendar-month-glow {
+    text-shadow:
+      0 0 6px rgba(236, 72, 153, 0.68),
+      0 0 14px rgba(236, 72, 153, 0.42),
+      0 0 26px rgba(168, 85, 247, 0.3);
+  }
+
   .cta-button {
     @apply relative inline-flex items-center gap-2 overflow-hidden rounded-full border-2 border-brand bg-surface px-4 py-2 font-bold text-brand;
     transition:
