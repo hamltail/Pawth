@@ -137,11 +137,11 @@
       0 0 24px rgba(167, 139, 250, 0.4);
   }
 
-  .sidebar-logout {
+  .danger-link {
     color: #dc2626;
   }
 
-  :root[data-theme='dark'] .sidebar-logout {
+  :root[data-theme='dark'] .danger-link {
     color: #f87171;
   }
 
