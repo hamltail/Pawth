@@ -36,28 +36,27 @@ module CalendarHelper
     date == today
   end
 
-  # def calendar_mark_for(date, post)
-  #   if post
-  #     render 'shared/paw',
-  #            klass: 'text-pink-300 cursor-pointer calendar-mark--posted',
-  #            dataset: { date:, content: post.content },
-  #            grad: true
-  #   else
-  #     render 'shared/paw',
-  #            klass: 'text-muted opacity-50',
-  #            grad: false
-  #   end
-  # end
-  def calendar_mark_for(date, post)
+  def calendar_mark_for(date, post, icon: :paw)
+    partial = calendar_mark_partial(icon)
+
     if post
-      render 'shared/star',
-            klass: 'text-yellow-400 cursor-pointer calendar-mark--posted',
-            dataset: { date:, content: post.content },
-            grad: true
+      render partial,
+             klass: 'cursor-pointer calendar-mark--posted',
+             dataset: { date:, content: post.content },
+             grad: true
     else
-      render 'shared/star',
-            klass: 'text-muted opacity-50',
-            grad: false
+      render partial,
+             klass: 'text-muted opacity-50',
+             grad: false
+    end
+  end
+
+  def calendar_mark_partial(icon)
+    case icon.to_sym
+    when :star
+      'shared/star'
+    else
+      'shared/paw'
     end
   end
 
