@@ -20,8 +20,7 @@
 
   .min-w-0.pb-8
     %div{ class: 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-start gap-x-3 rounded-2xl bg-surface px-5 py-4 ring-1 ring-default-border' }
-      .min-w-0.leading-relaxed.text-primary.break-words
-        = h(post.content)
+      .min-w-0.leading-relaxed.text-primary.whitespace-pre-wrap.break-words= h(post.content)
 
       - if post.posted_on == Date.current
         - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
