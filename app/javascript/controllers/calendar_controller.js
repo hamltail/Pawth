@@ -12,7 +12,7 @@ export default class extends Controller {
 
     this.ctx = gsap.context(() => {
       this.refreshCurrentPostRefs();
-      this.fadeInPaws();
+      this.fadeInMarks();
       this.animateTodayBadge();
     }, this.element);
 
@@ -31,7 +31,7 @@ export default class extends Controller {
   }
 
   handleMouseover(e) {
-    const el = e.target.closest('.paw.paw--posted');
+    const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
     gsap.killTweensOf(el, 'y,rotation,filter');
@@ -48,7 +48,7 @@ export default class extends Controller {
   }
 
   handleMouseout(e) {
-    const el = e.target.closest('.paw.paw--posted');
+    const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
     gsap.killTweensOf(el, 'y,rotation,filter');
@@ -67,7 +67,7 @@ export default class extends Controller {
   handleClick(e) {
     this.refreshCurrentPostRefs();
 
-    const el = e.target.closest('.paw.paw--posted');
+    const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
     this.squish(el, { scale: 1.55, duration: 0.16 });
@@ -94,7 +94,7 @@ export default class extends Controller {
       );
     }
 
-    // 肉球から日記を選択したら、
+    // カレンダーマークから日記を選択したら、
     // 日記ナビゲーションの矢印状態を更新する
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
@@ -174,15 +174,17 @@ export default class extends Controller {
     });
   }
 
-  fadeInPaws() {
-    const paws = this.element.querySelectorAll('svg.paw.paw--posted');
+  fadeInMarks() {
+    const marks = this.element.querySelectorAll(
+      'svg.calendar-mark.calendar-mark--posted',
+    );
 
-    if (!paws.length) return;
+    if (!marks.length) return;
 
-    gsap.killTweensOf(paws);
+    gsap.killTweensOf(marks);
 
     gsap.fromTo(
-      paws,
+      marks,
       {
         opacity: 0,
         y: -10,
@@ -235,7 +237,7 @@ export default class extends Controller {
     gsap.killTweensOf([
       this.contentEl,
       this.element.querySelectorAll('.today-badge .today-char'),
-      this.element.querySelectorAll('svg.paw.paw--posted'),
+      this.element.querySelectorAll('svg.calendar-mark.calendar-mark--posted'),
     ]);
 
     this.ctx?.revert();

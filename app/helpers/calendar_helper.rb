@@ -36,10 +36,10 @@ module CalendarHelper
     date == today
   end
 
-  def paw_icon_for(date, post)
+  def calendar_mark_for(date, post)
     if post
       render 'shared/paw',
-             klass: 'text-pink-300 cursor-pointer paw--posted',
+             klass: 'text-pink-300 cursor-pointer calendar-mark--posted',
              dataset: { date:, content: post.content },
              grad: true
     else

@@ -149,7 +149,7 @@
     @apply motion-safe:transition-transform duration-200;
   }
 
-  .paw--posted {
+  .calendar-mark--posted {
     @apply opacity-0 -translate-y-2;
   }
 

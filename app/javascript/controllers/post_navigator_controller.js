@@ -108,7 +108,9 @@ export default class extends Controller {
 
   posts() {
     return Array.from(
-      document.querySelectorAll('#calendar .paw.paw--posted'),
+      document.querySelectorAll(
+        '#calendar .calendar-mark.calendar-mark--posted',
+      ),
     ).sort((a, b) => a.dataset.date.localeCompare(b.dataset.date));
   }
 
