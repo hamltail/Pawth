@@ -26,7 +26,6 @@ services:
     command: >
       bash -c "
         bin/rails db:prepare &&
-        bin/rails e2e:ensure_user &&
         bin/rails server -b 0.0.0.0 -p 3001
       "
     ports:

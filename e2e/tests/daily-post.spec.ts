@@ -8,7 +8,9 @@ test.describe('daily post', () => {
     const authPage = new AuthPage(page);
 
     await authPage.goto();
-    const appShell = await authPage.loginAsPlaywright();
+    const appShell = await authPage.loginAs(
+      'playwright-daily-post@example.com',
+    );
 
     const content = 'Playwrightから今日の日記を投稿しました。';
 

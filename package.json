@@ -16,7 +16,7 @@
     "lint:js:fix": "eslint \"app/javascript/**/*.{js,ts,jsx,tsx}\" --fix",
     "test": "npm run format:check && npm run lint && npm run test:unit && npm run test:e2e",
     "test:unit": "bundle exec rspec",
-    "test:e2e": "docker compose -f compose.dev.yml run --build --rm e2e",
+    "test:e2e": "docker compose -f compose.dev.yml run --rm web-e2e bin/rails e2e:ensure_user && docker compose -f compose.dev.yml run --build --rm e2e; status=$?; docker compose -f compose.dev.yml run --rm web-e2e bin/rails e2e:cleanup; exit $status",
     "test:e2e:headed": "npm --prefix e2e run test:headed",
     "test:e2e:debug": "npm --prefix e2e run test:debug",
     "test:e2e:trace": "npm --prefix e2e run trace",
