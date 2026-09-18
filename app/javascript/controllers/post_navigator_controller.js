@@ -180,10 +180,6 @@ export default class extends Controller {
 
   setDisabled(button, disabled) {
     button.disabled = disabled;
-
-    button.classList.toggle('opacity-25', disabled);
-    button.classList.toggle('cursor-not-allowed', disabled);
-    button.classList.toggle('hover:text-gray-700', !disabled);
   }
 
   resetPointer() {
