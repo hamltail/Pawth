@@ -83,7 +83,13 @@
 
         %span= t('layout.sidebar.daily_posts')
 
-      %div{ data: { controller: 'collapsible', open: 'false' } }
+      .sidebar-settings{
+        data: {
+          controller: 'collapsible',
+          open: 'false',
+          collapsible_storage_key: 'sidebar-settings-open'
+        }
+      }
         %button.theme-link.w-full.flex.items-center.justify-between.font-medium{
           type: 'button',
           data: { action: 'click->collapsible#toggle' },
@@ -114,14 +120,10 @@
 
             %span= t('layout.sidebar.settings')
 
-          %span.transition-transform.duration-200{
-            data: { collapsible_target: 'icon' }
-          }
+          %span.sidebar-settings-icon.transition-transform.duration-200
             ▶
 
-        %ul.mt-2.pl-4.space-y-2.hidden#settings-submenu{
-          data: { collapsible_target: 'panel' }
-        }
+        %ul.sidebar-settings-panel.mt-2.pl-4.space-y-2#settings-submenu
           %li
             = link_to edit_profile_path, class: 'theme-link flex items-center gap-2 font-medium' do
               %svg.w-4.h-4.shrink-0{
