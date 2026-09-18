@@ -53,12 +53,12 @@
 }
 
 @theme {
-  --color-brand: #6d28d9; /* purple-700 */
-  --color-brand-light: #8b5cf6; /* purple-500 */
-  --color-brand-dark: #4c1d95; /* purple-900 */
+  --color-brand: #6d28d9;
+  --color-brand-light: #8b5cf6;
+  --color-brand-dark: #4c1d95;
 
-  --color-secondary: #f97316; /* orange-500 */
-  --color-secondary-light: #fdba74; /* orange-300 */
+  --color-secondary: #f97316;
+  --color-secondary-light: #fdba74;
 
   --color-pawth-pink: #f472b6;
 
@@ -179,6 +179,18 @@
 
   .public-posts-toggle.is-public .public-posts-public-label {
     display: inline;
+  }
+
+  .sidebar-settings-panel {
+    display: none;
+  }
+
+  .sidebar-settings.is-open .sidebar-settings-panel {
+    display: block;
+  }
+
+  .sidebar-settings.is-open .sidebar-settings-icon {
+    transform: rotate(90deg);
   }
 
   .timeline-search-panel {
