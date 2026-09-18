@@ -1,11 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
+import { createSwipeTracker } from 'lib/swipe';
 
 export default class extends Controller {
   static targets = ['prevButton', 'nextButton'];
 
   connect() {
-    this.pointerStartX = null;
-    this.pointerStartY = null;
+    this.swipe = createSwipeTracker();
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
     this.handleCalendarChanged = this.handleCalendarChanged.bind(this);
@@ -31,7 +31,8 @@ export default class extends Controller {
       this.handleCalendarChanged,
     );
 
-    this.resetPointer();
+    this.swipe?.reset();
+    this.swipe = null;
   }
 
   handlePostSelected(event) {
@@ -67,43 +68,24 @@ export default class extends Controller {
   }
 
   handlePointerDown(event) {
-    if (!event.isPrimary) return;
-
-    this.pointerStartX = event.clientX;
-    this.pointerStartY = event.clientY;
+    this.swipe?.start(event);
   }
 
   handlePointerUp(event) {
-    if (
-      !event.isPrimary ||
-      this.pointerStartX === null ||
-      this.pointerStartY === null
-    ) {
-      return;
-    }
+    const direction = this.swipe?.finish(event);
 
-    const deltaX = event.clientX - this.pointerStartX;
-    const deltaY = event.clientY - this.pointerStartY;
-
-    this.resetPointer();
-
-    const swipeThreshold = 50;
-
-    if (Math.abs(deltaY) >= Math.abs(deltaX)) return;
-    if (Math.abs(deltaX) < swipeThreshold) return;
-
-    // 左スワイプ → 次の日記
-    if (deltaX < 0) {
+    if (direction === 'left') {
       this.next();
       return;
     }
 
-    // 右スワイプ → 前の日記
-    this.previous();
+    if (direction === 'right') {
+      this.previous();
+    }
   }
 
   handlePointerCancel() {
-    this.resetPointer();
+    this.swipe?.reset();
   }
 
   posts() {
@@ -169,7 +151,6 @@ export default class extends Controller {
     }
 
     this.setDisabled(this.prevButtonTarget, currentIndex === 0);
-
     this.setDisabled(this.nextButtonTarget, currentIndex === posts.length - 1);
   }
 
@@ -180,14 +161,5 @@ export default class extends Controller {
 
   setDisabled(button, disabled) {
     button.disabled = disabled;
-
-    button.classList.toggle('opacity-25', disabled);
-    button.classList.toggle('cursor-not-allowed', disabled);
-    button.classList.toggle('hover:text-gray-700', !disabled);
-  }
-
-  resetPointer() {
-    this.pointerStartX = null;
-    this.pointerStartY = null;
   }
 }

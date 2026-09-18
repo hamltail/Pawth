@@ -99,7 +99,7 @@
                 'stroke-linejoin': 'round'
               }
 
-    .mb-4{ data: { controller: 'public-posts-toggle' } }
+    .mb-4.public-posts-toggle{ data: { controller: 'public-posts-toggle' } }
       = f.label :public_posts, t('profiles.edit.public_posts_label'), class: 'block text-secondary-text mb-1'
 
       .flex.items-center
@@ -109,25 +109,16 @@
                       data: { public_posts_toggle_target: 'checkbox',
                               action: 'change->public-posts-toggle#render' }
 
-        %label{ for: 'toggle-public-profile', class: 'relative inline-block' }
-          %span.block.w-16.h-8.rounded-full.transition-colors.duration-200.bg-surface-muted.ring-1.ring-default-border#toggle-bar{
-            data: {
-              public_posts_toggle_target: 'bar'
-            }
-          }
+        %label.relative.inline-block{ for: 'toggle-public-profile' }
+          %span.public-posts-toggle-bar.block.w-16.h-8.rounded-full.ring-1.ring-default-border
 
-          %span.toggle-dot.absolute.left-0.top-0.w-8.h-8.bg-white.rounded-full.shadow-md.transition-transform.duration-200{
-            data: {
-              public_posts_toggle_target: 'dot'
-            }
-          }
+          %span.public-posts-toggle-dot.absolute.left-0.top-0.w-8.h-8.rounded-full.shadow-md
 
-        %span.ml-2.text-secondary-text#public-profile-label{
-          data: {
-            public_posts_toggle_target: 'label'
-          }
-        }
-          = @profile.public_posts? ? t('profiles.edit.public') : t('profiles.edit.private')
+        %span.public-posts-private-label.ml-2
+          = t('profiles.edit.private')
+
+        %span.public-posts-public-label.ml-2
+          = t('profiles.edit.public')
 
     .mt-6.flex.justify-center
       = f.button type: 'submit', class: 'inline-flex items-center gap-2 bg-brand hover:bg-brand-light text-white font-bold py-2 px-6 rounded-full' do
