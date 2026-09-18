@@ -23,9 +23,6 @@
     "e2e:install": "npm --prefix e2e ci",
     "e2e:install:browsers": "npm --prefix e2e run install:browsers"
   },
-  "dependencies": {
-    "gsap": "^3.13.0"
-  },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "eslint": "^9.33.0",
