@@ -83,7 +83,13 @@
 
         %span= t('layout.sidebar.daily_posts')
 
-      .sidebar-settings{ data: { controller: 'collapsible', open: 'false' } }
+      .sidebar-settings{
+        data: {
+          controller: 'collapsible',
+          open: 'false',
+          collapsible_storage_key: 'sidebar-settings-open'
+        }
+      }
         %button.theme-link.w-full.flex.items-center.justify-between.font-medium{
           type: 'button',
           data: { action: 'click->collapsible#toggle' },
