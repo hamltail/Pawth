@@ -6,7 +6,7 @@ test.describe('profile settings', () => {
     const authPage = new AuthPage(page);
 
     await authPage.goto();
-    await authPage.loginAsPlaywright();
+    await authPage.loginAs('playwright-profile@example.com');
   });
 
   test('表示名を更新できる', async ({ page }) => {
