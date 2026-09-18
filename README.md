@@ -13,23 +13,16 @@ Pawthは、1日1回、その日の記録を残せる小さな日記アプリで�
 
 ![Pawth](docs/images/pawth.webp)
 
-## 1日1投稿まで
-
-- 投稿は1日1回まで
-- 当日の投稿は3回まで編集できます
-- 投稿の削除は翌日以降にできます
-- 翌日以降の投稿は編集できません
-
 ## 技術スタック
 
-| Category       | Technology                              |
-| -------------- | --------------------------------------- |
-| Frontend       | Haml, Tailwind CSS, Turbo, GSAP         |
-| Backend        | Ruby 4.0.6, Rails 8.1.3                 |
-| Database       | PostgreSQL 18                           |
-| Authentication | Devise                                  |
-| Testing        | RSpec, FactoryBot, Playwright, axe-core |
-| Infrastructure | AWS (EC2, RDS, SES)                     |
+| Category       | Technology                                            |
+| -------------- | ----------------------------------------------------- |
+| Frontend       | Haml, Tailwind CSS, JavaScript, Turbo, Stimulus, GSAP |
+| Backend        | Ruby 4.0.6, Rails 8.1.3                               |
+| Database       | PostgreSQL 18                                         |
+| Authentication | Devise                                                |
+| Testing        | RSpec, FactoryBot, Playwright, axe-core               |
+| Infrastructure | AWS (EC2, RDS, SES)                                   |
 
 ## セットアップ
 
