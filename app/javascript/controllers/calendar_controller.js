@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import { gsap } from 'gsap';
+import { createSwipeTracker } from 'lib/swipe';
 
 export default class extends Controller {
   static targets = ['prevLink', 'nextLink'];
@@ -7,8 +8,7 @@ export default class extends Controller {
   connect() {
     if (document.documentElement.hasAttribute('data-turbo-preview')) return;
 
-    this.pointerStartX = null;
-    this.pointerStartY = null;
+    this.swipe = createSwipeTracker();
     this.selectedMark = null;
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
@@ -187,58 +187,32 @@ export default class extends Controller {
     this.selectedMark = null;
   }
 
-  handlePointerDown(e) {
-    if (!e.isPrimary) return;
+  handlePointerDown(event) {
+    this.swipe?.start(event);
 
-    this.pointerStartX = e.clientX;
-    this.pointerStartY = e.clientY;
+    if (!event.isPrimary) return;
 
-    const el = e.target.closest('.calendar-mark.calendar-mark--posted');
+    const el = event.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
     this.squish(el, { scale: 1.4 });
   }
 
-  handlePointerUp(e) {
-    if (
-      !e.isPrimary ||
-      this.pointerStartX === null ||
-      this.pointerStartY === null
-    ) {
-      return;
-    }
+  handlePointerUp(event) {
+    const direction = this.swipe?.finish(event);
 
-    const deltaX = e.clientX - this.pointerStartX;
-    const deltaY = e.clientY - this.pointerStartY;
-
-    this.resetPointer();
-
-    const swipeThreshold = 50;
-
-    // 横方向より縦方向への移動が大きければ、
-    // 通常のスクロールとして扱う
-    if (Math.abs(deltaY) >= Math.abs(deltaX)) return;
-
-    // 小さなドラッグやクリックでは月を変更しない
-    if (Math.abs(deltaX) < swipeThreshold) return;
-
-    // 左へスワイプ → 翌月
-    if (deltaX < 0) {
+    if (direction === 'left') {
       this.nextLinkTarget.click();
       return;
     }
 
-    // 右へスワイプ → 前月
-    this.prevLinkTarget.click();
+    if (direction === 'right') {
+      this.prevLinkTarget.click();
+    }
   }
 
   handlePointerCancel() {
-    this.resetPointer();
-  }
-
-  resetPointer() {
-    this.pointerStartX = null;
-    this.pointerStartY = null;
+    this.swipe?.reset();
   }
 
   squish(el, { scale = 1.3, duration = 0.1 } = {}) {
@@ -342,6 +316,7 @@ export default class extends Controller {
     this.dateEl = null;
     this.contentEl = null;
 
-    this.resetPointer();
+    this.swipe?.reset();
+    this.swipe = null;
   }
 }
