@@ -46,4 +46,28 @@ test.describe('timeline', () => {
 
     await expect(page.locator('#infinite-scroll-sentinel')).toHaveCount(0);
   });
+
+  test('キーワードで日記を検索できる', async ({ page }) => {
+    await page.getByRole('button', { name: '記録を検索' }).click();
+
+    await page
+      .getByRole('textbox', { name: 'キーワード検索' })
+      .fill('過去の日記 90');
+
+    await page.getByRole('button', { name: '検索', exact: true }).click();
+
+    const posts = page.locator('#posts');
+
+    await expect(
+      posts.getByText('Playwright E2E 過去の日記 90', { exact: true }),
+    ).toBeVisible();
+
+    await expect(
+      posts.getByText('Playwright E2E 過去の日記 87', { exact: true }),
+    ).toHaveCount(0);
+
+    await expect(
+      posts.getByText('Playwright E2E 過去の日記 93', { exact: true }),
+    ).toHaveCount(0);
+  });
 });
