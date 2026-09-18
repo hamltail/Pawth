@@ -145,12 +145,40 @@
     color: #f87171;
   }
 
-  .toggle-dot {
-    @apply motion-safe:transition-transform duration-200;
+  .public-posts-toggle-bar {
+    background-color: var(--pawth-surface-muted);
+    transition: background-color 200ms ease;
   }
 
-  .toggle-bar--on {
+  .public-posts-toggle-dot {
+    background-color: #ffffff;
+    transform: translateX(0);
+    transition: transform 200ms ease;
+  }
+
+  .public-posts-private-label {
+    color: #dc2626;
+  }
+
+  .public-posts-public-label {
+    display: none;
+    color: #15803d;
+  }
+
+  .public-posts-toggle.is-public .public-posts-toggle-bar {
     background-color: var(--pawth-success-border);
+  }
+
+  .public-posts-toggle.is-public .public-posts-toggle-dot {
+    transform: translateX(2rem);
+  }
+
+  .public-posts-toggle.is-public .public-posts-private-label {
+    display: none;
+  }
+
+  .public-posts-toggle.is-public .public-posts-public-label {
+    display: inline;
   }
 
   .calendar-mark--posted {
