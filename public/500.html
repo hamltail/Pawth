@@ -149,9 +149,6 @@
 
         margin-top: 28px;
 
-        font-size: 36px;
-        line-height: 1;
-
         background: var(--surface-soft);
         border: 1px solid var(--border);
         border-radius: 20px;
@@ -159,6 +156,15 @@
         box-shadow: var(--paw-shadow);
 
         transform: rotate(-6deg);
+      }
+
+      .paw img {
+        display: block;
+
+        width: 44px;
+        height: 44px;
+
+        object-fit: contain;
       }
 
       h1 {
@@ -272,9 +278,12 @@
           width: 56px;
           height: 56px;
 
-          font-size: 32px;
-
           border-radius: 18px;
+        }
+
+        .paw img {
+          width: 40px;
+          height: 40px;
         }
       }
 
@@ -291,7 +300,9 @@
       <section class="error-card" aria-labelledby="error-title">
         <p class="error-code" aria-hidden="true">500</p>
 
-        <div class="paw" aria-hidden="true">🐾</div>
+        <div class="paw" aria-hidden="true">
+          <img src="/pawth.png" alt="" />
+        </div>
 
         <h1 id="error-title">ちょっと道に迷ってしまったみたい。</h1>
 
