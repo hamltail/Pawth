@@ -14,7 +14,7 @@
 
   %div{ class: 'flex flex-col xl:grid xl:grid-cols-2 xl:gap-8 xl:items-start' }
     %div
-      = turbo_frame_tag 'calendar', data: { turbo_cache: 'false' } do
+      = turbo_frame_tag 'calendar', data: { turbo_temporary: true } do
         = render 'calendar',
           user: @user,
           calendar_days: @calendar_days,
