@@ -41,7 +41,7 @@
 
   %body
     %div.flex.min-h-screen.bg-page{
-      data: { controller: 'menu' }
+      data: (user_signed_in? ? { controller: 'menu' } : {})
     }
       - if user_signed_in?
         %button.md:hidden.fixed.top-8.left-8.z-50.bg-surface.text-primary.p-2.rounded-lg.shadow-lg.ring-1.ring-default-border{
