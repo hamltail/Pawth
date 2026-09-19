@@ -1,4 +1,4 @@
-const DEFAULT_THRESHOLD = 50;
+const DEFAULT_THRESHOLD = 40;
 
 export function createSwipeTracker({ threshold = DEFAULT_THRESHOLD } = {}) {
   let startX = null;
