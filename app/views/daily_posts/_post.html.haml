@@ -24,7 +24,7 @@
 
       - if post.posted_on == Date.current
         - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
-          = link_to edit_daily_post_path(post), data: { turbo_frame: 'modal' }, class: 'theme-link inline-flex h-8 items-center.gap-1.5 whitespace-nowrap rounded-full px-2 text-sm font-semibold transition-colors hover:bg-surface-muted' do
+          = link_to edit_daily_post_path(post), data: { turbo_frame: 'modal' }, class: 'theme-link inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full px-2 text-sm font-semibold transition-colors hover:bg-surface-muted' do
             %svg.h-4.w-4{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
               %path{ d: 'M16.862 3.487a2.1 2.1 0 0 1 2.97 2.97L8.37 17.92 4.5 19.5l1.58-3.87L16.862 3.487Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %path{ d: 'm14.75 5.6 3.65 3.65', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
@@ -45,7 +45,7 @@
 
       - else
         %span
-        = link_to daily_post_path(post), class: 'danger-link inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-surface-muted', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する', confirm_preserve_scroll_value: true } do
+        = link_to daily_post_path(post, request.query_parameters.slice('q', 'year', 'month')), class: 'danger-link inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-surface-muted', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する', confirm_preserve_scroll_value: true } do
           %svg.h-5.w-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
             %path{ d: 'M4.5 6.75h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
             %path{ d: 'M9 6.75V4.5h6v2.25', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }

@@ -46,9 +46,13 @@ class DailyPostsController < ApplicationController
 
   def destroy
     if @daily_post.destroy
-      redirect_to daily_posts_path, status: :see_other, notice: t('controllers.daily_posts.destroyed')
+      redirect_to daily_posts_path(timeline_filter_params),
+                  status: :see_other,
+                  notice: t('controllers.daily_posts.destroyed')
     else
-      redirect_to daily_posts_path, status: :see_other, alert: @daily_post.errors.full_messages.to_sentence
+      redirect_to daily_posts_path(timeline_filter_params),
+                  status: :see_other,
+                  alert: @daily_post.errors.full_messages.to_sentence
     end
   end
 
@@ -60,6 +64,10 @@ class DailyPostsController < ApplicationController
 
   def daily_post_params
     params.require(:daily_post).permit(:content)
+  end
+
+  def timeline_filter_params
+    params.permit(:q, :year, :month)
   end
 
   def create_success_stream(post)
