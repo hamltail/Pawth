@@ -117,13 +117,15 @@ test.describe('timeline', () => {
 
     await expect(nearbyPost).toBeVisible();
 
-    const isNearbyPostInViewport = await nearbyPost.evaluate((element) => {
-      const rect = element.getBoundingClientRect();
+    await expect
+      .poll(() =>
+        nearbyPost.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
 
-      return rect.bottom > 0 && rect.top < window.innerHeight;
-    });
-
-    expect(isNearbyPostInViewport).toBe(true);
+          return rect.bottom > 0 && rect.top < window.innerHeight;
+        }),
+      )
+      .toBe(true);
   });
 
   test('キーワード検索中に削除しても検索条件を維持できる', async ({ page }) => {
