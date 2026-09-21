@@ -82,7 +82,14 @@ test.describe('timeline', () => {
       .locator('li[id^="post_"]')
       .filter({ hasText: targetContent });
 
-    while ((await targetPost.count()) === 0) {
+    const nearbyPost = posts
+      .locator('li[id^="post_"]')
+      .filter({ hasText: nearbyContent });
+
+    while (
+      (await targetPost.count()) === 0 ||
+      (await nearbyPost.count()) === 0
+    ) {
       await page.evaluate(() => {
         window.scrollTo(0, document.body.scrollHeight);
       });
@@ -92,10 +99,7 @@ test.describe('timeline', () => {
 
     await targetPost.scrollIntoViewIfNeeded();
 
-    const nearbyPost = posts
-      .locator('li[id^="post_"]')
-      .filter({ hasText: nearbyContent });
-
+    await expect(targetPost).toBeVisible();
     await expect(nearbyPost).toBeVisible();
 
     await targetPost.getByRole('link', { name: '削除' }).click();
