@@ -72,9 +72,14 @@ class DailyPostsController < ApplicationController
 
   def create_success_stream(post)
     ctx = month_context_for(Date.current)
+    timeline_posts = current_user.daily_posts.recent_first.limit(10)
 
     [
-      turbo_stream.prepend('posts', partial: 'daily_posts/post', locals: { post: post }),
+      turbo_stream.update(
+        'posts',
+        partial: 'daily_posts/timeline_posts',
+        locals: { posts: timeline_posts, previous_month: nil }
+      ),
       turbo_stream.replace('current_post', partial: 'activities/current_post', locals: { post: post }),
       turbo_stream.replace('calendar', partial: 'activities/calendar', locals: ctx),
       turbo_stream.replace('new-post-button', partial: 'activities/new_post_button', locals: { posted_today: true }),
