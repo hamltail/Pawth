@@ -57,7 +57,7 @@
         = f.label :display_name, t('activerecord.attributes.profile.display_name'), class: 'block text-secondary-text mb-1'
 
         = f.text_field :display_name,
-                       class: 'border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full max-w-56 px-3 py-2'
+                       class: 'border border-default-border bg-surface/50 text-primary placeholder:text-muted rounded w-full max-w-56 px-3 py-2'
 
       .mb-4
         = f.label :calendar_icon, t('profiles.edit.calendar_icon_label'), class: 'block text-secondary-text mb-2'
@@ -66,7 +66,7 @@
           %label.relative.cursor-pointer
             = f.radio_button :calendar_icon, 'paw', class: 'sr-only peer'
 
-            .flex.items-center.justify-center.w-20.h-16.rounded-xl.bg-surface-muted.ring-1.ring-default-border.transition-all.duration-200.hover:ring-2.hover:ring-brand.peer-checked:ring-2.peer-checked:ring-brand
+            %div{ class: 'flex items-center justify-center w-20 h-16 rounded-xl bg-surface-muted/50 ring-1 ring-default-border transition-all duration-200 hover:ring-2 hover:ring-brand peer-checked:ring-2 peer-checked:ring-brand' }
               = render 'shared/paw',
                        klass: '',
                        grad: true
@@ -88,7 +88,7 @@
           %label.relative.cursor-pointer
             = f.radio_button :calendar_icon, 'star', class: 'sr-only peer'
 
-            .flex.items-center.justify-center.w-20.h-16.rounded-xl.bg-surface-muted.ring-1.ring-default-border.transition-all.duration-200.hover:ring-2.hover:ring-brand.peer-checked:ring-2.peer-checked:ring-brand
+            %div{ class: 'flex items-center justify-center w-20 h-16 rounded-xl bg-surface-muted/50 ring-1 ring-default-border transition-all duration-200 hover:ring-2 hover:ring-brand peer-checked:ring-2 peer-checked:ring-brand' }
               = render 'shared/star',
                        klass: '',
                        grad: true
