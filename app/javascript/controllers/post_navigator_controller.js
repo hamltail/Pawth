@@ -248,13 +248,16 @@ export default class extends Controller {
     contentEl.textContent =
       post.dataset.content || 'まだ日記をかいていません。';
 
-    // スワイプ・矢印移動ではボヨヨーン等のアニメーションを入れない
     this.refresh(date);
 
-    // 右側の日記移動とカレンダーの選択中マークを同期する
+    // 右側の日記移動とカレンダーの選択中マークを同期し、
+    // キーボード・スワイプによる移動では選択マークもアニメーションする
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
-        detail: { date },
+        detail: {
+          date,
+          animateMark: true,
+        },
       }),
     );
   }
