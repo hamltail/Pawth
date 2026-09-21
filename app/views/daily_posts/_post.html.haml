@@ -45,7 +45,7 @@
 
       - else
         %span
-        = link_to daily_post_path(post), class: 'danger-link inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-surface-muted', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する' } do
+        = link_to daily_post_path(post, request.query_parameters.slice('q', 'year', 'month')), class: 'danger-link inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-surface-muted', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する', confirm_preserve_scroll_value: true } do
           %svg.h-5.w-5{ fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
             %path{ d: 'M4.5 6.75h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
             %path{ d: 'M9 6.75V4.5h6v2.25', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }

@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+const TIMELINE_STATE_KEY = 'pawth:timeline-state';
+
 export default class extends Controller {
   static targets = ['posts', 'sentinel'];
 
@@ -24,6 +26,8 @@ export default class extends Controller {
     if (this.hasSentinelTarget) {
       this.observer.observe(this.sentinelTarget);
     }
+
+    this.restoreTimelineState();
   }
 
   disconnect() {
@@ -31,11 +35,11 @@ export default class extends Controller {
   }
 
   async loadNextPage() {
-    if (this.loading || !this.hasSentinelTarget) return;
+    if (this.loading || !this.hasSentinelTarget) return false;
 
     const url = this.sentinelTarget.dataset.nextUrl;
 
-    if (!url) return;
+    if (!url) return false;
 
     this.loading = true;
 
@@ -76,19 +80,60 @@ export default class extends Controller {
         this.sentinelTarget.dataset.nextUrl = nextSentinel.dataset.nextUrl;
         this.loading = false;
 
-        if (this.isSentinelVisible()) {
-          this.loadNextPage();
-        }
-
-        return;
+        return true;
       }
 
       this.observer.unobserve(this.sentinelTarget);
       this.sentinelTarget.remove();
+      this.loading = false;
+
+      return true;
     } catch (error) {
       console.error('Failed to load next timeline page:', error);
       this.loading = false;
+
+      return false;
     }
+  }
+
+  async restoreTimelineState() {
+    const rawState = sessionStorage.getItem(TIMELINE_STATE_KEY);
+
+    if (!rawState) return;
+
+    sessionStorage.removeItem(TIMELINE_STATE_KEY);
+
+    let state;
+
+    try {
+      state = JSON.parse(rawState);
+    } catch {
+      return;
+    }
+
+    const scrollY = Number(state.scrollY);
+    const loadedPostCount = Number(state.loadedPostCount);
+
+    if (!Number.isFinite(scrollY) || !Number.isFinite(loadedPostCount)) return;
+
+    const targetPostCount = Math.max(loadedPostCount - 1, 0);
+
+    while (this.currentPostCount < targetPostCount && this.hasSentinelTarget) {
+      const loaded = await this.loadNextPage();
+
+      if (!loaded) break;
+    }
+
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: scrollY,
+        behavior: 'instant',
+      });
+    });
+  }
+
+  get currentPostCount() {
+    return this.postsTarget.querySelectorAll(':scope > li[id^="post_"]').length;
   }
 
   removeDuplicateMonthHeading(nextPosts) {
