@@ -9,6 +9,7 @@ export default class extends Controller {
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
     this.handleCalendarChanged = this.handleCalendarChanged.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
 
     document.addEventListener('pawth:post-selected', this.handlePostSelected);
 
@@ -16,6 +17,8 @@ export default class extends Controller {
       'pawth:calendar-changed',
       this.handleCalendarChanged,
     );
+
+    document.addEventListener('keydown', this.handleKeydown);
 
     this.refresh();
   }
@@ -30,6 +33,8 @@ export default class extends Controller {
       'pawth:calendar-changed',
       this.handleCalendarChanged,
     );
+
+    document.removeEventListener('keydown', this.handleKeydown);
 
     this.swipe?.reset();
     this.swipe = null;
@@ -49,6 +54,33 @@ export default class extends Controller {
     this.disableNavigation();
   }
 
+  handleKeydown(event) {
+    if (this.isEditableElement(event.target)) return;
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      this.previous();
+      return;
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      this.next();
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      this.moveToAdjacentWeek(-1);
+      return;
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      this.moveToAdjacentWeek(1);
+    }
+  }
+
   previous() {
     const posts = this.posts();
     const currentIndex = this.currentIndex(posts);
@@ -65,6 +97,104 @@ export default class extends Controller {
     if (currentIndex === -1 || currentIndex >= posts.length - 1) return;
 
     this.selectPost(posts[currentIndex + 1]);
+  }
+
+  moveToAdjacentWeek(direction) {
+    const posts = this.posts();
+    const currentIndex = this.currentIndex(posts);
+
+    if (currentIndex === -1) return;
+
+    const currentPost = posts[currentIndex];
+    const currentDate = this.parseDate(currentPost.dataset.date);
+    const currentWeekIndex = this.calendarWeekIndex(currentDate);
+
+    const targetWeekPosts = this.findNextPostedWeek(
+      posts,
+      currentWeekIndex,
+      direction,
+    );
+
+    if (!targetWeekPosts.length) return;
+
+    const currentColumn = this.calendarColumnIndex(currentDate);
+
+    const targetPost = targetWeekPosts.reduce((nearestPost, post) => {
+      const nearestDate = this.parseDate(nearestPost.dataset.date);
+      const postDate = this.parseDate(post.dataset.date);
+
+      const nearestColumnDistance = Math.abs(
+        this.calendarColumnIndex(nearestDate) - currentColumn,
+      );
+      const postColumnDistance = Math.abs(
+        this.calendarColumnIndex(postDate) - currentColumn,
+      );
+
+      if (postColumnDistance < nearestColumnDistance) {
+        return post;
+      }
+
+      if (postColumnDistance > nearestColumnDistance) {
+        return nearestPost;
+      }
+
+      const nearestDateDistance = Math.abs(nearestDate - currentDate);
+      const postDateDistance = Math.abs(postDate - currentDate);
+
+      return postDateDistance < nearestDateDistance ? post : nearestPost;
+    });
+
+    this.selectPost(targetPost);
+  }
+
+  findNextPostedWeek(posts, currentWeekIndex, direction) {
+    const weekIndexes = posts
+      .map((post) => this.calendarWeekIndex(this.parseDate(post.dataset.date)))
+      .filter((weekIndex) =>
+        direction < 0
+          ? weekIndex < currentWeekIndex
+          : weekIndex > currentWeekIndex,
+      );
+
+    if (!weekIndexes.length) return [];
+
+    const targetWeekIndex =
+      direction < 0 ? Math.max(...weekIndexes) : Math.min(...weekIndexes);
+
+    return posts.filter((post) => {
+      const postDate = this.parseDate(post.dataset.date);
+
+      return this.calendarWeekIndex(postDate) === targetWeekIndex;
+    });
+  }
+
+  calendarWeekIndex(date) {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+
+    // JavaScriptは日曜=0なので、月曜=0へ変換する
+    const leadingEmptyCells = (firstDayOfMonth.getDay() + 6) % 7;
+    const gridIndex = leadingEmptyCells + date.getDate() - 1;
+
+    return Math.floor(gridIndex / 7);
+  }
+
+  calendarColumnIndex(date) {
+    // 月曜=0、火曜=1、...、日曜=6
+    return (date.getDay() + 6) % 7;
+  }
+
+  parseDate(dateString) {
+    const [year, month, day] = dateString.split('-').map(Number);
+
+    return new Date(year, month - 1, day);
+  }
+
+  isEditableElement(element) {
+    if (!(element instanceof Element)) return false;
+
+    return (
+      element.matches('input, textarea, select') || element.isContentEditable
+    );
   }
 
   handlePointerDown(event) {
@@ -118,13 +248,16 @@ export default class extends Controller {
     contentEl.textContent =
       post.dataset.content || 'まだ日記をかいていません。';
 
-    // スワイプ・矢印移動ではボヨヨーン等のアニメーションを入れない
     this.refresh(date);
 
-    // 右側の日記移動とカレンダーの選択中マークを同期する
+    // 右側の日記移動とカレンダーの選択中マークを同期し、
+    // キーボード・スワイプによる移動では選択マークもアニメーションする
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
-        detail: { date },
+        detail: {
+          date,
+          animateMark: true,
+        },
       }),
     );
   }

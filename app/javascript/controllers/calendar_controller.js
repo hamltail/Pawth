@@ -142,11 +142,15 @@ export default class extends Controller {
   }
 
   handlePostSelected(event) {
-    const { date } = event.detail;
+    const { date, animateMark = false } = event.detail;
 
     if (!date) return;
 
-    this.selectMark(date);
+    const selectedMark = this.selectMark(date);
+
+    if (animateMark && selectedMark) {
+      this.squish(selectedMark, { scale: 1.4 });
+    }
   }
 
   syncSelectedMark() {
@@ -166,11 +170,13 @@ export default class extends Controller {
 
     this.clearSelectedMark();
 
-    if (!nextMark) return;
+    if (!nextMark) return null;
 
     // CSSアニメーションはクラス追加直後から開始する
     nextMark.classList.add('calendar-mark--selected');
     this.selectedMark = nextMark;
+
+    return nextMark;
   }
 
   clearSelectedMark() {
