@@ -108,21 +108,18 @@ export default class extends Controller {
     const currentPost = posts[currentIndex];
     const currentDate = this.parseDate(currentPost.dataset.date);
     const currentWeekIndex = this.calendarWeekIndex(currentDate);
-    const targetWeekIndex = currentWeekIndex + direction;
 
-    if (targetWeekIndex < 0) return;
+    const targetWeekPosts = this.findNextPostedWeek(
+      posts,
+      currentWeekIndex,
+      direction,
+    );
 
-    const candidates = posts.filter((post) => {
-      const postDate = this.parseDate(post.dataset.date);
-
-      return this.calendarWeekIndex(postDate) === targetWeekIndex;
-    });
-
-    if (!candidates.length) return;
+    if (!targetWeekPosts.length) return;
 
     const currentColumn = this.calendarColumnIndex(currentDate);
 
-    const targetPost = candidates.reduce((nearestPost, post) => {
+    const targetPost = targetWeekPosts.reduce((nearestPost, post) => {
       const nearestDate = this.parseDate(nearestPost.dataset.date);
       const postDate = this.parseDate(post.dataset.date);
 
@@ -133,10 +130,42 @@ export default class extends Controller {
         this.calendarColumnIndex(postDate) - currentColumn,
       );
 
-      return postColumnDistance < nearestColumnDistance ? post : nearestPost;
+      if (postColumnDistance < nearestColumnDistance) {
+        return post;
+      }
+
+      if (postColumnDistance > nearestColumnDistance) {
+        return nearestPost;
+      }
+
+      const nearestDateDistance = Math.abs(nearestDate - currentDate);
+      const postDateDistance = Math.abs(postDate - currentDate);
+
+      return postDateDistance < nearestDateDistance ? post : nearestPost;
     });
 
     this.selectPost(targetPost);
+  }
+
+  findNextPostedWeek(posts, currentWeekIndex, direction) {
+    const weekIndexes = posts
+      .map((post) => this.calendarWeekIndex(this.parseDate(post.dataset.date)))
+      .filter((weekIndex) =>
+        direction < 0
+          ? weekIndex < currentWeekIndex
+          : weekIndex > currentWeekIndex,
+      );
+
+    if (!weekIndexes.length) return [];
+
+    const targetWeekIndex =
+      direction < 0 ? Math.max(...weekIndexes) : Math.min(...weekIndexes);
+
+    return posts.filter((post) => {
+      const postDate = this.parseDate(post.dataset.date);
+
+      return this.calendarWeekIndex(postDate) === targetWeekIndex;
+    });
   }
 
   calendarWeekIndex(date) {
