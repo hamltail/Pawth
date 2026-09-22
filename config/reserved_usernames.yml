@@ -7,20 +7,33 @@ reserved:
   - mod
   - moderator
   - official
+  - operator
+  - owner
   - root
   - staff
+  - superuser
   - sys
   - system
 
   # 認証・アカウント
   - account
+  - accounts
   - auth
+  - authenticate
+  - authentication
   - login
   - logout
   - me
   - oauth
+  - password
+  - passwords
   - profile
+  - profiles
   - register
+  - registration
+  - registrations
+  - session
+  - sessions
   - settings
   - signin
   - signout
@@ -29,8 +42,12 @@ reserved:
   # ユーザー・組織
   - group
   - groups
+  - member
+  - members
   - org
+  - organization
   - organizations
+  - team
   - teams
   - user
   - username
@@ -39,17 +56,21 @@ reserved:
   # 投稿・コンテンツ
   - activities
   - activity
+  - achievement
   - achievements
   - badge
   - badges
   - comment
   - comments
+  - daily_post
   - daily_posts
   - discover
   - explore
   - feed
+  - feeds
   - post
   - posts
+  - reaction
   - reactions
   - replies
   - reply
@@ -59,8 +80,10 @@ reserved:
   - shared
   - status
   - statuses
+  - tag
   - tags
   - timeline
+  - topic
   - topics
   - trending
   - viewed
@@ -70,25 +93,45 @@ reserved:
   - follow
   - followers
   - following
+  - fork
   - forks
   - invite
   - invites
+  - like
   - likes
   - log
   - logs
+  - message
   - messages
+  - notification
   - notifications
   - starred
   - stars
   - watch
   - watched
 
-  # サポート・情報
+  # Pawthで将来使いそうな機能
+  - archive
+  - archives
+  - calendar
+  - calendars
+  - history
+  - home
+  - journal
+  - journals
+  - record
+  - records
+  - stats
+  - streak
+  - streaks
+
+  # サポート・公式情報
   - about
   - contact
   - faq
   - help
   - info
+  - legal
   - privacy
   - security
   - support
@@ -97,17 +140,49 @@ reserved:
   # API・外部連携
   - api
   - callback
+  - callbacks
+  - integration
+  - integrations
+  - oauth2
+  - token
+  - tokens
+  - v1
+  - v2
   - webhook
   - webhooks
 
-  # データ操作
+  # データ・ファイル操作
+  - backup
+  - backups
+  - download
+  - downloads
   - export
+  - exports
+  - file
+  - files
   - import
+  - imports
   - upload
   - uploads
 
-  # Rails・Web・技術系
+  # メディア
+  - avatar
+  - avatars
+  - gallery
+  - image
+  - images
+  - media
+  - photo
+  - photos
+  - picture
+  - pictures
+
+  # Web・アプリケーション
+  - app
+  - apps
   - assets
+  - blog
+  - blogs
   - config
   - console
   - css
@@ -115,26 +190,58 @@ reserved:
   - edit
   - health
   - health_check
-  - images
   - js
   - new
   - public
   - robots
   - sitemap
 
-  # プロジェクト固有・AI関連
+  # 開発・インフラ
+  - debug
+  - development
+  - docs
+  - documentation
+  - internal
+  - jwt
+  - metrics
+  - monitor
+  - monitoring
+  - production
+  - projects
+  - sandbox
+  - snippets
+  - staging
+  - test
+  - testing
+
+  # AI・Bot
   - ai
   - assistant
+  - assistants
   - bot
   - bots
   - chat
   - chats
+
+  # サービス・ブランド保護
   - pawth
 
-  # メディア
-  - gallery
-  - media
-  - photo
-  - photos
-  - picture
-  - pictures
+  # システム通知・メール
+  - mail
+  - newsletter
+  - newsletters
+  - noreply
+  - unsubscribe
+  - unsubscribes
+
+  # 特殊・紛らわしいユーザー名
+  - all
+  - everyone
+  - here
+  - name
+  - nickname
+  - none
+  - null
+  - undefined
+  - unknown
+  - you
