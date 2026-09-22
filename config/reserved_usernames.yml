@@ -1,14 +1,39 @@
 reserved:
-  # 管理・認証系
-  - account
+  # 管理・運営・システム
   - admin
+  - adminpanel
+  - administrator
+  - manage
+  - mod
+  - moderator
+  - official
+  - operator
+  - owner
+  - root
+  - staff
+  - superuser
+  - sys
+  - system
+
+  # 認証・アカウント
+  - account
+  - accounts
   - auth
+  - authenticate
+  - authentication
   - login
   - logout
   - me
+  - oauth
+  - password
+  - passwords
   - profile
+  - profiles
   - register
-  - root
+  - registration
+  - registrations
+  - session
+  - sessions
   - settings
   - signin
   - signout
@@ -17,25 +42,35 @@ reserved:
   # ユーザー・組織
   - group
   - groups
+  - member
+  - members
   - org
+  - organization
   - organizations
+  - team
   - teams
   - user
+  - username
   - users
 
   # 投稿・コンテンツ
   - activities
   - activity
+  - achievement
   - achievements
+  - badge
   - badges
   - comment
   - comments
+  - daily_post
   - daily_posts
   - discover
   - explore
   - feed
+  - feeds
   - post
   - posts
+  - reaction
   - reactions
   - replies
   - reply
@@ -45,72 +80,168 @@ reserved:
   - shared
   - status
   - statuses
+  - tag
   - tags
   - timeline
+  - topic
   - topics
   - trending
   - viewed
 
-  # 開発・管理機能
-  - adminpanel
-  - config
-  - console
-  - dashboard
-  - manage
-
-  # サポート系
-  - about
-  - api
-  - contact
-  - faq
-  - help
-  - privacy
-  - security
-  - support
-  - terms
-
-  # 静的ファイル・技術系
-  - assets
-  - css
-  - images
-  - js
-
-  # プロジェクト固有・AI関連
-  - ai
-  - assistant
-  - bot
-  - bots
-  - chat
-  - chats
-  - pawth
-
-  # メディア関連
-  - gallery
-  - media
-  - photo
-  - photos
-  - picture
-  - pictures
-  - upload
-  - uploads
-
-  # API・連携関連
-  - callback
-  - webhooks
-
-  # SNSや通知機能
+  # SNS・コミュニケーション
+  - community
   - follow
   - followers
   - following
+  - fork
   - forks
   - invite
   - invites
+  - like
   - likes
   - log
   - logs
+  - message
   - messages
+  - notification
   - notifications
   - starred
   - stars
   - watch
   - watched
+
+  # Pawthで将来使いそうな機能
+  - archive
+  - archives
+  - calendar
+  - calendars
+  - history
+  - home
+  - journal
+  - journals
+  - record
+  - records
+  - stats
+  - streak
+  - streaks
+
+  # サポート・公式情報
+  - about
+  - contact
+  - faq
+  - help
+  - info
+  - legal
+  - privacy
+  - security
+  - support
+  - terms
+
+  # API・外部連携
+  - api
+  - callback
+  - callbacks
+  - integration
+  - integrations
+  - oauth2
+  - token
+  - tokens
+  - v1
+  - v2
+  - webhook
+  - webhooks
+
+  # データ・ファイル操作
+  - backup
+  - backups
+  - download
+  - downloads
+  - export
+  - exports
+  - file
+  - files
+  - import
+  - imports
+  - upload
+  - uploads
+
+  # メディア
+  - avatar
+  - avatars
+  - gallery
+  - image
+  - images
+  - media
+  - photo
+  - photos
+  - picture
+  - pictures
+
+  # Web・アプリケーション
+  - app
+  - apps
+  - assets
+  - blog
+  - blogs
+  - config
+  - console
+  - css
+  - dashboard
+  - edit
+  - health
+  - health_check
+  - js
+  - new
+  - public
+  - robots
+  - sitemap
+
+  # 開発・インフラ
+  - debug
+  - development
+  - docs
+  - documentation
+  - internal
+  - jwt
+  - metrics
+  - monitor
+  - monitoring
+  - production
+  - projects
+  - sandbox
+  - snippets
+  - staging
+  - test
+  - testing
+
+  # AI・Bot
+  - ai
+  - assistant
+  - assistants
+  - bot
+  - bots
+  - chat
+  - chats
+
+  # サービス・ブランド保護
+  - pawth
+
+  # システム通知・メール
+  - mail
+  - newsletter
+  - newsletters
+  - noreply
+  - unsubscribe
+  - unsubscribes
+
+  # 特殊・紛らわしいユーザー名
+  - all
+  - everyone
+  - here
+  - name
+  - nickname
+  - none
+  - 'null'
+  - undefined
+  - unknown
+  - you

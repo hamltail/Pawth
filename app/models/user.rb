@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\z/
+  USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z/
   RESERVED_USERNAMES = YAML.load_file(
     Rails.root.join('config/reserved_usernames.yml')
   )['reserved'].map(&:downcase).freeze
@@ -15,7 +15,10 @@ class User < ApplicationRecord
 
   before_validation :normalize_username
   validates :email, presence: true
-  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :username,
+            presence: true,
+            length: { in: 5..39 },
+            uniqueness: { case_sensitive: false }
   validate :username_is_not_reserved
   validate :username_is_valid_format_github_like
 
