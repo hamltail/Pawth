@@ -292,17 +292,17 @@ export default class extends Controller {
         },
       })
       .to(page, {
-        rotationY: isNext ? -35 : 35,
-        scaleX: 0.96,
-        duration: 0.16,
+        rotationY: isNext ? -32 : 32,
+        scaleX: 0.98,
+        duration: 0.22,
         ease: 'power1.in',
       })
       .to(page, {
         rotationY: isNext ? -92 : 92,
-        scaleX: 0.82,
+        scaleX: 0.84,
         opacity: 0,
-        duration: 0.28,
-        ease: 'power2.in',
+        duration: 0.43,
+        ease: 'power2.inOut',
       });
   }
 

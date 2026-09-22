@@ -345,6 +345,23 @@
       0 0 24px rgba(168, 85, 247, 0.22);
   }
 
+  .daily-post-card {
+    transition:
+      transform 300ms ease-out,
+      filter 300ms ease-out;
+  }
+
+  .daily-post-card:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 5px 7px rgba(15, 23, 42, 0.1));
+  }
+
+  :root[data-theme='dark'] .daily-post-card:hover {
+    filter:
+      drop-shadow(0 0 4px rgba(196, 181, 253, 0.3))
+      drop-shadow(0 0 10px rgba(168, 85, 247, 0.16));
+  }
+
   .daily-post-scroll {
     scrollbar-width: thin;
     scrollbar-color: rgba(139, 92, 246, 0.65) transparent;
@@ -495,7 +512,7 @@
     55% {
       box-shadow:
         0 0 14px rgba(253, 186, 116, 1),
-        0 0 32px rgba(251, 146, 60, 0.85),
+        0 0 32px rgba(251, 60, 0, 0.85),
         0 0 52px rgba(249, 115, 22, 0.55);
     }
 
