@@ -46,7 +46,11 @@ Rails.application.configure do
 
   # メール
   if ENV['PAWTH_DOCKER_LOCAL'] == 'true'
-    config.action_mailer.default_url_options = { host: 'localhost', port: 3001, protocol: 'http' }
+    config.action_mailer.default_url_options = {
+      host: 'localhost',
+      port: ENV.fetch('PORT', 3000),
+      protocol: 'http'
+    }
   else
     config.action_mailer.default_url_options = { host: 'pawth.hamltail.dev', protocol: 'https' }
   end
