@@ -6,11 +6,12 @@ services:
     tty: true
     stdin_open: true
     environment:
+      PORT: ${PORT:-3000}
       DATABASE_URL: postgres://postgres:postgres@db:5432/pawth_development
     volumes:
       - .:/app
     ports:
-      - '3000:3000'
+      - '${PORT:-3000}:${PORT:-3000}'
     depends_on:
       - db
 
