@@ -1,14 +1,26 @@
 reserved:
-  # 管理・認証系
-  - account
+  # 管理・運営・システム
   - admin
+  - adminpanel
+  - administrator
+  - manage
+  - mod
+  - moderator
+  - official
+  - root
+  - staff
+  - sys
+  - system
+
+  # 認証・アカウント
+  - account
   - auth
   - login
   - logout
   - me
+  - oauth
   - profile
   - register
-  - root
   - settings
   - signin
   - signout
@@ -21,12 +33,14 @@ reserved:
   - organizations
   - teams
   - user
+  - username
   - users
 
   # 投稿・コンテンツ
   - activities
   - activity
   - achievements
+  - badge
   - badges
   - comment
   - comments
@@ -51,54 +65,8 @@ reserved:
   - trending
   - viewed
 
-  # 開発・管理機能
-  - adminpanel
-  - config
-  - console
-  - dashboard
-  - manage
-
-  # サポート系
-  - about
-  - api
-  - contact
-  - faq
-  - help
-  - privacy
-  - security
-  - support
-  - terms
-
-  # 静的ファイル・技術系
-  - assets
-  - css
-  - images
-  - js
-
-  # プロジェクト固有・AI関連
-  - ai
-  - assistant
-  - bot
-  - bots
-  - chat
-  - chats
-  - pawth
-
-  # メディア関連
-  - gallery
-  - media
-  - photo
-  - photos
-  - picture
-  - pictures
-  - upload
-  - uploads
-
-  # API・連携関連
-  - callback
-  - webhooks
-
-  # SNSや通知機能
+  # SNS・コミュニケーション
+  - community
   - follow
   - followers
   - following
@@ -114,3 +82,59 @@ reserved:
   - stars
   - watch
   - watched
+
+  # サポート・情報
+  - about
+  - contact
+  - faq
+  - help
+  - info
+  - privacy
+  - security
+  - support
+  - terms
+
+  # API・外部連携
+  - api
+  - callback
+  - webhook
+  - webhooks
+
+  # データ操作
+  - export
+  - import
+  - upload
+  - uploads
+
+  # Rails・Web・技術系
+  - assets
+  - config
+  - console
+  - css
+  - dashboard
+  - edit
+  - health
+  - health_check
+  - images
+  - js
+  - new
+  - public
+  - robots
+  - sitemap
+
+  # プロジェクト固有・AI関連
+  - ai
+  - assistant
+  - bot
+  - bots
+  - chat
+  - chats
+  - pawth
+
+  # メディア
+  - gallery
+  - media
+  - photo
+  - photos
+  - picture
+  - pictures
