@@ -23,10 +23,14 @@
         }
       }
         .shrink-0
-          .inline-flex.items-center.gap-2.rounded-full.bg-surface-muted.px-3.py-1.text-xs.font-semibold.text-secondary-text
+          .inline-flex.items-center.gap-2.rounded-full.bg-surface-muted.px-3.py-1.font-semibold.text-secondary-text{
+            class: 'text-[10px] md:text-xs'
+          }
             %span#daily-post-date= post.posted_on
 
-        #daily-post-content.daily-post-scroll.mt-3.min-h-0.flex-1.overflow-y-auto.leading-relaxed.text-primary.whitespace-pre-wrap.break-words
+        #daily-post-content.daily-post-scroll.mt-3.min-h-0.flex-1.overflow-y-auto.leading-relaxed.text-primary.whitespace-pre-wrap.break-words{
+          class: 'text-sm md:text-base'
+        }
           = h(post.content)
 
       %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
