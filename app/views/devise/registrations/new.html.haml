@@ -12,13 +12,7 @@
 
     - if resource.errors.any?
       %div.status-error.border.px-4.py-4.rounded.mb-6
-        %p.font-bold= "#{resource.errors.count}件のエラーがあります。"
-        %ul.ml-4.list-disc
-          - priority = [:username, :email, :password, :password_confirmation]
-          - sorted_errors = resource.errors.messages.sort_by { |k, _| priority.index(k) }
-          - sorted_errors.each do |attribute, messages|
-            - messages.each do |msg|
-              %li= resource.class.human_attribute_name(attribute) + msg
+        %p= t("users.registration.error_message")
 
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       .mb-4

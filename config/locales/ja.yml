@@ -141,6 +141,8 @@ ja:
         other: '%{count}件のエラーがあります。'
 
   users:
+    registration:
+      error_message: '入力内容を確認してください。'
     edit:
       title: 'アカウント設定'
       update: '更新'
