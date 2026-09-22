@@ -38,7 +38,8 @@
 
       - calendar_days.each do |date|
         - post = post_for(date, posts_by_day)
-        - date_class = date.saturday? ? 'calendar-saturday' : (date.sunday? ? 'calendar-sunday' : 'text-secondary-text')
+        - holiday = HolidayJp.holiday?(date)
+        - date_class = date.saturday? ? 'calendar-saturday' : (date.sunday? || holiday ? 'calendar-sunday' : 'text-secondary-text')
 
         %div{ class: day_cell_classes(date) }
           %span{ class: "text-xs #{date_class}" }= date.day
