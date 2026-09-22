@@ -1,20 +1,9 @@
 require "faker"
 Faker::Config.locale = 'en'
 
-miku = FactoryBot.create(:user,
-                          username: "miku",
-                          email: "miku@example.com",
-                          confirmed_at: Time.current
-                        )
-rin = FactoryBot.create(:user,
-                          username: "rin",
-                          email: "rin@example.com",
-                          confirmed_at: Time.current
-                        )
-other_users = FactoryBot.create_list(:user, 30)
+users = FactoryBot.create_list(:user, 30)
 
-target_users = [miku, rin] + other_users
-target_users.each do |user|
+users.each do |user|
   dates = (1..180).to_a.sample(175)
   dates.each do |days_ago|
     FactoryBot.create(
@@ -27,33 +16,16 @@ target_users.each do |user|
   end
 end
 
-miku.profile || miku.create_profile!
-miku.profile.avatar.purge if miku.profile.avatar.attached?
-miku.profile.avatar.attach(
-  io: File.open(Rails.root.join("db/seed_images/avatar1.png"), "rb"),
-  filename: "avatar1.png",
-  content_type: "image/png"
-)
-
-rin.profile || rin.create_profile!
-rin.profile.avatar.purge if rin.profile.avatar.attached?
-rin.profile.avatar.attach(
-  io: File.open(Rails.root.join("db/seed_images/avatar2.png"), "rb"),
-  filename: "avatar2.png",
-  content_type: "image/png"
-)
-
-# 他のユーザーはローテーション
 avatar_paths = Dir[Rails.root.join("db/seed_images/avatar*.png")].sort
 avatar_paths << nil
 avatar_enum = avatar_paths.cycle
 
-other_users.each do |user|
+users.each do |user|
   profile = user.profile || user.create_profile!
   profile.avatar.purge if profile.avatar.attached?
 
   path = avatar_enum.next
-  next unless path.present? # nil の場合はスキップ（未登録）
+  next unless path.present?
 
   profile.avatar.attach(
     io: File.open(path, "rb"),
