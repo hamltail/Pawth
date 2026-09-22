@@ -38,7 +38,7 @@ export default class extends Controller {
 
     document.removeEventListener('keydown', this.handleKeydown);
 
-    this.removePageTurnLayer();
+    this.finishPageTurn();
 
     this.swipe?.reset();
     this.swipe = null;
@@ -86,6 +86,8 @@ export default class extends Controller {
   }
 
   previous() {
+    this.finishPageTurn();
+
     const posts = this.posts();
     const currentIndex = this.currentIndex(posts);
 
@@ -95,6 +97,8 @@ export default class extends Controller {
   }
 
   next() {
+    this.finishPageTurn();
+
     const posts = this.posts();
     const currentIndex = this.currentIndex(posts);
 
@@ -104,6 +108,8 @@ export default class extends Controller {
   }
 
   moveToAdjacentWeek(direction) {
+    this.finishPageTurn();
+
     const posts = this.posts();
     const currentIndex = this.currentIndex(posts);
 
@@ -239,7 +245,7 @@ export default class extends Controller {
   }
 
   animatePageTurn(post, direction) {
-    if (!post || !this.hasCardTarget || this.isAnimating) return;
+    if (!post || !this.hasCardTarget) return;
 
     this.isAnimating = true;
 
@@ -296,6 +302,18 @@ export default class extends Controller {
         this.isAnimating = false;
       },
     });
+  }
+
+  finishPageTurn() {
+    if (!this.pageTurnLayer) {
+      this.isAnimating = false;
+      return;
+    }
+
+    gsap.killTweensOf(this.pageTurnLayer);
+    this.pageTurnLayer.remove();
+    this.pageTurnLayer = null;
+    this.isAnimating = false;
   }
 
   removePageTurnLayer() {
