@@ -112,25 +112,15 @@ export default class extends Controller {
 
     const { date, content } = el.dataset;
 
-    if (this.dateEl) {
-      this.dateEl.textContent = date || '';
-    }
+    if (!date || !this.dateEl || !this.contentEl) return;
 
-    if (this.contentEl) {
-      this.contentEl.textContent = content || 'まだ日記をかいていません。';
+    // 選択中の日記を再度クリックした場合は何もしない
+    if (this.dateEl.textContent === date) return;
 
-      gsap.killTweensOf(this.contentEl);
-
-      gsap.fromTo(
-        this.contentEl,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 1.618,
-          ease: 'power1.out',
-        },
-      );
-    }
+    this.animatePostReveal({
+      date,
+      content: content || 'まだ日記をかいていません。',
+    });
 
     // カレンダーマークから日記を選択したら、
     // 日記ナビゲーションと選択中マークの状態を更新する
@@ -139,6 +129,36 @@ export default class extends Controller {
         detail: { date },
       }),
     );
+  }
+
+  animatePostReveal({ date, content }) {
+    if (!this.dateEl || !this.contentEl) return;
+
+    const revealElements = [this.dateEl.parentElement, this.contentEl].filter(
+      Boolean,
+    );
+
+    gsap.killTweensOf(revealElements);
+
+    gsap.set(revealElements, {
+      opacity: 0.6,
+    });
+
+    this.dateEl.textContent = date;
+    this.contentEl.textContent = content;
+    this.contentEl.scrollTop = 0;
+
+    gsap.to(revealElements, {
+      opacity: 1,
+      duration: 0.6,
+      ease: 'sine.inOut',
+      overwrite: 'auto',
+      onComplete: () => {
+        gsap.set(revealElements, {
+          clearProps: 'opacity',
+        });
+      },
+    });
   }
 
   handlePostSelected(event) {
@@ -312,6 +332,7 @@ export default class extends Controller {
     );
 
     gsap.killTweensOf([
+      this.dateEl?.parentElement,
       this.contentEl,
       this.element.querySelectorAll('.today-badge .today-char'),
       this.element.querySelectorAll('svg.calendar-mark.calendar-mark--posted'),
