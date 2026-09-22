@@ -357,8 +357,7 @@
   }
 
   :root[data-theme='dark'] .daily-post-card:hover {
-    filter:
-      drop-shadow(0 0 4px rgba(196, 181, 253, 0.3))
+    filter: drop-shadow(0 0 4px rgba(196, 181, 253, 0.3))
       drop-shadow(0 0 10px rgba(168, 85, 247, 0.16));
   }
 

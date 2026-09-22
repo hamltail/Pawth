@@ -105,37 +105,17 @@ export default class extends Controller {
   }
 
   handleClick(e) {
-    this.refreshCurrentPostRefs();
-
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    const { date, content } = el.dataset;
+    const { date } = el.dataset;
 
-    if (this.dateEl) {
-      this.dateEl.textContent = date || '';
-    }
+    if (!date) return;
 
-    if (this.contentEl) {
-      this.contentEl.textContent = content || 'まだ日記をかいていません。';
-
-      gsap.killTweensOf(this.contentEl);
-
-      gsap.fromTo(
-        this.contentEl,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 1.618,
-          ease: 'power1.out',
-        },
-      );
-    }
-
-    // カレンダーマークから日記を選択したら、
-    // 日記ナビゲーションと選択中マークの状態を更新する
+    // 日記の切り替えはpost-navigator側へ任せ、
+    // 矢印・キーボード・スワイプと同じカード移動を使用する
     document.dispatchEvent(
-      new CustomEvent('pawth:post-selected', {
+      new CustomEvent('pawth:post-navigation-requested', {
         detail: { date },
       }),
     );
@@ -312,7 +292,6 @@ export default class extends Controller {
     );
 
     gsap.killTweensOf([
-      this.contentEl,
       this.element.querySelectorAll('.today-badge .today-char'),
       this.element.querySelectorAll('svg.calendar-mark.calendar-mark--posted'),
     ]);
