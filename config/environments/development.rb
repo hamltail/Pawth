@@ -29,7 +29,10 @@ Rails.application.configure do
   # メール：即時に不具合を見つけたいので error を上げる
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = {
+    host: 'localhost',
+    port: ENV.fetch('PORT', 3000)
+  }
   # ブラウザでメールを確認（実送信しない）
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_deliveries = true
