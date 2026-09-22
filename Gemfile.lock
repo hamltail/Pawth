@@ -163,6 +163,7 @@ GEM
       rainbow
       rubocop (>= 1.0)
       sysexits (~> 1.1)
+    holiday_jp (0.8.1)
     html2haml (2.3.0)
       erubis (~> 2.7.0)
       haml (>= 4.0)
@@ -468,6 +469,7 @@ DEPENDENCIES
   foreman
   haml-rails
   haml_lint
+  holiday_jp
   html2haml
   image_processing
   importmap-rails
