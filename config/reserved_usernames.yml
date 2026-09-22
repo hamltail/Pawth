@@ -241,7 +241,7 @@ reserved:
   - name
   - nickname
   - none
-  - null
+  - 'null'
   - undefined
   - unknown
   - you
