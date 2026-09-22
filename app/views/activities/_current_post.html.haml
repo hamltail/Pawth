@@ -5,8 +5,9 @@
       action: 'pointerdown->post-navigator#handlePointerDown pointerup->post-navigator#handlePointerUp pointercancel->post-navigator#handlePointerCancel'
     }
   }
-    .flex.items-center.gap-2
-      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
+    .flex.items-center{ class: 'gap-1 md:gap-2' }
+      %button.flex.shrink-0.items-center.justify-center.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
+        class: 'w-7 md:w-10',
         type: 'button',
         aria: { label: '前の日記' },
         data: {
@@ -14,7 +15,11 @@
           action: 'click->post-navigator#previous'
         }
       }
-        = render 'shared/icon_arrow', direction: 'left', klass: 'w-5 h-5'
+        %div{ class: 'md:hidden' }
+          = render 'shared/icon_arrow', direction: 'left', klass: 'w-4 h-4'
+
+        %div{ class: 'hidden md:block' }
+          = render 'shared/icon_arrow', direction: 'left', klass: 'w-5 h-5'
 
       .daily-post-card.relative.flex.flex-1.min-w-0.flex-col.overflow-hidden.rounded-2xl.p-5.bg-surface.shadow-sm.ring-1.ring-default-border{
         class: 'h-64 xl:h-[28rem]',
@@ -33,7 +38,8 @@
         }
           = h(post.content)
 
-      %button.flex.shrink-0.items-center.justify-center.w-10.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
+      %button.flex.shrink-0.items-center.justify-center.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
+        class: 'w-7 md:w-10',
         type: 'button',
         aria: { label: '次の日記' },
         data: {
@@ -41,7 +47,11 @@
           action: 'click->post-navigator#next'
         }
       }
-        = render 'shared/icon_arrow', direction: 'right', klass: 'w-5 h-5'
+        %div{ class: 'md:hidden' }
+          = render 'shared/icon_arrow', direction: 'right', klass: 'w-4 h-4'
+
+        %div{ class: 'hidden md:block' }
+          = render 'shared/icon_arrow', direction: 'right', klass: 'w-5 h-5'
 
 - else
   .mb-6.rounded-2xl.p-6.bg-surface-muted.text-muted.text-center.ring-1.ring-default-border
