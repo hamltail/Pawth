@@ -25,10 +25,8 @@ class DailyPost < ApplicationRecord
   scope :by_year, ->(year) {
     where('EXTRACT(YEAR FROM posted_on) = ?', year.to_i) if year.present?
   }
-  scope :by_month, ->(month, year = nil) {
-    if month.present? && year.present?
-      where('EXTRACT(MONTH FROM posted_on) = ? AND EXTRACT(YEAR FROM posted_on) = ?', month.to_i, year.to_i)
-    end
+  scope :by_month, ->(month) {
+    where('EXTRACT(MONTH FROM posted_on) = ?', month.to_i) if month.present?
   }
 
   def edit_remaining_count
