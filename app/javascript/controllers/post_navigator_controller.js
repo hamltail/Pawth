@@ -245,9 +245,11 @@ export default class extends Controller {
 
     const card = this.cardTarget;
     const page = card.cloneNode(true);
+    const isNext = direction === 'next';
 
     page.removeAttribute('data-post-navigator-target');
     page.removeAttribute('id');
+
     page.querySelectorAll('[id]').forEach((element) => {
       element.removeAttribute('id');
     });
@@ -261,10 +263,6 @@ export default class extends Controller {
       height: '100%',
       margin: '0',
       zIndex: '10',
-      transformStyle: 'preserve-3d',
-      backfaceVisibility: 'hidden',
-      WebkitBackfaceVisibility: 'hidden',
-      boxShadow: '0 16px 32px rgba(15, 23, 42, 0.18)',
     });
 
     card.style.position = 'relative';
@@ -272,38 +270,32 @@ export default class extends Controller {
 
     this.pageTurnLayer = page;
 
-    // 複製した旧ページを上に残したまま、
+    // 古い日記カードを上に残したまま、
     // 下にある本物のカードを次の日記へ切り替える
     this.selectPost(post);
 
-    const isNext = direction === 'next';
-
     gsap.set(page, {
-      transformPerspective: 1200,
+      xPercent: 0,
+      y: 0,
+      rotationZ: 0,
+      scale: 1,
+      opacity: 1,
       transformOrigin: isNext ? '0% 50%' : '100% 50%',
-      rotationY: 0,
     });
 
-    gsap
-      .timeline({
-        onComplete: () => {
-          this.removePageTurnLayer();
-          this.isAnimating = false;
-        },
-      })
-      .to(page, {
-        rotationY: isNext ? -32 : 32,
-        scaleX: 0.98,
-        duration: 0.22,
-        ease: 'power1.in',
-      })
-      .to(page, {
-        rotationY: isNext ? -92 : 92,
-        scaleX: 0.84,
-        opacity: 0,
-        duration: 0.43,
-        ease: 'power2.inOut',
-      });
+    gsap.to(page, {
+      xPercent: isNext ? -105 : 105,
+      y: 6,
+      rotationZ: isNext ? -1.5 : 1.5,
+      scale: 0.985,
+      opacity: 0,
+      duration: 0.44,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        this.removePageTurnLayer();
+        this.isAnimating = false;
+      },
+    });
   }
 
   removePageTurnLayer() {
