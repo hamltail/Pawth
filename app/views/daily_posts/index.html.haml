@@ -51,7 +51,8 @@
       - if @pagy.next
         #infinite-scroll-sentinel.h-4{ data: { infinite_scroll_target: 'sentinel', next_url: daily_posts_path(request.query_parameters.merge(page: @pagy.next)) } }
 
-    %button.scroll-to-top-button.theme-link.fixed.bottom-6.right-6.z-30.inline-flex.h-12.w-12.translate-y-2.items-center.justify-center.rounded-full.border.border-default-border.bg-surface.opacity-0.pointer-events-none.transition-all.duration-300.ease-out.hover:-translate-y-1.hover:bg-surface-muted.md:bottom-8.md:right-8{
+    %button.scroll-to-top-button.theme-link.fixed.z-30.inline-flex.translate-y-2.items-center.justify-center.rounded-full.border.border-default-border.bg-surface.opacity-0.pointer-events-none.transition-all.duration-300.ease-out.hover:-translate-y-1.hover:bg-surface-muted{
+      class: 'bottom-6 right-6 h-14 w-14 md:bottom-8 md:right-8 md:h-12 md:w-12',
       type: 'button',
       data: {
         controller: 'scroll-to-top',
@@ -61,7 +62,8 @@
         label: 'トップへ戻る'
       }
     }
-      %svg.h-6.w-6{
+      %svg{
+        class: 'h-7 w-7 md:h-6 md:w-6',
         viewBox: '0 0 24 24',
         fill: 'none',
         stroke: 'currentColor',
