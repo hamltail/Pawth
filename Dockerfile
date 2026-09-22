@@ -71,6 +71,7 @@ RUN groupadd --system --gid 1000 app && \
     mkdir -p log tmp/pids tmp/cache tmp/sockets storage && \
     chown -R app:app .
 USER 1000:1000
-ENV RAILS_LOG_TO_STDOUT=1
+ENV RAILS_LOG_TO_STDOUT=1 \
+    PORT=3000
 EXPOSE 3000
-CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3000"]
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
