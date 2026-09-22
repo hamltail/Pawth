@@ -10,17 +10,10 @@ export default class extends Controller {
     this.isAnimating = false;
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
-    this.handlePostNavigationRequested =
-      this.handlePostNavigationRequested.bind(this);
     this.handleCalendarChanged = this.handleCalendarChanged.bind(this);
     this.handleKeydown = this.handleKeydown.bind(this);
 
     document.addEventListener('pawth:post-selected', this.handlePostSelected);
-
-    document.addEventListener(
-      'pawth:post-navigation-requested',
-      this.handlePostNavigationRequested,
-    );
 
     document.addEventListener(
       'pawth:calendar-changed',
@@ -36,11 +29,6 @@ export default class extends Controller {
     document.removeEventListener(
       'pawth:post-selected',
       this.handlePostSelected,
-    );
-
-    document.removeEventListener(
-      'pawth:post-navigation-requested',
-      this.handlePostNavigationRequested,
     );
 
     document.removeEventListener(
@@ -62,35 +50,6 @@ export default class extends Controller {
     if (!date) return;
 
     this.refresh(date);
-  }
-
-  handlePostNavigationRequested(event) {
-    const { date } = event.detail;
-
-    if (!date) return;
-
-    const posts = this.posts();
-    const post = posts.find((candidate) => candidate.dataset.date === date);
-
-    if (!post) return;
-
-    const currentDate = document.getElementById('daily-post-date')?.textContent;
-
-    if (!currentDate) {
-      this.selectPost(post);
-      return;
-    }
-
-    // 選択中の日記を再度クリックした場合は何もしない
-    if (date === currentDate) return;
-
-    this.finishPageTurn();
-
-    // 未来へ進むときはnextと同じく左へ、
-    // 過去へ戻るときはpreviousと同じく右へ抜ける
-    const direction = date > currentDate ? 'next' : 'previous';
-
-    this.animatePageTurn(post, direction);
   }
 
   handleCalendarChanged() {
