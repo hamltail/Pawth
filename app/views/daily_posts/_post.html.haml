@@ -1,9 +1,9 @@
 %li{ id: "post_#{post.id}", class: 'grid grid-cols-[4rem_2rem_minmax(0,1fr)] gap-x-4 sm:grid-cols-[5rem_2rem_minmax(0,1fr)]' }
   .pt-1.text-right
-    - day_color_class = if post.posted_on.saturday?
-      - 'calendar-saturday'
-    - elsif post.posted_on.sunday?
+    - day_color_class = if post.posted_on.sunday? || HolidayJp.holiday?(post.posted_on)
       - 'calendar-sunday'
+    - elsif post.posted_on.saturday?
+      - 'calendar-saturday'
     - else
       - 'text-secondary-text'
     .text-sm.font-bold.leading-none{ class: day_color_class }
