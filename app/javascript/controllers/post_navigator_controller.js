@@ -1,11 +1,13 @@
 import { Controller } from '@hotwired/stimulus';
+import { gsap } from 'gsap';
 import { createSwipeTracker } from 'lib/swipe';
 
 export default class extends Controller {
-  static targets = ['prevButton', 'nextButton'];
+  static targets = ['prevButton', 'nextButton', 'card'];
 
   connect() {
     this.swipe = createSwipeTracker();
+    this.isAnimating = false;
 
     this.handlePostSelected = this.handlePostSelected.bind(this);
     this.handleCalendarChanged = this.handleCalendarChanged.bind(this);
@@ -35,6 +37,8 @@ export default class extends Controller {
     );
 
     document.removeEventListener('keydown', this.handleKeydown);
+
+    this.removePageTurnLayer();
 
     this.swipe?.reset();
     this.swipe = null;
@@ -87,7 +91,7 @@ export default class extends Controller {
 
     if (currentIndex <= 0) return;
 
-    this.selectPost(posts[currentIndex - 1]);
+    this.animatePageTurn(posts[currentIndex - 1], 'previous');
   }
 
   next() {
@@ -96,7 +100,7 @@ export default class extends Controller {
 
     if (currentIndex === -1 || currentIndex >= posts.length - 1) return;
 
-    this.selectPost(posts[currentIndex + 1]);
+    this.animatePageTurn(posts[currentIndex + 1], 'next');
   }
 
   moveToAdjacentWeek(direction) {
@@ -144,7 +148,7 @@ export default class extends Controller {
       return postDateDistance < nearestDateDistance ? post : nearestPost;
     });
 
-    this.selectPost(targetPost);
+    this.animatePageTurn(targetPost, direction < 0 ? 'previous' : 'next');
   }
 
   findNextPostedWeek(posts, currentWeekIndex, direction) {
@@ -234,6 +238,82 @@ export default class extends Controller {
     return posts.findIndex((post) => post.dataset.date === dateEl.textContent);
   }
 
+  animatePageTurn(post, direction) {
+    if (!post || !this.hasCardTarget || this.isAnimating) return;
+
+    this.isAnimating = true;
+
+    const card = this.cardTarget;
+    const page = card.cloneNode(true);
+
+    page.removeAttribute('data-post-navigator-target');
+    page.removeAttribute('id');
+    page.querySelectorAll('[id]').forEach((element) => {
+      element.removeAttribute('id');
+    });
+
+    page.classList.add('pointer-events-none');
+
+    Object.assign(page.style, {
+      position: 'absolute',
+      inset: '0',
+      width: '100%',
+      height: '100%',
+      margin: '0',
+      zIndex: '10',
+      transformStyle: 'preserve-3d',
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+      boxShadow: '0 16px 32px rgba(15, 23, 42, 0.18)',
+    });
+
+    card.style.position = 'relative';
+    card.appendChild(page);
+
+    this.pageTurnLayer = page;
+
+    // 複製した旧ページを上に残したまま、
+    // 下にある本物のカードを次の日記へ切り替える
+    this.selectPost(post);
+
+    const isNext = direction === 'next';
+
+    gsap.set(page, {
+      transformPerspective: 1200,
+      transformOrigin: isNext ? '0% 50%' : '100% 50%',
+      rotationY: 0,
+    });
+
+    gsap
+      .timeline({
+        onComplete: () => {
+          this.removePageTurnLayer();
+          this.isAnimating = false;
+        },
+      })
+      .to(page, {
+        rotationY: isNext ? -35 : 35,
+        scaleX: 0.96,
+        duration: 0.16,
+        ease: 'power1.in',
+      })
+      .to(page, {
+        rotationY: isNext ? -92 : 92,
+        scaleX: 0.82,
+        opacity: 0,
+        duration: 0.28,
+        ease: 'power2.in',
+      });
+  }
+
+  removePageTurnLayer() {
+    if (!this.pageTurnLayer) return;
+
+    gsap.killTweensOf(this.pageTurnLayer);
+    this.pageTurnLayer.remove();
+    this.pageTurnLayer = null;
+  }
+
   selectPost(post) {
     if (!post) return;
 
@@ -247,6 +327,8 @@ export default class extends Controller {
     dateEl.textContent = date;
     contentEl.textContent =
       post.dataset.content || 'まだ日記をかいていません。';
+
+    contentEl.scrollTop = 0;
 
     this.refresh(date);
 
