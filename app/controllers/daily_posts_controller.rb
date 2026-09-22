@@ -8,7 +8,7 @@ class DailyPostsController < ApplicationController
     posts = current_user.daily_posts
                         .search_text(params[:q])
                         .by_year(params[:year])
-                        .by_month(params[:month], params[:year])
+                        .by_month(params[:month])
                         .recent_first
 
     @pagy, @daily_posts = pagy(posts, limit: 10)

@@ -134,11 +134,13 @@ RSpec.describe DailyPost, type: :model do
       expect(DailyPost.by_year(2025)).not_to include(post2)
     end
 
-    it 'by_monthは特定の月と年の日記を取得する' do
+    it 'by_monthは年をまたいで特定の月の日記を取得する' do
       post1 = DailyPost.create!(content: 'post May 2025', user: user, posted_on: '2025-05-15')
-      post2 = DailyPost.create!(content: 'post March 2025', user: user, posted_on: '2025-03-15')
-      expect(DailyPost.by_month(5, 2025)).to include(post1)
-      expect(DailyPost.by_month(5, 2025)).not_to include(post2)
+      post2 = DailyPost.create!(content: 'post May 2024', user: user, posted_on: '2024-05-15')
+      post3 = DailyPost.create!(content: 'post March 2025', user: user, posted_on: '2025-03-15')
+
+      expect(DailyPost.by_month(5)).to include(post1, post2)
+      expect(DailyPost.by_month(5)).not_to include(post3)
     end
   end
 end
