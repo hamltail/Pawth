@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\z/
+  USERNAME_REGEX = /\A(?!.*--)[a-z0-9](?:[a-z0-9-]{3,37}[a-z0-9])\z/
   RESERVED_USERNAMES = YAML.load_file(
     Rails.root.join('config/reserved_usernames.yml')
   )['reserved'].map(&:downcase).freeze
