@@ -1,10 +1,10 @@
-.bg-page.min-h-screen.shadow-md.rounded-lg.px-4.py-8.relative.sm:px-8
-  .flex.flex-col.items-center.gap-4.mb-8.sm:grid.sm:grid-cols-3
-    %div.hidden.sm:block
+%div{ class: 'bg-page min-h-screen shadow-md rounded-lg px-4 py-8 relative md:px-8' }
+  %div{ class: 'flex flex-col items-center gap-4 mb-8 md:grid md:grid-cols-3' }
+    %div{ class: 'hidden md:block' }
 
     %h1.page-title-glow.text-2xl.font-bold.text-primary.text-center= t('.title')
 
-    .flex.justify-center.sm:justify-end
+    %div{ class: 'flex justify-center md:justify-end' }
       #new-post-button
         = render 'activities/new_post_button', posted_today: current_user.posted_today?
 
@@ -20,7 +20,7 @@
 
     #timeline-search.timeline-search-panel
       = form_with url: daily_posts_path, method: :get, local: true, class: 'mx-auto flex max-w-2xl flex-wrap justify-center gap-2 rounded-2xl border border-default-border bg-surface p-4', data: { controller: 'search-filters' } do |f|
-        %div{ class: 'relative w-full sm:flex-1 sm:min-w-64' }
+        %div{ class: 'relative w-full md:flex-1 md:min-w-64' }
           = label_tag :q, t('.search_placeholder'), class: 'sr-only'
           = f.text_field :q, placeholder: t('.search_placeholder'), value: params[:q], class: 'h-12 w-full rounded-md border border-default-border bg-page px-4 pr-10 text-primary placeholder:text-muted', data: { search_filters_target: 'field', action: 'input->search-filters#update' }
           %button{ type: 'button', class: 'hidden absolute right-2 top-1/2 -translate-y-1/2 theme-link h-7 w-7 items-center justify-center rounded-full hover:bg-surface-muted', aria: { label: 'キーワードをクリア' }, data: { search_filters_target: 'clear', action: 'click->search-filters#clear', field_index: 0 } }
@@ -44,7 +44,7 @@
         = f.submit t('.submit_search'), class: 'h-12 min-w-20 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-light cursor-pointer'
 
   - if @daily_posts.any?
-    .mx-auto.max-w-4xl{ data: { controller: 'infinite-scroll' } }
+    %div{ data: { controller: 'infinite-scroll' } }
       %ul.posts#posts{ data: { infinite_scroll_target: 'posts' } }
         = render 'timeline_posts', posts: @daily_posts, previous_month: nil
 
