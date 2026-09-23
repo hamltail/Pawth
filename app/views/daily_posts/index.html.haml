@@ -44,7 +44,7 @@
         = f.submit t('.submit_search'), class: 'h-12 min-w-20 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-light cursor-pointer'
 
   - if @daily_posts.any?
-    .mx-auto.max-w-4xl{ data: { controller: 'infinite-scroll' } }
+    %div{ data: { controller: 'infinite-scroll' } }
       %ul.posts#posts{ data: { infinite_scroll_target: 'posts' } }
         = render 'timeline_posts', posts: @daily_posts, previous_month: nil
 
