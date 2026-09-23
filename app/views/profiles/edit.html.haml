@@ -50,6 +50,8 @@
             }
           %span ファイルを選択
 
+        %p.text-sm.text-secondary-text.opacity-80.mt-2= t('profiles.edit.avatar_hint')
+
         - if @profile.errors[:avatar].any?
           %p.field-error.text-sm.mt-1= @profile.errors.full_messages_for(:avatar).first
 
