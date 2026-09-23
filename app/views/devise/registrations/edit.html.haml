@@ -24,6 +24,10 @@
         %span.text-xs.text-muted.ml-1
           = t("devise.registrations.edit.password_hint_nochange")
 
+        - if @minimum_password_length
+          %span.text-xs.text-muted.ml-1
+            = t("devise.shared.password_min_length", length: @minimum_password_length)
+
         = f.password_field :password,
                            autocomplete: "new-password",
                            class: "border border-default-border bg-surface text-primary placeholder:text-muted rounded w-full px-3 py-2"
