@@ -2,7 +2,7 @@
   - has_avatar = @profile.avatar.attached? && @profile.avatar.blob&.persisted?
 
   - if has_avatar
-    %div{ class: 'pointer-events-none absolute right-6 bottom-24 aspect-square w-2/3 sm:w-[65%] lg:top-6 lg:bottom-6 lg:w-auto opacity-25', aria: { hidden: 'true' } }
+    %div{ class: 'pointer-events-none absolute right-6 bottom-24 aspect-square w-2/3 lg:top-6 lg:bottom-6 lg:w-auto opacity-25', aria: { hidden: 'true' } }
       = image_tag @profile.avatar,
                   alt: '',
                   class: 'h-full w-full object-cover'

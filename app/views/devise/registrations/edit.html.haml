@@ -4,11 +4,11 @@
 
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true, data: { turbo: "false" } }) do |f|
       - if resource.errors.any?
-        %div{ class: 'w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+        %div{ class: 'w-full md:mx-auto md:w-3/4 lg:w-1/2' }
           %div.status-error.border.px-4.py-4.rounded.mb-6
             %p= t("users.registration.error_message")
 
-      %div{ class: 'mb-4 w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+      %div{ class: 'mb-4 w-full md:mx-auto md:w-3/4 lg:w-1/2' }
         = f.label :email, class: "block text-secondary-text mb-2"
 
         = f.email_field :email,
@@ -18,7 +18,7 @@
         - if resource.errors[:email].any?
           %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:email).first
 
-      %div{ class: 'mb-4 w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+      %div{ class: 'mb-4 w-full md:mx-auto md:w-3/4 lg:w-1/2' }
         = f.label :password, class: "block text-secondary-text"
 
         %span.text-xs.text-muted.ml-1
@@ -35,7 +35,7 @@
         - if resource.errors[:password].any?
           %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:password).first
 
-      %div{ class: 'mb-4 w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+      %div{ class: 'mb-4 w-full md:mx-auto md:w-3/4 lg:w-1/2' }
         = f.label :password_confirmation, class: "block text-secondary-text mb-2"
 
         = f.password_field :password_confirmation,
@@ -45,7 +45,7 @@
         - if resource.errors[:password_confirmation].any?
           %p.field-error.text-sm.mt-1= resource.errors.full_messages_for(:password_confirmation).first
 
-      %div{ class: 'mb-4 w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+      %div{ class: 'mb-4 w-full md:mx-auto md:w-3/4 lg:w-1/2' }
         = f.label :current_password, class: "block text-secondary-text"
 
         %span.text-xs.text-muted.ml-1
@@ -67,7 +67,7 @@
 
   %div.bg-surface.shadow-md.rounded-lg.px-8.py-8.mt-24.ring-1.ring-default-border
     %section
-      %div{ class: 'w-full sm:mx-auto sm:w-3/4 lg:w-1/2' }
+      %div{ class: 'w-full md:mx-auto md:w-3/4 lg:w-1/2' }
         %h2.text-red-600.font-bold.mb-2= t('users.edit.delete_section_title')
 
         %p.text-sm.text-muted.mb-4

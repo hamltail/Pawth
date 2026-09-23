@@ -1,4 +1,4 @@
-%li{ id: "post_#{post.id}", class: 'grid grid-cols-[2.5rem_1.5rem_minmax(0,1fr)] gap-x-2 sm:grid-cols-[5rem_2rem_minmax(0,1fr)] sm:gap-x-4' }
+%li{ id: "post_#{post.id}", class: 'grid grid-cols-[2.5rem_1.5rem_minmax(0,1fr)] gap-x-2 md:grid-cols-[5rem_2rem_minmax(0,1fr)] md:gap-x-4' }
   .pt-1.text-right
     - day_color_class = if post.posted_on.sunday? || HolidayJp.holiday?(post.posted_on)
       - 'calendar-sunday'
@@ -7,48 +7,48 @@
     - else
       - 'text-secondary-text'
 
-    %div{ class: "text-xs sm:text-sm font-bold leading-none #{day_color_class}" }
+    %div{ class: "text-xs md:text-sm font-bold leading-none #{day_color_class}" }
       = post.posted_on.day
 
-    %div{ class: "mt-1 text-[10px] sm:text-xs font-bold #{day_color_class}" }
+    %div{ class: "mt-1 text-[10px] md:text-xs font-bold #{day_color_class}" }
       = timeline_weekday_label(post.posted_on)
 
   .relative
-    %div{ class: 'absolute bottom-0 left-[10px] top-0 w-1 rounded-full bg-default-border opacity-40 sm:left-[14px]' }
-    %div{ class: 'absolute bottom-0 left-[11px] top-0 w-0.5 rounded-full bg-gradient-to-b from-brand via-brand-light to-default-border sm:left-[15px]' }
+    %div{ class: 'absolute bottom-0 left-[10px] top-0 w-1 rounded-full bg-default-border opacity-40 md:left-[14px]' }
+    %div{ class: 'absolute bottom-0 left-[11px] top-0 w-0.5 rounded-full bg-gradient-to-b from-brand via-brand-light to-default-border md:left-[15px]' }
 
-    %div{ class: 'timeline-mark relative z-10 flex h-8 w-8 -translate-x-1 items-center justify-center rounded-full bg-page sm:h-10 sm:w-10' }
+    %div{ class: 'timeline-mark relative z-10 flex h-8 w-8 -translate-x-1 items-center justify-center rounded-full bg-page md:h-10 md:w-10' }
       = timeline_mark_for(icon: current_user.profile.calendar_icon)
 
   .min-w-0.pb-8
-    %div{ class: 'rounded-2xl bg-surface px-4 pb-2 pt-3 ring-1 ring-default-border sm:px-5 sm:pb-3 sm:pt-4' }
-      %div{ class: 'min-w-0 whitespace-pre-wrap break-words text-sm leading-relaxed text-primary sm:text-base' }= h(post.content)
+    %div{ class: 'rounded-2xl bg-surface px-4 pb-2 pt-3 ring-1 ring-default-border md:px-5 md:pb-3 md:pt-4' }
+      %div{ class: 'min-w-0 whitespace-pre-wrap break-words text-sm leading-relaxed text-primary md:text-base' }= h(post.content)
 
       %div{ class: 'mt-1 flex items-center justify-end gap-1' }
         - if post.posted_on == Date.current
           - if post.edit_count < DailyPost::EDIT_COUNT_LIMIT
-            = link_to edit_daily_post_path(post), data: { turbo_frame: 'modal' }, class: 'theme-link inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-full px-1.5 text-xs font-semibold transition-colors hover:bg-surface-muted sm:h-8 sm:gap-1.5 sm:px-2 sm:text-sm' do
-              %svg{ class: 'h-3.5 w-3.5 sm:h-4 sm:w-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+            = link_to edit_daily_post_path(post), data: { turbo_frame: 'modal' }, class: 'theme-link inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-full px-1.5 text-xs font-semibold transition-colors hover:bg-surface-muted md:h-8 md:gap-1.5 md:px-2 md:text-sm' do
+              %svg{ class: 'h-3.5 w-3.5 md:h-4 md:w-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
                 %path{ d: 'M16.862 3.487a2.1 2.1 0 0 1 2.97 2.97L8.37 17.92 4.5 19.5l1.58-3.87L16.862 3.487Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
                 %path{ d: 'm14.75 5.6 3.65 3.65', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %span= t('daily_posts.shared.edit')
           - else
-            %button.text-muted.cursor-not-allowed.inline-flex.items-center.whitespace-nowrap.rounded-full.font-semibold{ class: 'h-7 gap-1 px-1.5 text-xs sm:h-8 sm:gap-1.5 sm:px-2 sm:text-sm', type: 'button', data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT) } }
-              %svg{ class: 'h-3.5 w-3.5 sm:h-4 sm:w-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+            %button.text-muted.cursor-not-allowed.inline-flex.items-center.whitespace-nowrap.rounded-full.font-semibold{ class: 'h-7 gap-1 px-1.5 text-xs md:h-8 md:gap-1.5 md:px-2 md:text-sm', type: 'button', data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.edit_limit_alert', limit: DailyPost::EDIT_COUNT_LIMIT) } }
+              %svg{ class: 'h-3.5 w-3.5 md:h-4 md:w-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
                 %path{ d: 'M16.862 3.487a2.1 2.1 0 0 1 2.97 2.97L8.37 17.92 4.5 19.5l1.58-3.87L16.862 3.487Z', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
                 %path{ d: 'm14.75 5.6 3.65 3.65', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %span= t('daily_posts.shared.edit')
 
-          %button.text-muted.cursor-not-allowed.inline-flex.items-center.justify-center.rounded-full{ class: 'h-7 w-7 sm:h-8 sm:w-8', type: 'button', aria: { label: t('daily_posts.shared.delete') }, data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.delete_today_alert') } }
-            %svg{ class: 'h-4 w-4 sm:h-5 sm:w-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+          %button.text-muted.cursor-not-allowed.inline-flex.items-center.justify-center.rounded-full{ class: 'h-7 w-7 md:h-8 md:w-8', type: 'button', aria: { label: t('daily_posts.shared.delete') }, data: { controller: 'alert', action: 'click->alert#click', alert_message_value: t('daily_posts.shared.delete_today_alert') } }
+            %svg{ class: 'h-4 w-4 md:h-5 md:w-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
               %path{ d: 'M4.5 6.75h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
               %path{ d: 'M9 6.75V4.5h6v2.25', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %path{ d: 'M6.75 6.75 7.5 19.5h9l.75-12.75', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %path{ d: 'M10 10.5v5.25M14 10.5v5.25', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
 
         - else
-          = link_to daily_post_path(post, request.query_parameters.slice('q', 'year', 'month')), class: 'danger-link inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-surface-muted sm:h-8 sm:w-8', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する', confirm_preserve_scroll_value: true } do
-            %svg{ class: 'h-4 w-4 sm:h-5 sm:w-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
+          = link_to daily_post_path(post, request.query_parameters.slice('q', 'year', 'month')), class: 'danger-link inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-surface-muted md:h-8 md:w-8', aria: { label: t('daily_posts.shared.delete') }, data: { turbo: false, controller: 'confirm', action: 'click->confirm#click', confirm_message_value: t('daily_posts.shared.delete_confirm'), confirm_method_value: 'delete', confirm_requires_text_value: true, confirm_expected_text_value: '削除する', confirm_preserve_scroll_value: true } do
+            %svg{ class: 'h-4 w-4 md:h-5 md:w-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24', aria: { hidden: 'true' } }
               %path{ d: 'M4.5 6.75h15', 'stroke-width': '1.5', 'stroke-linecap': 'round' }
               %path{ d: 'M9 6.75V4.5h6v2.25', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
               %path{ d: 'M6.75 6.75 7.5 19.5h9l.75-12.75', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
