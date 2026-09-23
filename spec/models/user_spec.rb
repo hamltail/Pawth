@@ -28,4 +28,19 @@ RSpec.describe User, type: :model do
       expect(user.errors[:username]).to be_present
     end
   end
+
+  describe 'password' do
+    it '7文字は無効であること' do
+      user = build(:user, password: 'a' * 7)
+
+      expect(user).to be_invalid
+      expect(user.errors[:password]).to be_present
+    end
+
+    it '8文字は有効であること' do
+      user = build(:user, password: 'a' * 8)
+
+      expect(user).to be_valid
+    end
+  end
 end

@@ -14,8 +14,8 @@ class Profile < ApplicationRecord
   def avatar_size_within_limit
     return unless avatar.attached?
 
-    if avatar.blob.byte_size > 2.megabytes
-      errors.add(:avatar, :size_too_large, size: '2MB')
+    if avatar.blob.byte_size > 1.megabyte
+      errors.add(:avatar, :size_too_large, size: '1MB')
     end
   end
 

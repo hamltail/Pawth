@@ -122,6 +122,7 @@ ja:
     edit:
       title: 'プロフィール設定'
       update: '更新'
+      avatar_hint: '1MB以下／512×512px程度の正方形を推奨'
       calendar_icon_label: 'カレンダーアイコン'
       public_posts_label: '日記の公開設定'
       public: '公開'
