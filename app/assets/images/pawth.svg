@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Pawth paw</title>
+
+  <defs>
+    <linearGradient id="toeGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe8ed"/>
+      <stop offset="38%" stop-color="#ffc8d8"/>
+      <stop offset="100%" stop-color="#fda7c1"/>
+    </linearGradient>
+
+    <linearGradient id="padGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe3e9"/>
+      <stop offset="42%" stop-color="#ffc8d8"/>
+      <stop offset="100%" stop-color="#fca5c0"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="#fc9fbb" stroke-width="1" stroke-linejoin="round">
+    <path
+      id="toe-left"
+      d="M19 50
+         C11 50 5 57 5 67
+         C5 78 11 86 20 87
+         C27 87 33 80 34 70
+         C35 60 28 51 19 50Z"
+      fill="url(#toeGradient)"
+      transform="translate(19.5 68.5) scale(.95) translate(-19.5 -68.5)"
+    />
+
+    <path
+      id="toe-upper-left"
+      d="M45 19
+         C35 19 29 28 29 40
+         C29 54 35 63 45 64
+         C55 64 62 54 62 41
+         C62 28 55 19 45 19Z"
+      fill="url(#toeGradient)"
+      transform="translate(45.5 41.5) scale(.94) translate(-45.5 -41.5)"
+    />
+
+    <path
+      id="toe-upper-right"
+      d="M81 19
+         C71 19 65 28 65 41
+         C65 54 71 63 81 64
+         C91 64 97 54 97 41
+         C97 28 91 19 81 19Z"
+      fill="url(#toeGradient)"
+      transform="translate(81 41.5) scale(.94) translate(-81 -41.5)"
+    />
+
+    <path
+      id="toe-right"
+      d="M107 50
+         C99 50 93 59 93 69
+         C93 79 99 86 107 87
+         C115 87 121 78 121 68
+         C121 57 115 50 107 50Z"
+      fill="url(#toeGradient)"
+      transform="translate(107 68.5) scale(.95) translate(-107 -68.5)"
+    />
+
+    <path
+      id="pad-main"
+      d="M64 67
+         C58 67 51 70 44 74
+         C36 79 29 86 26 93
+         C22 101 25 109 31 113
+         C36 117 42 118 48 115
+         C54 113 59 110 64 110
+         C69 110 74 113 80 115
+         C86 118 92 117 97 113
+         C103 109 106 101 102 93
+         C99 86 92 79 84 74
+         C77 70 70 67 64 67Z"
+      fill="url(#padGradient)"
+      transform="translate(64 92) scale(.98) translate(-64 -92)"
+    />
+  </g>
+</svg>

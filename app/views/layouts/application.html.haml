@@ -12,12 +12,12 @@
 
     %link{
       rel: "icon",
-      type: "image/png",
-      href: asset_path("pawth.png")
+      type: "image/svg+xml",
+      href: asset_path("pawth.svg")
     }/
 
     %link{
-      href: asset_path("pawth.png"),
+      href: asset_path("pawth.svg"),
       rel: "apple-touch-icon"
     }/
 
@@ -75,16 +75,16 @@
       - else
         %header.fixed.top-8.left-8.z-40
           = link_to new_user_session_path,
-                    class: 'inline-flex items-center gap-2 sidebar-brand',
+                    class: 'public-brand inline-flex items-center gap-1',
                     aria: { label: 'Pawth ログインへ' } do
 
             %span.text-2xl.font-extrabold.tracking-tight
               Pawth
 
-            %span.text-2xl{
+            %span.public-brand-paw-wrapper{
               aria: { hidden: 'true' }
             }
-              🐾
+              %span.public-brand-paw
 
           %p.hidden.md:block.mt-1.text-xs.text-muted
             日々の足あとを描く、1日1投稿の小さな日記アプリ

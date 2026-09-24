@@ -137,6 +137,53 @@
       0 0 24px rgba(167, 139, 250, 0.4);
   }
 
+  .public-brand {
+    color: #30323a;
+    text-shadow: 0 4px 10px rgb(0 0 0 / 18%);
+    transition:
+      color 200ms ease,
+      text-shadow 200ms ease;
+  }
+
+  .public-brand-paw-wrapper {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    filter: drop-shadow(0 4px 5px rgb(0 0 0 / 18%));
+  }
+
+  .public-brand-paw {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+
+    mask-image: url('/pawth.svg');
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+
+    -webkit-mask-image: url('/pawth.svg');
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+
+  :root[data-theme='dark'] .public-brand {
+    color: #f4f1f8;
+    text-shadow:
+      0 0 8px rgba(249, 168, 212, 0.65),
+      0 0 18px rgba(249, 168, 212, 0.48),
+      0 0 32px rgba(167, 139, 250, 0.32);
+  }
+
+  :root[data-theme='dark'] .public-brand-paw-wrapper {
+    filter: drop-shadow(0 0 6px rgba(249, 168, 212, 0.7))
+      drop-shadow(0 0 14px rgba(249, 168, 212, 0.5))
+      drop-shadow(0 0 26px rgba(167, 139, 250, 0.34));
+  }
+
   .danger-link {
     color: #dc2626;
   }
