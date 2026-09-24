@@ -138,7 +138,7 @@
   }
 
   .public-brand {
-    color: #111827;
+    color: #30323a;
     text-shadow: 0 4px 10px rgb(0 0 0 / 18%);
     transition:
       color 200ms ease,
@@ -147,6 +147,9 @@
 
   .public-brand-paw-wrapper {
     display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
     filter: drop-shadow(0 4px 5px rgb(0 0 0 / 18%));
   }
 
@@ -168,17 +171,17 @@
   }
 
   :root[data-theme='dark'] .public-brand {
-    color: #f1eaff;
+    color: #f4f1f8;
     text-shadow:
-      0 0 5px rgba(241, 234, 255, 0.9),
-      0 0 12px rgba(196, 181, 253, 0.65),
-      0 0 24px rgba(167, 139, 250, 0.4);
+      0 0 8px rgba(249, 168, 212, 0.65),
+      0 0 18px rgba(249, 168, 212, 0.48),
+      0 0 32px rgba(167, 139, 250, 0.32);
   }
 
   :root[data-theme='dark'] .public-brand-paw-wrapper {
-    filter: drop-shadow(0 0 5px rgba(241, 234, 255, 0.6))
-      drop-shadow(0 0 12px rgba(196, 181, 253, 0.42))
-      drop-shadow(0 0 22px rgba(167, 139, 250, 0.25));
+    filter: drop-shadow(0 0 6px rgba(249, 168, 212, 0.7))
+      drop-shadow(0 0 14px rgba(249, 168, 212, 0.5))
+      drop-shadow(0 0 26px rgba(167, 139, 250, 0.34));
   }
 
   .danger-link {

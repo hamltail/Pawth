@@ -75,13 +75,13 @@
       - else
         %header.fixed.top-8.left-8.z-40
           = link_to new_user_session_path,
-                    class: 'public-brand inline-flex items-center gap-2',
+                    class: 'public-brand inline-flex items-center gap-1',
                     aria: { label: 'Pawth ログインへ' } do
 
             %span.text-2xl.font-extrabold.tracking-tight
               Pawth
 
-            %span.public-brand-paw-wrapper.size-6{
+            %span.public-brand-paw-wrapper{
               aria: { hidden: 'true' }
             }
               %span.public-brand-paw
