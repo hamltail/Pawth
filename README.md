@@ -21,7 +21,7 @@ Pawthは、1日1回、その日の記録を残せる小さな日記アプリで�
 | Backend        | Ruby 4.0.6, Rails 8.1.3                               |
 | Database       | PostgreSQL 18                                         |
 | Authentication | Devise                                                |
-| Testing        | RSpec, FactoryBot, Playwright, axe-core               |
+| Testing        | RSpec, FactoryBot, SimpleCov, Playwright, axe-core    |
 | Infrastructure | AWS (EC2, RDS, SES)                                   |
 
 ## セットアップ
