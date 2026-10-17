@@ -18,6 +18,12 @@ namespace :e2e do
         email: 'playwright-profile@example.com',
         username: 'playwright-profile',
         seed_daily_posts: false
+      },
+      {
+        email: 'playwright-private@example.com',
+        username: 'playwright-private',
+        seed_daily_posts: false,
+        private_posts: true
       }
     ]
 
@@ -31,6 +37,22 @@ namespace :e2e do
         password_confirmation: password,
         confirmed_at: Time.current
       )
+
+      if attributes[:private_posts]
+        user.profile.update!(public_posts: false)
+
+        user.daily_posts.create!(
+          posted_on: Date.current,
+          content: 'E2E_PRIVATE_TODAY_CONTENT',
+          edit_count: 0
+        )
+
+        user.daily_posts.create!(
+          posted_on: Date.current.prev_month.beginning_of_month,
+          content: 'E2E_PRIVATE_PREVIOUS_CONTENT',
+          edit_count: 0
+        )
+      end
 
       next unless attributes[:seed_daily_posts]
 
@@ -53,7 +75,8 @@ namespace :e2e do
     emails = [
       'playwright@example.com',
       'playwright-daily-post@example.com',
-      'playwright-profile@example.com'
+      'playwright-profile@example.com',
+      'playwright-private@example.com'
     ]
 
     User.where(email: emails).destroy_all
