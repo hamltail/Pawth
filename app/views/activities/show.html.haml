@@ -1,5 +1,4 @@
 - page_title = t('.page_title', name: @user.display_name_or_username)
-- can_view_posts = @user.profile.public_posts? || (user_signed_in? && current_user == @user)
 
 .bg-page.min-h-screen.flex.flex-col.px-4{ class: 'py-4 md:px-8 md:py-8' }
   .text-center{ class: 'mb-6 md:mb-12' }
@@ -34,7 +33,7 @@
           = turbo_frame_tag 'modal'
 
       = turbo_frame_tag 'current_post' do
-        - if can_view_posts
+        - if @can_view_posts
           = render 'activities/current_post', post: @current_post
         - else
           .flex.flex-col.items-center.justify-center.h-32.bg-surface-muted.rounded-lg.shadow-inner
