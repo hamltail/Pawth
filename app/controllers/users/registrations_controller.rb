@@ -11,7 +11,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     self.resource = current_user
 
-    if password_change_requested?(account_update_params)
+    if password_change_requested?(account_update_params) ||
+       email_change_requested?(account_update_params)
       resource_updated = update_resource(resource, account_update_params)
     else
       profile_update_params = account_update_params.dup
@@ -48,15 +49,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   protected
-    def configure_account_update_params
-      devise_parameter_sanitizer.permit(
-        :account_update,
-        keys: []
-      )
-    end
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: []
+    )
+  end
 
   private
-    def password_change_requested?(params)
-      params[:password].present? || params[:password_confirmation].present?
-    end
+
+  def password_change_requested?(params)
+    params[:password].present? || params[:password_confirmation].present?
+  end
+
+  def email_change_requested?(params)
+    new_email = params[:email].to_s.strip
+
+    new_email.present? && !new_email.casecmp?(resource.email.to_s)
+  end
 end
