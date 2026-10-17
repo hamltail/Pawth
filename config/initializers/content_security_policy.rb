@@ -35,6 +35,6 @@ Rails.application.configure do
   # インラインJavaScriptにnonceを使用する
   config.content_security_policy_nonce_directives = %w[script-src]
 
-  # 第1段階：違反を報告するが、ブロックはしない
-  config.content_security_policy_report_only = true
+  # 第2段階：CSP違反を実際にブロックする
+  config.content_security_policy_report_only = false
 end

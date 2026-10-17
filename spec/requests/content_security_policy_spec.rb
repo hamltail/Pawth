@@ -6,17 +6,17 @@ RSpec.describe 'Content Security Policy', type: :request do
       get new_user_session_path
     end
 
-    it 'Report-Onlyヘッダーを返す' do
+    it '強制モードのCSPヘッダーを返す' do
       expect(response).to have_http_status(:ok)
 
-      policy = response.headers['Content-Security-Policy-Report-Only']
+      policy = response.headers['Content-Security-Policy']
 
       expect(policy).to be_present
-      expect(response.headers['Content-Security-Policy']).to be_nil
+      expect(response.headers['Content-Security-Policy-Report-Only']).to be_nil
     end
 
     it '基本的なセキュリティディレクティブを含む' do
-      policy = response.headers.fetch('Content-Security-Policy-Report-Only')
+      policy = response.headers.fetch('Content-Security-Policy')
 
       expect(policy).to include("default-src 'self'")
       expect(policy).to include("object-src 'none'")
@@ -26,7 +26,7 @@ RSpec.describe 'Content Security Policy', type: :request do
     end
 
     it '既存の外部JavaScript配信元を許可対象に含む' do
-      policy = response.headers.fetch('Content-Security-Policy-Report-Only')
+      policy = response.headers.fetch('Content-Security-Policy')
 
       expect(policy).to include('https://cdn.jsdelivr.net')
       expect(policy).to include('https://ga.jspm.io')
@@ -41,7 +41,7 @@ RSpec.describe 'Content Security Policy', type: :request do
       nonce = meta['content']
       expect(nonce).to be_present
 
-      policy = response.headers.fetch('Content-Security-Policy-Report-Only')
+      policy = response.headers.fetch('Content-Security-Policy')
       expect(policy).to include("'nonce-#{nonce}'")
 
       theme_script = document.css('script[nonce]').find do |script|
@@ -50,6 +50,17 @@ RSpec.describe 'Content Security Policy', type: :request do
 
       expect(theme_script).to be_present
       expect(theme_script['nonce']).to eq(nonce)
+    end
+
+    it 'HTMLのインラインイベントを許可する設定がない' do
+      policy = response.headers.fetch('Content-Security-Policy')
+
+      script_src = policy.split(';').find do |directive|
+        directive.strip.start_with?('script-src ')
+      end
+
+      expect(script_src).to be_present
+      expect(script_src).not_to include("'unsafe-inline'")
     end
   end
 
@@ -69,15 +80,14 @@ RSpec.describe 'Content Security Policy', type: :request do
     expect(second_nonce).not_to eq(first_nonce)
   end
 
-  it 'ログイン済みページでもReport-Onlyヘッダーを返す' do
+  it 'ログイン済みページでも強制モードのCSPヘッダーを返す' do
     user = create(:user)
     sign_in user
 
     get activity_path(user.username)
 
     expect(response).to have_http_status(:ok)
-    expect(
-      response.headers['Content-Security-Policy-Report-Only']
-    ).to be_present
+    expect(response.headers['Content-Security-Policy']).to be_present
+    expect(response.headers['Content-Security-Policy-Report-Only']).to be_nil
   end
 end
