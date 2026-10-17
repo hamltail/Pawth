@@ -2,9 +2,6 @@ import { Controller } from '@hotwired/stimulus';
 import 'emoji-picker-element';
 import i18nJa from 'emoji-i18n-ja';
 
-const PICKER_DATA_URL =
-  'https://cdn.jsdelivr.net/npm/emoji-picker-element-data@^1/ja/emojibase/data.json';
-
 export default class extends Controller {
   static targets = ['button', 'dialog', 'picker', 'textarea'];
 
@@ -59,11 +56,7 @@ export default class extends Controller {
     try {
       const dict = i18nJa?.default ?? i18nJa;
 
-      Object.assign(this.pickerTarget, {
-        i18n: dict,
-        locale: 'ja',
-        dataSource: PICKER_DATA_URL,
-      });
+      this.pickerTarget.i18n = dict;
     } catch (error) {
       console.warn('emoji i18n setup failed:', error);
     }
