@@ -68,6 +68,8 @@ jobs:
             "app/**/*.{js,jsx,ts,tsx,css,scss,html,erb,json,md,yml,yaml}" \
             "config/**/*.{yml,yaml}" \
             ".github/**/*.yml"
+      - name: Brakeman
+        run: bundle exec brakeman --no-pager --exit-on-warn --exit-on-error
       - name: Run RSpec
         if: hashFiles('spec/**/*') != ''
         run: bundle exec rspec --format documentation
@@ -89,7 +91,8 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        ports: ['5432:5432']
+        ports:
+          - '5432:5432'
         options: >-
           --health-cmd="pg_isready -U postgres -d postgres"
           --health-interval=10s --health-timeout=5s --health-retries=5
