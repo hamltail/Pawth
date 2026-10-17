@@ -5,7 +5,7 @@
     .bg-surface.shadow-lg.rounded-lg.px-8.py-8.w-full.max-w-3xl.mx-4.relative.ring-1.ring-default-border
       %button.absolute.top-2.right-2.text-muted.hover:text-primary.text-2xl.transition-colors{
         type: 'button',
-        onclick: "document.getElementById('modal').innerHTML = ''"
+        data: { action: 'click->modal-animation#close' }
       } ×
 
       %h1.text-2xl.font-bold.text-primary.mb-8.text-center= t('.title')

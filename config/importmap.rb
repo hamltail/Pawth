@@ -6,6 +6,11 @@ pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js'
 pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin_all_from 'app/javascript/lib', under: 'lib'
 
-pin 'emoji-picker-element', to: 'https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js', preload: true
-pin 'emoji-i18n-ja', to: 'https://cdn.jsdelivr.net/npm/emoji-picker-element@1/i18n/ja.js'
+pin 'emoji-picker-element',
+    to: 'https://cdn.jsdelivr.net/npm/emoji-picker-element@1.29.1/index.js',
+    preload: true
+
+pin 'emoji-i18n-ja',
+    to: 'https://cdn.jsdelivr.net/npm/emoji-picker-element@1.29.1/i18n/ja.js'
+
 pin 'gsap', to: 'https://ga.jspm.io/npm:gsap@3.12.2/index.js'

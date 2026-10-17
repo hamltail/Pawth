@@ -2,13 +2,20 @@ class ActivitiesController < ApplicationController
   before_action :set_user, :set_month
 
   def show
-    @current_post = @user.daily_posts.order(posted_on: :desc).first
+    @can_view_posts = @user.profile.public_posts? || current_user == @user
 
     month_range = @month.all_month
-    posts       = @user.daily_posts.where(posted_on: month_range).to_a
+    @calendar_days = month_range.to_a
 
-    @calendar_days       = month_range.to_a
-    @posts_by_day = posts.index_by(&:posted_on)
+    if @can_view_posts
+      @current_post = @user.daily_posts.order(posted_on: :desc).first
+      @posts_by_day = @user.daily_posts
+                           .where(posted_on: month_range)
+                           .index_by(&:posted_on)
+    else
+      @current_post = nil
+      @posts_by_day = {}
+    end
 
     @prev_month = @month.prev_month
     @next_month = @month.next_month
