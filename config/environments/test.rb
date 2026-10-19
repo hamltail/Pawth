@@ -12,6 +12,10 @@ Rails.application.configure do
   # エラー詳細を表示（デバッグしやすく）
   config.consider_all_requests_local = true
 
+  # テストログはファイルに保存せずSTDOUTへ出力
+  config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.log_level = :info
+
   # キャッシュ無効。キャッシュに起因するブレ防止
   config.cache_store = :null_store
 
@@ -26,10 +30,10 @@ Rails.application.configure do
 
   # 実送信しない。送られたメールは ActionMailer::Base.deliveries に貯まる
   config.action_mailer.delivery_method = :test
-  # メール内リンク生成用のホスト。何でもOK（実送信しないため）
+  # メール内リンク生成用のホスト
   config.action_mailer.default_url_options = { host: 'test.hamltail.dev' }
 
-  # Active Jobはテストアダプタ（enqueue/performの検証がしやすい）
+  # Active Jobはテストアダプタ
   config.active_job.queue_adapter = :test
 
   # 非推奨警告はstderrへ。CIで拾いやすい
