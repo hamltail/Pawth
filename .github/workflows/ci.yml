@@ -59,8 +59,7 @@ jobs:
         if: hashFiles('.rubocop.yml') != ''
         run: bundle exec rubocop --parallel
       - name: ESLint
-        if: hashFiles('.eslintrc*') != ''
-        run: npx eslint .
+        run: npm run lint:js
       - name: Prettier (check)
         if: hashFiles('package.json') != ''
         run: |
