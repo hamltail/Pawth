@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
+  describe 'public_posts' do
+    it '新規プロフィールは初期状態で非公開であること' do
+      user = create(:user)
+
+      expect(user.profile.public_posts).to be(false)
+      expect(user.profile.reload.public_posts).to be(false)
+    end
+
+    it '公開設定を有効に変更できること' do
+      profile = create(:user).profile
+
+      profile.update!(public_posts: true)
+
+      expect(profile.reload.public_posts).to be(true)
+    end
+
+    it '既存の公開設定を保持できること' do
+      profile = create(:user).profile
+      profile.update!(public_posts: true)
+
+      profile.update!(display_name: 'テストユーザー')
+
+      expect(profile.reload.public_posts).to be(true)
+    end
+  end
+
   describe 'calendar_icon' do
     let(:profile) { create(:user).profile }
 

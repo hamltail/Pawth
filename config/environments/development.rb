@@ -12,6 +12,10 @@ Rails.application.configure do
   # 開発用のサーバタイミング（パフォ計測ヘッダ）
   config.server_timing = true
 
+  # RailsログはSTDOUTに統一
+  config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.log_level = :debug
+
   # キャッシュは dev:cache トグルに追従（普段はOFFでOK）
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
@@ -43,10 +47,10 @@ Rails.application.configure do
   # マイグレーション未実行ならページロード時にエラー
   config.active_record.migration_error = :page_load
 
-  # SQLを呼んだ行を強調
-  config.active_record.verbose_query_logs = true
-  # SQLへタグ付け（実行時間などの追跡向け）
-  config.active_record.query_log_tags_enabled = true
+  # 生SQLと呼び出し元の補助ログを出さない
+  config.active_record.verbose_query_logs = false
+  config.active_record.query_log_tags_enabled = false
+
   # Active Jobのログを丁寧に
   config.active_job.verbose_enqueue_logs = true
 
