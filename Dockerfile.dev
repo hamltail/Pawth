@@ -1,10 +1,22 @@
 ARG RUBY_VERSION=4.0.6
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
-# 必要なOSパッケージをインストール
+# 開発・テスト用のOSパッケージ
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     build-essential git curl nodejs npm libpq-dev libvips \
     libyaml-dev pkg-config \
+    libatk1.0-0t64 \
+    libatk-bridge2.0-0t64 \
+    libatspi2.0-0t64 \
+    libdbus-1-3 \
+    libcups2t64 \
+    libxkbcommon0 \
+    libasound2t64 \
+    libgbm1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
