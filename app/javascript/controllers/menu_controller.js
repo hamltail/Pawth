@@ -10,14 +10,14 @@ export default class extends Controller {
     this.onDocumentClick = this.handleDocumentClick.bind(this);
     this.onMqlChange = this.handleBreakpointChange.bind(this);
 
-    document.addEventListener('click', this.onDocumentClick);
+    document.addEventListener('click', this.onDocumentClick, true);
     this.mq.addEventListener('change', this.onMqlChange);
 
     this.render();
   }
 
   disconnect() {
-    document.removeEventListener('click', this.onDocumentClick);
+    document.removeEventListener('click', this.onDocumentClick, true);
     this.mq.removeEventListener('change', this.onMqlChange);
 
     document.body.classList.remove('overflow-hidden');
