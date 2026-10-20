@@ -408,37 +408,43 @@
       drop-shadow(0 0 10px rgba(168, 85, 247, 0.16));
   }
 
-  .daily-post-scroll {
+  /* Global scrollbar styling */
+  :root,
+  :root * {
     scrollbar-width: thin;
     scrollbar-color: rgba(139, 92, 246, 0.65) transparent;
   }
 
-  .daily-post-scroll::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
 
-  .daily-post-scroll::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .daily-post-scroll::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: rgba(139, 92, 246, 0.55);
     border-radius: 9999px;
   }
 
-  .daily-post-scroll::-webkit-scrollbar-thumb:hover {
+  ::-webkit-scrollbar-thumb:hover {
     background: rgba(109, 40, 217, 0.8);
   }
 
-  :root[data-theme='dark'] .daily-post-scroll {
+  :root[data-theme='dark'],
+  :root[data-theme='dark'] * {
     scrollbar-color: rgba(196, 181, 253, 0.7) transparent;
   }
 
-  :root[data-theme='dark'] .daily-post-scroll::-webkit-scrollbar-thumb {
+  :root[data-theme='dark']::-webkit-scrollbar-thumb,
+  :root[data-theme='dark'] *::-webkit-scrollbar-thumb {
     background: rgba(196, 181, 253, 0.55);
   }
 
-  :root[data-theme='dark'] .daily-post-scroll::-webkit-scrollbar-thumb:hover {
+  :root[data-theme='dark']::-webkit-scrollbar-thumb:hover,
+  :root[data-theme='dark'] *::-webkit-scrollbar-thumb:hover {
     background: rgba(244, 114, 182, 0.85);
   }
 
