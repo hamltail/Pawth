@@ -610,3 +610,11 @@
     @apply opacity-40 cursor-default;
   }
 }
+
+@layer utilities {
+  :root[data-theme='dark'] #theme-options {
+    box-shadow:
+      0 0 10px rgba(196, 181, 253, 0.16),
+      0 0 22px rgba(249, 168, 212, 0.09);
+  }
+}
