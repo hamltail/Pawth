@@ -138,8 +138,16 @@
 
             %span= t('layout.sidebar.settings')
 
-          %span.sidebar-settings-icon.transition-transform.duration-200
-            ▶
+          %span.sidebar-settings-icon.inline-flex{ data: { collapsible_target: 'animated' }, aria: { hidden: 'true' } }
+            %svg.w-4.h-4{
+              viewBox: '0 0 24 24',
+              fill: 'none',
+              stroke: 'currentColor',
+              'stroke-width': '1.8',
+              'stroke-linecap': 'round',
+              'stroke-linejoin': 'round'
+            }
+              %path{ d: 'm9 18 6-6-6-6' }
 
         %ul.sidebar-settings-panel.mt-2.pl-4.space-y-2#settings-submenu
           %li

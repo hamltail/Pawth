@@ -1,13 +1,23 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
+  static targets = ['animated'];
+
   connect() {
+    this.animatedTargets.forEach((element) => {
+      element.classList.remove('transition-transform', 'duration-200');
+    });
+
     const open = this.persistedOpen ?? this.element.dataset.open === 'true';
     this.setOpen(open);
   }
 
   toggle(event) {
     event.preventDefault();
+
+    this.animatedTargets.forEach((element) => {
+      element.classList.add('transition-transform', 'duration-200');
+    });
 
     const open = !this.element.classList.contains('is-open');
 
