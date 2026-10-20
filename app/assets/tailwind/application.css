@@ -184,6 +184,68 @@
       drop-shadow(0 0 26px rgba(167, 139, 250, 0.34));
   }
 
+  .sidebar-menu-button {
+    color: #374151;
+    --tw-shadow:
+      0 4px 12px rgba(15, 23, 42, 0.12), 0 8px 24px rgba(15, 23, 42, 0.08);
+    transition:
+      box-shadow 200ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .sidebar-menu-button:hover {
+    --tw-shadow:
+      0 6px 16px rgba(15, 23, 42, 0.14), 0 10px 28px rgba(15, 23, 42, 0.1);
+  }
+
+  .sidebar-menu-button:active {
+    transform: translateY(1px);
+  }
+
+  .sidebar-menu-paw-wrapper {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: none;
+  }
+
+  .sidebar-menu-paw {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+
+    mask-image: url('/pawth.svg');
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+
+    -webkit-mask-image: url('/pawth.svg');
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+
+  :root[data-theme='dark'] .sidebar-menu-button {
+    color: #f4f1f8;
+    --tw-shadow:
+      0 0 10px rgba(196, 181, 253, 0.22), 0 0 22px rgba(249, 168, 212, 0.1);
+  }
+
+  :root[data-theme='dark'] .sidebar-menu-button:hover {
+    --tw-shadow:
+      0 0 14px rgba(196, 181, 253, 0.3), 0 0 26px rgba(249, 168, 212, 0.14);
+  }
+
+  :root[data-theme='dark'] .sidebar-menu-paw-wrapper {
+    filter: drop-shadow(0 0 4px rgba(249, 168, 212, 0.55))
+      drop-shadow(0 0 10px rgba(196, 181, 253, 0.3))
+      drop-shadow(0 0 16px rgba(167, 139, 250, 0.18));
+  }
+
   .danger-link {
     color: #dc2626;
   }

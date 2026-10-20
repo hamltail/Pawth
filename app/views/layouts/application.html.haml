@@ -45,7 +45,7 @@
       data: (user_signed_in? ? { controller: 'menu' } : {})
     }
       - if user_signed_in?
-        %button.hidden.fixed.top-8.left-8.z-50.bg-surface.text-primary.p-2.rounded-lg.shadow-lg.ring-1.ring-default-border{
+        %button.hidden.fixed.top-8.left-8.z-50.grid.size-10.place-items-center.bg-surface.rounded-lg.ring-1.ring-default-border.sidebar-menu-button{
           id: 'menu-button',
           type: 'button',
           data: {
@@ -58,18 +58,8 @@
             expanded: 'false'
           }
         }
-          %svg.w-6.h-6{
-            fill: 'none',
-            stroke: 'currentColor',
-            viewBox: '0 0 24 24',
-            aria: { hidden: 'true' }
-          }
-            %path{
-              d: 'M4 6h16M4 12h16M4 18h16',
-              'stroke-width': '2',
-              'stroke-linecap': 'round',
-              'stroke-linejoin': 'round'
-            }
+          %span.sidebar-menu-paw-wrapper{ aria: { hidden: 'true' } }
+            %span.sidebar-menu-paw
 
         = render 'layouts/sidebar'
 
