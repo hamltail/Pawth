@@ -46,6 +46,7 @@ export default class extends Controller {
     this.sidebarTarget.classList.toggle('translate-x-0', this.opened);
 
     this.buttonTarget.classList.toggle('hidden', this.opened);
+    this.buttonTarget.hidden = this.opened;
 
     this.mainTarget.classList.toggle(
       'lg:ml-64',

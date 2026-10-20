@@ -45,6 +45,7 @@ export default class extends Controller {
 
     this.panelTarget.classList.remove('hidden');
     this.panelTarget.classList.add('flex');
+    this.panelTarget.hidden = false;
     this.triggerTarget.setAttribute('aria-expanded', 'true');
   }
 
@@ -53,6 +54,7 @@ export default class extends Controller {
 
     this.panelTarget.classList.remove('flex');
     this.panelTarget.classList.add('hidden');
+    this.panelTarget.hidden = true;
     this.triggerTarget.setAttribute('aria-expanded', 'false');
   }
 
