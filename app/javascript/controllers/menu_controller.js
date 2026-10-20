@@ -10,14 +10,14 @@ export default class extends Controller {
     this.onDocumentClick = this.handleDocumentClick.bind(this);
     this.onMqlChange = this.handleBreakpointChange.bind(this);
 
-    document.addEventListener('click', this.onDocumentClick, true);
+    document.addEventListener('click', this.onDocumentClick);
     this.mq.addEventListener('change', this.onMqlChange);
 
     this.render();
   }
 
   disconnect() {
-    document.removeEventListener('click', this.onDocumentClick, true);
+    document.removeEventListener('click', this.onDocumentClick);
     this.mq.removeEventListener('change', this.onMqlChange);
 
     document.body.classList.remove('overflow-hidden');
@@ -46,7 +46,6 @@ export default class extends Controller {
     this.sidebarTarget.classList.toggle('translate-x-0', this.opened);
 
     this.buttonTarget.classList.toggle('hidden', this.opened);
-    this.buttonTarget.hidden = this.opened;
 
     this.mainTarget.classList.toggle(
       'lg:ml-64',
