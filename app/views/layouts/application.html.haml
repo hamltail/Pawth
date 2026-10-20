@@ -91,7 +91,7 @@
             日々の足あとを描く、1日1投稿の小さな日記アプリ
 
       - main_class = user_signed_in? ? "ml-0 lg:ml-64 flex-1 min-h-screen bg-page transition-all duration-200" : "flex-1 min-h-screen bg-page"
-      - container_class = "mx-auto w-full max-w-280 min-h-screen"
+      - container_class = content_for?(:wide_calendar_layout) ? "mx-auto w-full max-w-[92rem] min-h-screen" : "mx-auto w-full max-w-280 min-h-screen"
 
       %main{
         class: main_class,
