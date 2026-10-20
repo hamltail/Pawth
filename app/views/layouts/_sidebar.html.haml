@@ -9,7 +9,7 @@
                   root_path,
                   class: 'sidebar-brand'
 
-      %button.theme-link.grid.size-8.place-items-center.rounded-lg.hover:bg-surface-muted{
+      %button.theme-link.grid.size-8.place-items-center.rounded-lg.hover:bg-surface-muted.hover:scale-110.hover:rotate-6.focus-visible:scale-110.focus-visible:rotate-6.transition-transform.duration-200{
         type: 'button',
         data: { action: 'click->menu#close' },
         aria: { label: 'サイドバーを閉じる', controls: 'sidebar' }
@@ -298,7 +298,6 @@
           }
             %span.block.size-4
               %svg.w-full.h-full{
-                viewBox: '0 0 24 24',
                 fill: 'none',
                 stroke: 'currentColor',
                 viewBox: '0 0 24 24',
