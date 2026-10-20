@@ -9,22 +9,26 @@
                   root_path,
                   class: 'sidebar-brand'
 
-      %button.theme-link.grid.size-8.place-items-center.rounded-lg.hover:bg-surface-muted.hover:scale-110.hover:rotate-6.focus-visible:scale-110.focus-visible:rotate-6.transition-transform.duration-200{
-        type: 'button',
-        data: { action: 'click->menu#close' },
-        aria: { label: 'サイドバーを閉じる', controls: 'sidebar' }
-      }
-        %svg.w-5.h-5{
-          fill: 'none',
-          stroke: 'currentColor',
-          viewBox: '0 0 24 24',
-          aria: { hidden: 'true' }
+      .relative
+        %button.theme-link.sidebar-close-button.grid.size-8.place-items-center.rounded-lg.hover:bg-surface-muted.hover:scale-110.hover:rotate-6.focus-visible:scale-110.focus-visible:rotate-6.transition-transform.duration-200{
+          type: 'button',
+          data: { action: 'click->menu#close' },
+          aria: { label: t('layout.sidebar.close'), controls: 'sidebar' }
         }
-          %path{
-            d: 'M6 6l12 12M18 6 6 18',
-            'stroke-width': '2',
-            'stroke-linecap': 'round'
+          %svg.w-5.h-5{
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24',
+            aria: { hidden: 'true' }
           }
+            %path{
+              d: 'M6 6l12 12M18 6 6 18',
+              'stroke-width': '2',
+              'stroke-linecap': 'round'
+            }
+
+        %span.sidebar-menu-tooltip.sidebar-close-tooltip{ aria: { hidden: 'true' } }
+          = t('layout.sidebar.toggle_tooltip')
 
     %nav.flex.flex-col.space-y-6
       = link_to root_path, class: 'theme-link flex items-center gap-3 font-medium' do

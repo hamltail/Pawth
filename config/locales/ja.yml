@@ -109,6 +109,9 @@ ja:
   layout:
     sidebar:
       app_name: 'Pawth'
+      open: 'サイドバーを開く'
+      close: 'サイドバーを閉じる'
+      toggle_tooltip: 'サイドバーを切り替える'
       calendar: 'カレンダー'
       daily_posts: 'タイムライン'
       settings: '設定'

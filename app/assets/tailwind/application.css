@@ -301,6 +301,21 @@
     box-shadow: 0 0 12px rgba(196, 181, 253, 0.16);
   }
 
+  .sidebar-close-tooltip {
+    position: fixed;
+    top: 2.5rem;
+    right: auto;
+    left: calc(100% + 0.625rem);
+    transform: translate(-4px, -50%);
+  }
+
+  .sidebar-close-button:hover + .sidebar-close-tooltip,
+  .sidebar-close-button:focus-visible + .sidebar-close-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%);
+  }
+
   .danger-link {
     color: #dc2626;
   }

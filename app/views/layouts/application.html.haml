@@ -53,7 +53,7 @@
             menu_target: 'button'
           },
           aria: {
-            label: 'サイドバーを開く',
+            label: t('layout.sidebar.open'),
             controls: 'sidebar',
             expanded: 'false'
           }
@@ -74,7 +74,7 @@
               %path{ d: 'm14 9 3 3-3 3' }
 
           %span.sidebar-menu-tooltip{ aria: { hidden: 'true' } }
-            サイドバーを切り替える
+            = t('layout.sidebar.toggle_tooltip')
 
         = render 'layouts/sidebar'
 
