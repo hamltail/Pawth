@@ -60,6 +60,21 @@
         }
           %span.sidebar-menu-paw-wrapper{ aria: { hidden: 'true' } }
             %span.sidebar-menu-paw
+            %svg.sidebar-menu-toggle-icon.w-6.h-6{
+              fill: 'none',
+              stroke: 'currentColor',
+              viewBox: '0 0 24 24',
+              'stroke-width': '1.7',
+              'stroke-linecap': 'round',
+              'stroke-linejoin': 'round',
+              aria: { hidden: 'true' }
+            }
+              %rect{ x: '3', y: '3', width: '18', height: '18', rx: '2.5' }
+              %path{ d: 'M9 3v18' }
+              %path{ d: 'm14 9 3 3-3 3' }
+
+          %span.sidebar-menu-tooltip{ aria: { hidden: 'true' } }
+            サイドバーを切り替える
 
         = render 'layouts/sidebar'
 
