@@ -2,7 +2,7 @@
   id: 'sidebar',
   data: { menu_target: 'sidebar' }
 }
-  %div
+  %div.daily-post-scroll.min-h-0.flex-1.overflow-y-auto.pb-20
     .flex.items-center.justify-between.mb-8
       .text-lg.font-bold
         = link_to t('layout.sidebar.app_name'),
@@ -317,26 +317,27 @@
                 %path{ d: 'M8 20h8' }
                 %path{ d: 'M12 16v4' }
 
-      = link_to destroy_user_session_path,
-          data: { turbo_method: :delete },
-          class: 'sidebar-no-close danger-link flex items-center gap-3 font-medium' do
-        %svg.w-5.h-5.shrink-0{
-          fill: 'none',
-          stroke: 'currentColor',
-          viewBox: '0 0 24 24',
-          aria: { hidden: 'true' }
+  %div.mt-auto.shrink-0.pt-4
+    = link_to destroy_user_session_path,
+        data: { turbo_method: :delete },
+        class: 'sidebar-no-close danger-link flex items-center gap-3 font-medium' do
+      %svg.w-5.h-5.shrink-0{
+        fill: 'none',
+        stroke: 'currentColor',
+        viewBox: '0 0 24 24',
+        aria: { hidden: 'true' }
+      }
+        %path{
+          d: 'M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10',
+          'stroke-width': '1.5',
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
         }
-          %path{
-            d: 'M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10',
-            'stroke-width': '1.5',
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
-          }
-          %path{
-            d: 'M13 8.5 16.5 12 13 15.5M8.5 12h8',
-            'stroke-width': '1.5',
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
-          }
+        %path{
+          d: 'M13 8.5 16.5 12 13 15.5M8.5 12h8',
+          'stroke-width': '1.5',
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
+        }
 
-        %span= t('layout.sidebar.logout')
+      %span= t('layout.sidebar.logout')
