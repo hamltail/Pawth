@@ -42,8 +42,9 @@ export default class extends Controller {
 
   render() {
     this.sidebarTarget.classList.toggle('-translate-x-full', !this.opened);
-
     this.sidebarTarget.classList.toggle('translate-x-0', this.opened);
+    this.sidebarTarget.classList.toggle('lg:-translate-x-full', !this.opened);
+    this.sidebarTarget.classList.toggle('lg:translate-x-0', this.opened);
 
     this.buttonTarget.classList.toggle('hidden', this.opened);
 
@@ -53,7 +54,6 @@ export default class extends Controller {
     );
 
     this.sidebarTarget.setAttribute('aria-hidden', String(!this.opened));
-
     this.sidebarTarget.inert = !this.opened;
 
     this.buttonTarget.setAttribute('aria-expanded', String(this.opened));

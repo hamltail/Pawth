@@ -1,4 +1,4 @@
-%li{ id: "post_#{post.id}", class: 'grid grid-cols-[2.5rem_1.5rem_minmax(0,1fr)] gap-x-2 md:grid-cols-[5rem_2rem_minmax(0,1fr)] md:gap-x-4' }
+%li{ id: "post_#{post.id}", class: 'grid grid-cols-[1.5rem_1.5rem_minmax(0,1fr)] gap-x-2 md:grid-cols-[2.5rem_2rem_minmax(0,1fr)] md:gap-x-4' }
   .pt-1.text-right
     - day_color_class = if post.posted_on.sunday? || HolidayJp.holiday?(post.posted_on)
       - 'calendar-sunday'
@@ -18,7 +18,7 @@
     %div{ class: 'absolute bottom-0 left-[11px] top-0 w-0.5 rounded-full bg-gradient-to-b from-brand via-brand-light to-default-border md:left-[15px]' }
 
     %div{ class: 'timeline-mark relative z-10 flex h-8 w-8 -translate-x-1 items-center justify-center rounded-full bg-page md:h-10 md:w-10' }
-      = timeline_mark_for(icon: current_user.profile.calendar_icon)
+      = timeline_mark_for(icon: current_user.profile.calendar_icon, highlight: post.posted_on == Date.current)
 
   .min-w-0.pb-8
     %div{ class: 'rounded-2xl bg-surface px-4 pb-2 pt-3 ring-1 ring-default-border md:px-5 md:pb-3 md:pt-4' }

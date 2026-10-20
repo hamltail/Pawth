@@ -1,9 +1,9 @@
 module DailyPostsHelper
   include Pagy::Frontend
 
-  def timeline_mark_for(icon: :paw)
+  def timeline_mark_for(icon: :paw, highlight: false)
     render calendar_mark_partial(icon),
-           klass: '!w-8 !h-8',
+           klass: "!w-8 !h-8#{' calendar-mark--selected' if highlight}",
            dataset: {},
            grad: true
   end
