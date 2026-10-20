@@ -131,6 +131,8 @@ jobs:
       - name: Prepare DB
         working-directory: e2e
         run: ../bin/rails db:create db:schema:load
+      - name: Build Tailwind CSS
+        run: bin/rails tailwindcss:build
       - name: Run Playwright
         working-directory: e2e
         run: npm test

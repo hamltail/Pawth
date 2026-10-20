@@ -1,12 +1,30 @@
-%aside.bg-sidebar.shadow-md.w-64.h-screen.px-6.py-6.flex.flex-col.fixed.z-60.transform.transition-transform.duration-200.-translate-x-full.md:translate-x-0.md:flex{
+%aside.bg-sidebar.shadow-md.w-64.h-screen.px-6.py-6.flex.flex-col.fixed.z-60.transform.transition-transform.duration-200.-translate-x-full{
   id: 'sidebar',
   data: { menu_target: 'sidebar' }
 }
   %div
-    .text-lg.font-bold.mb-8
-      = link_to t('layout.sidebar.app_name'),
-                root_path,
-                class: 'sidebar-brand'
+    .flex.items-center.justify-between.mb-8
+      .text-lg.font-bold
+        = link_to t('layout.sidebar.app_name'),
+                  root_path,
+                  class: 'sidebar-brand'
+
+      %button.theme-link.grid.size-8.place-items-center.rounded-lg.hover:bg-surface-muted{
+        type: 'button',
+        data: { action: 'click->menu#close' },
+        aria: { label: 'サイドバーを閉じる', controls: 'sidebar' }
+      }
+        %svg.w-5.h-5{
+          fill: 'none',
+          stroke: 'currentColor',
+          viewBox: '0 0 24 24',
+          aria: { hidden: 'true' }
+        }
+          %path{
+            d: 'M6 6l12 12M18 6 6 18',
+            'stroke-width': '2',
+            'stroke-linecap': 'round'
+          }
 
     %nav.flex.flex-col.space-y-6
       = link_to root_path, class: 'theme-link flex items-center gap-3 font-medium' do
@@ -169,8 +187,30 @@
 
               %span= t('layout.sidebar.account_settings')
 
-      %div{ data: { controller: 'theme' } }
-        %div.inline-flex.shrink-0.gap-1.rounded-full.border.border-default-border.bg-surface.p-1
+      %div.relative.inline-flex{ data: { controller: 'theme' } }
+        %button.grid.size-9.place-items-center.rounded-full.border.border-default-border.bg-surface.text-primary.hover:bg-surface-muted.transition-colors{
+          type: 'button',
+          title: 'テーマを変更',
+          data: {
+            action: 'click->theme#toggle',
+            theme_target: 'trigger'
+          },
+          aria: {
+            label: 'テーマを変更',
+            expanded: 'false',
+            controls: 'theme-options'
+          }
+        }
+          %span.block.size-4{
+            data: { theme_target: 'triggerIcon' },
+            aria: { hidden: 'true' }
+          }
+
+        %div#theme-options.hidden.absolute.top-full.left-0.z-70.mt-2.shrink-0.gap-1.rounded-full.border.border-default-border.bg-surface.p-1.shadow-lg{
+          role: 'group',
+          data: { theme_target: 'panel' },
+          aria: { label: 'テーマを変更' }
+        }
           %button.grid.size-8.place-items-center.rounded-full.text-muted.hover:bg-surface-muted.transition-colors{
             type: 'button',
             aria: {
@@ -253,6 +293,7 @@
                 viewBox: '0 0 24 24',
                 fill: 'none',
                 stroke: 'currentColor',
+                viewBox: '0 0 24 24',
                 'stroke-width': '2',
                 'stroke-linecap': 'round',
                 'stroke-linejoin': 'round',

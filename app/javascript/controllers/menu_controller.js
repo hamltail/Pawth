@@ -1,93 +1,88 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['sidebar', 'button'];
+  static targets = ['sidebar', 'button', 'main'];
 
   connect() {
+    this.mq = window.matchMedia('(min-width: 1024px)');
+    this.opened = this.mq.matches;
+
     this.onDocumentClick = this.handleDocumentClick.bind(this);
-    this.onKeydown = this.handleKeydown.bind(this);
-    this.mq = window.matchMedia('(min-width: 768px)');
     this.onMqlChange = this.handleBreakpointChange.bind(this);
 
     document.addEventListener('click', this.onDocumentClick);
-    document.addEventListener('keydown', this.onKeydown);
     this.mq.addEventListener('change', this.onMqlChange);
 
-    this.syncDesktopState();
+    this.render();
   }
 
   disconnect() {
     document.removeEventListener('click', this.onDocumentClick);
-    document.removeEventListener('keydown', this.onKeydown);
     this.mq.removeEventListener('change', this.onMqlChange);
-  }
 
-  toggle() {
-    if (this.isDesktop()) return; // md以上は常時表示
-    this.isOpen() ? this.close() : this.open();
-  }
-
-  applyState({ open, desktop }) {
-    this.sidebarTarget.classList.toggle('-translate-x-full', !open);
-    this.buttonTarget.classList.toggle('hidden', open);
-    this.sidebarTarget.setAttribute('aria-hidden', open ? 'false' : 'true');
-    this.buttonTarget.setAttribute('aria-expanded', open ? 'true' : 'false');
-
-    if (desktop && open) {
-      this.sidebarTarget.classList.remove('-translate-x-full');
-      this.buttonTarget.classList.add('hidden');
-    }
+    document.body.classList.remove('overflow-hidden');
   }
 
   open() {
-    this.applyState({ open: true, desktop: this.isDesktop() });
+    this.opened = true;
+    this.render();
   }
 
   close() {
-    if (this.isDesktop()) return;
-    this.applyState({ open: false, desktop: this.isDesktop() });
-  }
+    if (!this.opened) return;
 
-  isOpen() {
-    return !this.sidebarTarget.classList.contains('-translate-x-full');
+    this.opened = false;
+    this.render();
+    this.buttonTarget.focus();
   }
 
   isDesktop() {
     return this.mq.matches;
   }
 
-  syncDesktopState() {
-    this.applyState({ open: this.isDesktop(), desktop: this.isDesktop() });
+  render() {
+    this.sidebarTarget.classList.toggle('-translate-x-full', !this.opened);
+
+    this.sidebarTarget.classList.toggle('translate-x-0', this.opened);
+
+    this.buttonTarget.classList.toggle('hidden', this.opened);
+
+    this.mainTarget.classList.toggle(
+      'lg:ml-64',
+      this.isDesktop() && this.opened,
+    );
+
+    this.sidebarTarget.setAttribute('aria-hidden', String(!this.opened));
+
+    this.sidebarTarget.inert = !this.opened;
+
+    this.buttonTarget.setAttribute('aria-expanded', String(this.opened));
+
+    document.body.classList.toggle(
+      'overflow-hidden',
+      !this.isDesktop() && this.opened,
+    );
   }
 
-  handleBreakpointChange(e) {
-    if (e.matches) {
-      this.sidebarTarget.classList.remove('-translate-x-full');
-      this.buttonTarget.classList.add('hidden');
-      this.sidebarTarget.setAttribute('aria-hidden', 'false');
-      this.buttonTarget.setAttribute('aria-expanded', 'true');
-    } else {
+  handleBreakpointChange() {
+    this.opened = this.isDesktop();
+    this.render();
+  }
+
+  handleDocumentClick(event) {
+    if (this.isDesktop() || !this.opened) return;
+
+    const insideSidebar = this.sidebarTarget.contains(event.target);
+    const onMenuButton = this.buttonTarget.contains(event.target);
+
+    if (!insideSidebar && !onMenuButton) {
       this.close();
+      return;
     }
-  }
 
-  handleDocumentClick(e) {
-    if (!this.isOpen() || this.isDesktop()) return;
+    const link = event.target.closest('#sidebar nav a');
 
-    const insideSidebar = this.sidebarTarget.contains(e.target);
-    const onMenuButton = this.buttonTarget.contains(e.target);
-    const noClose = e.target.closest('.sidebar-no-close');
-
-    // 外クリック
-    if (!insideSidebar && !onMenuButton) return this.close();
-
-    // サイドバー内リンククリック（no-close除外）
-    const link = e.target.closest('#sidebar nav a');
-    if (link && !noClose) this.close();
-  }
-
-  handleKeydown(e) {
-    if (e.key === 'Escape' && this.isOpen() && !this.isDesktop()) {
+    if (link && !link.closest('.sidebar-no-close')) {
       this.close();
     }
   }
