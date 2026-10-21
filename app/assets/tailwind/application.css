@@ -755,4 +755,8 @@
       0 0 10px rgba(196, 181, 253, 0.16),
       0 0 22px rgba(249, 168, 212, 0.09);
   }
+
+  #sidebar[aria-hidden='true'] ~ main .modal-container {
+    margin-left: 0;
+  }
 }
