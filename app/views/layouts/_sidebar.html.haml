@@ -1,3 +1,10 @@
+- calendar_active = controller_path == 'activities'
+- timeline_active = controller_path == 'daily_posts'
+- profile_active = controller_path == 'profiles'
+- account_active = controller_path == 'users/registrations'
+- settings_active = profile_active || account_active
+- sidebar_item_classes = 'theme-link -mx-3 rounded-xl px-3 py-2 transition-colors duration-150 hover:bg-brand/15 focus-visible:bg-brand/15'
+
 %aside.bg-sidebar.shadow-md.w-64.h-screen.px-6.py-6.flex.flex-col.fixed.z-60.transform.transition-transform.duration-200.-translate-x-full.lg:translate-x-0{
   id: 'sidebar',
   data: { menu_target: 'sidebar' }
@@ -30,8 +37,10 @@
         %span.sidebar-menu-tooltip.sidebar-close-tooltip{ aria: { hidden: 'true' } }
           = t('layout.sidebar.toggle_tooltip')
 
-    %nav.flex.flex-col.space-y-6
-      = link_to root_path, class: 'theme-link flex items-center gap-3 font-medium' do
+    %nav.flex.flex-col.space-y-2
+      = link_to root_path,
+                class: "#{sidebar_item_classes} flex items-center gap-3 font-medium#{' bg-brand/15' if calendar_active}",
+                aria: { current: ('page' if calendar_active) } do
         %svg.w-5.h-5.shrink-0{
           fill: 'none',
           stroke: 'currentColor',
@@ -80,7 +89,9 @@
 
         %span= t('layout.sidebar.calendar')
 
-      = link_to daily_posts_path, class: 'theme-link flex items-center gap-3 font-medium' do
+      = link_to daily_posts_path,
+                class: "#{sidebar_item_classes} flex items-center gap-3 font-medium#{' bg-brand/15' if timeline_active}",
+                aria: { current: ('page' if timeline_active) } do
         %svg.w-5.h-5.shrink-0{
           fill: 'none',
           stroke: 'currentColor',
@@ -105,14 +116,15 @@
 
         %span= t('layout.sidebar.daily_posts')
 
-      .sidebar-settings{
+      .sidebar-settings.-mx-3{
         data: {
           controller: 'collapsible',
           open: 'false',
           collapsible_storage_key: 'sidebar-settings-open'
         }
       }
-        %button.theme-link.w-full.flex.items-center.justify-between.font-medium{
+        %button.theme-link.w-full.flex.items-center.justify-between.font-medium.rounded-xl.px-3.py-2.transition-colors.duration-150{
+          class: "hover:bg-brand/15 focus-visible:bg-brand/15#{' bg-brand/15' if settings_active}",
           type: 'button',
           data: { action: 'click->collapsible#toggle' },
           aria: {
@@ -153,9 +165,11 @@
             }
               %path{ d: 'm9 18 6-6-6-6' }
 
-        %ul.sidebar-settings-panel.mt-2.pl-4.space-y-2#settings-submenu
+        %ul.sidebar-settings-panel.mt-2.pl-7.space-y-2#settings-submenu
           %li
-            = link_to edit_profile_path, class: 'theme-link flex items-center gap-2 font-medium' do
+            = link_to edit_profile_path,
+                      class: "#{sidebar_item_classes} flex items-center gap-2 font-medium#{' bg-brand/15' if profile_active}",
+                      aria: { current: ('page' if profile_active) } do
               %svg.w-4.h-4.shrink-0{
                 fill: 'none',
                 stroke: 'currentColor',
@@ -177,7 +191,9 @@
               %span= t('layout.sidebar.profile_settings')
 
           %li
-            = link_to edit_user_registration_path, class: 'theme-link flex items-center gap-2 font-medium' do
+            = link_to edit_user_registration_path,
+                      class: "#{sidebar_item_classes} flex items-center gap-2 font-medium#{' bg-brand/15' if account_active}",
+                      aria: { current: ('page' if account_active) } do
               %svg.w-4.h-4.shrink-0{
                 fill: 'none',
                 stroke: 'currentColor',
@@ -199,7 +215,7 @@
 
               %span= t('layout.sidebar.account_settings')
 
-      %div.relative.inline-flex{ data: { controller: 'theme' } }
+      %div.relative.inline-flex.pt-4{ data: { controller: 'theme' } }
         %button.theme-link.grid.size-9.place-items-center.rounded-full.border.border-default-border.bg-sidebar.hover:bg-surface-muted.transition-colors{
           type: 'button',
           title: 'テーマを変更',
