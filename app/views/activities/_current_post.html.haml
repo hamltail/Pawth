@@ -22,7 +22,7 @@
           = render 'shared/icon_arrow', direction: 'left', klass: 'w-5 h-5'
 
       .daily-post-card.relative.flex.flex-1.min-w-0.flex-col.overflow-hidden.rounded-2xl.p-5.bg-surface.shadow-sm.ring-1.ring-default-border{
-        class: 'h-72 md:h-64 min-[86rem]:h-auto min-[86rem]:min-h-[28rem]',
+        class: 'h-72 md:h-64 min-[86rem]:h-auto min-[86rem]:min-h-[28rem] min-[86rem]:max-h-[calc(100dvh-21rem)]',
         data: {
           post_navigator_target: 'card'
         }
@@ -34,7 +34,7 @@
             %span#daily-post-date= post.posted_on
 
         #daily-post-content.daily-post-scroll.mt-3.min-h-0.flex-1.overflow-y-auto.leading-relaxed.text-primary.whitespace-pre-wrap.break-words{
-          class: 'text-sm md:text-base min-[86rem]:flex-none min-[86rem]:overflow-visible'
+          class: 'text-sm md:text-base'
         }= h(post.content)
 
       %button.flex.shrink-0.items-center.justify-center.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
