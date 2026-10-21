@@ -79,7 +79,7 @@
             = link_to edit_user_registration_path,
                       class: "#{sidebar_item_classes} flex items-center gap-2 font-medium#{' bg-brand/15' if account_active}",
                       aria: { current: ('page' if account_active) } do
-              = render 'shared/sidebar_icons/settings', icon_class: 'w-4 h-4 shrink-0'
+              = render 'shared/sidebar_icons/settings', icon_class: 'w-5 h-5 shrink-0'
 
               %span= t('layout.sidebar.account_settings')
 
