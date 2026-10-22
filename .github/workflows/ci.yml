@@ -34,7 +34,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libvips
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ vars.RUBY_VERSION || '3.4' }}
+          ruby-version: .ruby-version
           bundler-cache: true
       - name: Setup Node (for ESLint/Prettier)
         if: hashFiles('package.json') != ''
@@ -101,7 +101,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libvips
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ vars.RUBY_VERSION || '3.4' }}
+          ruby-version: .ruby-version
           bundler-cache: true
       - uses: actions/setup-node@v4
         with:
