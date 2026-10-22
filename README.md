@@ -2,14 +2,19 @@
 
 ## 〜日々の足あとを描く〜
 
-Pawthは、1日1回、その日の記録を残せる小さな日記アプリです。
+Pawthは、日々の足あとを描く、小さなWeb日記アプリです。
 
-日々の記録をカレンダーに残し、これまでの歩みを振り返ることができます。
+その日の記録を残し、カレンダーやタイムラインからこれまでの歩みを振り返ることができます。
 
-> 🌐 紹介サイト: <https://pawth-lp.hamltail.dev/>
+## 紹介サイト
+
+🌐 [Webサイトを見る](https://pawth-lp.hamltail.dev/)
+
+Alternative: [Vercel](https://pawth-lp.vercel.app/)
 
 > [!NOTE]
-> 現在、本番環境の運用は停止しています。
+> 現在、Pawth本体の本番環境は運用を停止しています。
+> 紹介サイトは引き続き公開しています。
 
 ![Pawth](docs/images/pawth.webp)
 
@@ -18,7 +23,7 @@ Pawthは、1日1回、その日の記録を残せる小さな日記アプリで�
 | Category       | Technology                                            |
 | -------------- | ----------------------------------------------------- |
 | Frontend       | Haml, Tailwind CSS, JavaScript, Turbo, Stimulus, GSAP |
-| Backend        | Ruby 4.0.6, Rails 8.1.3                               |
+| Backend        | Ruby 4.0.7, Rails 8.1.4                               |
 | Database       | PostgreSQL 18                                         |
 | Authentication | Devise                                                |
 | Testing        | RSpec, FactoryBot, SimpleCov, Playwright, axe-core    |
@@ -68,7 +73,7 @@ Docker開発環境では、確認メールを`letter_opener_web`から確認で�
 http://localhost:3000/letter_opener
 ```
 
-## 本番構成（停止中）
+## 本番構成（停止）
 
 PawthはAWS上で以下の構成で運用していました。  
 現在、本番環境の運用は停止しています。
