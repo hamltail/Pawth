@@ -16,7 +16,10 @@ export class AuthPage {
       .getByRole('textbox', { name: 'パスワード' })
       .fill('password1234');
     await this.page.getByRole('button', { name: 'ログイン' }).click();
-    await expect(this.page.getByRole('link', { name: 'Pawth' })).toBeVisible();
+
+    // 未ログイン画面にも「Pawth」リンクがあるため、
+    // ログイン済みの場合だけ出現するサイドバーで判定する。
+    await expect(this.page.locator('#sidebar')).toBeAttached();
 
     return new AppShell(this.page);
   }

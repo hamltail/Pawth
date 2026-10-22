@@ -7,6 +7,10 @@ const useExternalServer = Boolean(process.env.BASE_URL);
 export default defineConfig({
   testDir: './tests',
   timeout: 60_000,
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
   use: {
     baseURL: BASE,
     trace: 'retain-on-failure',
