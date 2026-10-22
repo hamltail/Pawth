@@ -59,7 +59,8 @@ test.describe('sidebar', () => {
     await page.keyboard.press('Escape');
     await expect(sidebar).toHaveAttribute('aria-hidden', 'false');
 
-    await page.mouse.click(760, 40);
+    // 固定座標ではなく、サイドバー外の実際の要素をクリックする。
+    await page.getByRole('heading', { name: "playwright's Pawth" }).click();
 
     await expect(sidebar).toHaveAttribute('aria-hidden', 'true');
     await expect(openButton).toBeVisible();
