@@ -52,19 +52,30 @@ test.describe('calendar navigation', () => {
 
       if (!cell || !grid) continue;
 
+      // 日付セルが正方形であること
       expect(Math.abs(cell.width - cell.height)).toBeLessThan(1.5);
 
+      // カレンダーが画面幅を超えないこと
       expect(grid.x).toBeGreaterThanOrEqual(0);
       expect(grid.x + grid.width).toBeLessThanOrEqual(viewport.width + 1);
 
-      const mark = await cells.first().locator('.calendar-mark').boundingBox();
+      // SVGのレイアウト上のサイズを取得する。
+      // boundingBox() はGSAPのscaleアニメーションの影響を受けるため使わない。
+      const markSize = await cells
+        .first()
+        .locator('.calendar-mark')
+        .evaluate((element) => {
+          const style = window.getComputedStyle(element);
 
-      expect(mark).not.toBeNull();
+          return {
+            width: Number.parseFloat(style.width),
+            height: Number.parseFloat(style.height),
+          };
+        });
 
-      if (mark) {
-        expect(mark.width).toBeLessThanOrEqual(cell.width + 1);
-        expect(mark.height).toBeLessThanOrEqual(cell.height + 1);
-      }
+      // 肉球・星アイコンが日付セルに収まること
+      expect(markSize.width).toBeLessThanOrEqual(cell.width + 1);
+      expect(markSize.height).toBeLessThanOrEqual(cell.height + 1);
     }
   });
 
