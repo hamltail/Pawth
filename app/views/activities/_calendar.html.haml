@@ -12,10 +12,10 @@
   }
     .flex.items-center.justify-center.mb-3.lg:mb-8
       = link_to activity_path(username: user.username, year: prev_month.year, month: prev_month.month),
-                class: 'mx-2',
+                class: 'flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-muted text-muted transition-colors hover:bg-brand/10 hover:text-brand focus-visible:bg-brand/10 focus-visible:text-brand md:size-11',
                 data: { calendar_target: 'prevLink' },
                 aria: { label: t('activities.calendar.prev_month') } do
-        = render 'shared/icon_arrow', direction: 'left', klass: 'text-muted hover:text-primary transition-colors'
+        = render 'shared/icon_arrow', direction: 'left', klass: 'scale-75'
 
       %h2.mx-3.lg:mx-4.flex-1.flex.items-baseline.justify-center.gap-3.lg:gap-5{ aria: { live: 'polite' } }
         %span.calendar-month-glow.text-4xl.lg:text-5xl.font-bold.text-primary
@@ -25,10 +25,10 @@
           = meta[:month_year_label]
 
       = link_to activity_path(username: user.username, year: next_month.year, month: next_month.month),
-                class: 'mx-2',
+                class: 'flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-muted text-muted transition-colors hover:bg-brand/10 hover:text-brand focus-visible:bg-brand/10 focus-visible:text-brand md:size-11',
                 data: { calendar_target: 'nextLink' },
                 aria: { label: t('activities.calendar.next_month') } do
-        = render 'shared/icon_arrow', direction: 'right', klass: 'text-muted hover:text-primary transition-colors'
+        = render 'shared/icon_arrow', direction: 'right', klass: 'scale-75'
 
     .grid.grid-cols-7.gap-1.lg:gap-2.justify-center.mb-2.lg:mb-4
       - meta[:weekdays].each_with_index do |wd, index|
