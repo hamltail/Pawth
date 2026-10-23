@@ -574,13 +574,13 @@
 
   .status-error {
     color: var(--pawth-error-text);
-    background: var(--pawth-error-bg);
+    background-color: var(--pawth-error-bg);
     border-color: var(--pawth-error-border);
   }
 
   .status-success {
     color: var(--pawth-success-text);
-    background: var(--pawth-success-bg);
+    background-color: var(--pawth-success-bg);
     border-color: var(--pawth-success-border);
   }
 
