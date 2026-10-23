@@ -28,10 +28,13 @@
 
     %div{ class: 'mb-0 md:mb-8 min-[86rem]:mb-0 mx-auto w-full max-w-[52rem] min-[86rem]:max-w-none' }
       - if user_signed_in? && current_user == @user
-        .flex.justify-center.mb-6
+        %div{
+          class: 'group fixed right-8 top-8 z-40 flex justify-center min-[86rem]:static min-[86rem]:z-auto min-[86rem]:mb-6 [&_.new-post-action]:size-11 [&_.new-post-action]:justify-center [&_.new-post-action]:gap-0 [&_.new-post-action]:p-0 min-[86rem]:[&_.new-post-action]:h-auto min-[86rem]:[&_.new-post-action]:w-auto min-[86rem]:[&_.new-post-action]:gap-2 min-[86rem]:[&_.new-post-action]:px-4 min-[86rem]:[&_.new-post-action]:py-2 [&_.new-post-label]:sr-only min-[86rem]:[&_.new-post-label]:not-sr-only'
+        }
           #new-post-button
             = render 'activities/new_post_button', posted_today: current_user.posted_today?
-          = turbo_frame_tag 'modal'
+
+        = turbo_frame_tag 'modal'
 
       = turbo_frame_tag 'current_post' do
         - if @can_view_posts
