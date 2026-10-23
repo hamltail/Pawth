@@ -44,6 +44,9 @@ test.describe('calendar navigation', () => {
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
 
+      // PCからモバイルへ切り替える際のメイン領域の移動完了を待つ
+      await expect(page.locator('main')).toHaveCSS('margin-left', '0px');
+
       const cell = await cells.first().boundingBox();
       const grid = await calendar.locator('.calendar-days-grid').boundingBox();
 
