@@ -75,9 +75,9 @@ module CalendarHelper
 
   def today_badge(text = t('.today'))
     badge_classes = 'today-neon pointer-events-none select-none absolute ' \
-                    'bottom-[-0.25rem] lg:bottom-auto lg:top-11 left-1/2 ' \
+                    'top-[calc(1.25rem+min(32%,1.75rem))] lg:top-11 left-1/2 ' \
                     '-translate-x-1/2 flex gap-[2px] font-bold ' \
-                    'text-[8px] leading-none tracking-tight ' \
+                    'text-[11px] leading-none tracking-tight ' \
                     'lg:text-[12px] lg:tracking-widest ' \
                     'text-emerald-700 in-data-[theme=dark]:text-emerald-300'
 
