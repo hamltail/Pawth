@@ -74,15 +74,20 @@ module CalendarHelper
   end
 
   def today_badge(text = t('.today'))
-    badge_classes = 'today-badge pointer-events-none select-none absolute ' \
+    badge_classes = 'today-neon pointer-events-none select-none absolute ' \
                     'bottom-[-0.25rem] lg:bottom-auto lg:top-11 left-1/2 ' \
                     '-translate-x-1/2 flex gap-[2px] font-bold ' \
                     'text-[8px] leading-none tracking-tight ' \
-                    'lg:text-[12px] lg:tracking-widest'
+                    'lg:text-[12px] lg:tracking-widest ' \
+                    'text-emerald-700 in-data-[theme=dark]:text-emerald-300'
 
-    content_tag :div, class: badge_classes do
+    content_tag :div,
+                class: badge_classes,
+                style: 'text-shadow: 0 0 4px rgba(52,211,153,0.95), ' \
+                       '0 0 10px rgba(16,185,129,0.8), ' \
+                       '0 0 18px rgba(16,185,129,0.4);' do
       safe_join(text.chars.each_with_index.map { |ch, i|
-        content_tag(:span, ch, class: 'today-char', data: { idx: i })
+        content_tag(:span, ch, class: 'today-neon-char inline-block', data: { idx: i })
       })
     end
   end

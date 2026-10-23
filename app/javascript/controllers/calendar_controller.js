@@ -18,7 +18,6 @@ export default class extends Controller {
     this.ctx = gsap.context(() => {
       this.refreshCurrentPostRefs();
       this.fadeInMarks();
-      this.animateTodayBadge();
       this.syncSelectedMark();
     }, this.element);
 
@@ -40,8 +39,6 @@ export default class extends Controller {
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    // 選択中のマークはCSS側でネオンを管理しているため、
-    // GSAPでは位置・回転・拡大だけを操作する
     if (el.classList.contains('calendar-mark--selected')) {
       gsap.killTweensOf(el, 'y,rotation,scale');
 
@@ -57,7 +54,6 @@ export default class extends Controller {
       return;
     }
 
-    // 通常のマークは従来どおりホバー時にシャドウを付ける
     gsap.killTweensOf(el, 'y,rotation,scale,filter');
 
     gsap.to(el, {
@@ -75,7 +71,6 @@ export default class extends Controller {
     const el = e.target.closest('.calendar-mark.calendar-mark--posted');
     if (!el || !this.element.contains(el)) return;
 
-    // 選択中のマークはCSSネオンを壊さない
     if (el.classList.contains('calendar-mark--selected')) {
       gsap.killTweensOf(el, 'y,rotation,scale');
 
@@ -113,8 +108,6 @@ export default class extends Controller {
     const { date, content } = el.dataset;
 
     if (!date || !this.dateEl || !this.contentEl) return;
-
-    // 選択中の日記を再度クリックした場合は何もしない
     if (this.dateEl.textContent === date) return;
 
     this.animatePostReveal({
@@ -122,8 +115,6 @@ export default class extends Controller {
       content: content || 'まだ日記をかいていません。',
     });
 
-    // カレンダーマークから日記を選択したら、
-    // 日記ナビゲーションと選択中マークの状態を更新する
     document.dispatchEvent(
       new CustomEvent('pawth:post-selected', {
         detail: { date },
@@ -192,7 +183,6 @@ export default class extends Controller {
 
     if (!nextMark) return null;
 
-    // CSSアニメーションはクラス追加直後から開始する
     nextMark.classList.add('calendar-mark--selected');
     this.selectedMark = nextMark;
 
@@ -204,8 +194,6 @@ export default class extends Controller {
 
     this.selectedMark.classList.remove('calendar-mark--selected');
 
-    // 通常マークへ戻ったときに、
-    // 選択中ネオンのfilterをインラインへ残さない
     gsap.set(this.selectedMark, {
       clearProps: 'filter',
     });
@@ -242,10 +230,8 @@ export default class extends Controller {
   }
 
   squish(el, { scale = 1.3, duration = 0.1 } = {}) {
-    // 連打された場合は、進行中のscaleアニメーションだけを破棄する
     gsap.killTweensOf(el, 'scale');
 
-    // 前回の途中状態を引き継がず、必ず等倍から開始する
     gsap.set(el, { scale: 1 });
 
     gsap.to(el, {
@@ -255,8 +241,6 @@ export default class extends Controller {
       repeat: 1,
       ease: 'power2.out',
       overwrite: 'auto',
-
-      // アニメーション終了後も必ず等倍へ戻す
       onComplete: () => {
         gsap.set(el, { scale: 1 });
       },
@@ -270,7 +254,6 @@ export default class extends Controller {
 
     if (!marks.length) return;
 
-    // 選択ネオンで使うfilterには触らない
     gsap.killTweensOf(marks, 'opacity,y');
 
     gsap.fromTo(
@@ -289,42 +272,8 @@ export default class extends Controller {
     );
   }
 
-  animateTodayBadge() {
-    const chars = this.element.querySelectorAll('.today-badge .today-char');
-
-    if (!chars.length) return;
-
-    this.tl?.kill();
-
-    this.tl = gsap
-      .timeline({
-        delay: 0.3,
-        repeat: -1,
-        repeatDelay: 0.8,
-      })
-      .to(chars, {
-        y: -6,
-        duration: 0.22,
-        ease: 'power1.out',
-        stagger: 0.06,
-      })
-      .to(
-        chars,
-        {
-          y: 0,
-          duration: 0.22,
-          ease: 'power1.in',
-          stagger: 0.06,
-        },
-        0.1,
-      );
-  }
-
   teardown() {
     this.clearSelectedMark();
-
-    this.tl?.kill();
-    this.tl = null;
 
     document.removeEventListener(
       'pawth:post-selected',
@@ -334,7 +283,6 @@ export default class extends Controller {
     gsap.killTweensOf([
       this.dateEl?.parentElement,
       this.contentEl,
-      this.element.querySelectorAll('.today-badge .today-char'),
       this.element.querySelectorAll('svg.calendar-mark.calendar-mark--posted'),
     ]);
 

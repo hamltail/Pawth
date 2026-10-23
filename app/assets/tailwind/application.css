@@ -458,6 +458,35 @@
       1px 1px 0 #d97706;
   }
 
+  .today-neon {
+    clip-path: inset(0 100% 0 0);
+    animation: pawth-today-typewriter 12s linear infinite;
+  }
+
+  .today-neon-char {
+    width: 1ch;
+    flex: none;
+    font-family: monospace;
+    text-align: center;
+  }
+
+  @keyframes pawth-today-typewriter {
+    0% {
+      clip-path: inset(0 100% 0 0);
+      animation-timing-function: steps(5, end);
+    }
+
+    20%,
+    74% {
+      clip-path: inset(0 0 0 0);
+    }
+
+    75%,
+    100% {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
   .neon-yellow-soft {
     text-shadow:
       0 0 6px rgba(255, 250, 205, 0.7),
@@ -481,13 +510,13 @@
 
   .status-error {
     color: var(--pawth-error-text);
-    background-color: var(--pawth-error-bg);
+    background: var(--pawth-error-bg);
     border-color: var(--pawth-error-border);
   }
 
   .status-success {
     color: var(--pawth-success-text);
-    background-color: var(--pawth-success-bg);
+    background: var(--pawth-success-bg);
     border-color: var(--pawth-success-border);
   }
 

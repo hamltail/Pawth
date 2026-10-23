@@ -43,13 +43,20 @@
 
       - calendar_days.each do |date|
         - post = post_for(date, posts_by_day)
+        - is_today = calendar_today?(date)
         - date_class = calendar_day_color_class(date)
+        - date_class = 'calendar-today-date font-extrabold text-emerald-700 in-data-[theme=dark]:text-emerald-300' if is_today
 
         %div{ class: day_cell_classes(date) }
-          %span{ class: "text-xs leading-none #{date_class}" }= date.day
+          %span{
+            class: "text-xs leading-none #{date_class}",
+            style: (is_today ? 'text-shadow: 0 0 4px rgba(52,211,153,0.95), 0 0 10px rgba(16,185,129,0.8), 0 0 18px rgba(16,185,129,0.4);' : nil),
+            aria: (is_today ? { current: 'date' } : {})
+          }= date.day
+
           = calendar_mark_for(date, post, icon: user.profile.calendar_icon)
 
-          - if calendar_today?(date)
+          - if is_today
             = today_badge
 
       - meta[:trailing_empty].times do
