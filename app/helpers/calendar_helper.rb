@@ -29,6 +29,13 @@ module CalendarHelper
     end
   end
 
+  def calendar_day_color_class(date, weekday_class: 'text-secondary-text')
+    return 'calendar-sunday' if date.sunday? || HolidayJp.holiday?(date)
+    return 'calendar-saturday' if date.saturday?
+
+    weekday_class
+  end
+
   def post_for(date, posts_by_day)
     posts_by_day[date]
   end
@@ -43,7 +50,11 @@ module CalendarHelper
     if post
       render partial,
              klass: 'cursor-pointer calendar-mark--posted',
-             dataset: { date:, content: post.content },
+             dataset: {
+               date:,
+               content: post.content,
+               weekday_class: calendar_day_color_class(date, weekday_class: 'theme-link')
+             },
              grad: true
     else
       render partial,

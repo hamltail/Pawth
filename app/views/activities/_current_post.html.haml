@@ -48,7 +48,7 @@
             }= post.posted_on.day
 
             %span{
-              class: 'text-sm font-bold text-brand',
+              class: "text-sm font-bold #{calendar_day_color_class(post.posted_on, weekday_class: 'theme-link')}",
               data: { daily_post_date_target: 'weekday' }
             }= post.posted_on.strftime('%a').upcase
 

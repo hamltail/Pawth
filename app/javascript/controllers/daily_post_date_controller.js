@@ -58,5 +58,28 @@ export default class extends Controller {
     })
       .format(date)
       .toUpperCase();
+
+    this.updateWeekdayColor(value);
+  }
+
+  updateWeekdayColor(value) {
+    const mark = Array.from(
+      document.querySelectorAll('#calendar .calendar-mark--posted'),
+    ).find((element) => element.dataset.date === value);
+
+    const weekdayClass = mark?.dataset.weekdayClass;
+
+    const allowedClasses = [
+      'theme-link',
+      'calendar-saturday',
+      'calendar-sunday',
+    ];
+
+    // 選択中の日記が表示月の外にある場合は、
+    // サーバーが設定した初期色を維持する
+    if (!allowedClasses.includes(weekdayClass)) return;
+
+    this.weekdayTarget.classList.remove(...allowedClasses);
+    this.weekdayTarget.classList.add(weekdayClass);
   }
 }
