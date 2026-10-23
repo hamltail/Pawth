@@ -193,8 +193,7 @@
       box-shadow 200ms ease,
       background-color 150ms ease,
       color 150ms ease,
-      border-color 150ms ease,
-      transform 150ms ease;
+      border-color 150ms ease;
   }
 
   .sidebar-menu-button:hover {
@@ -458,9 +457,27 @@
       1px 1px 0 #d97706;
   }
 
+  .calendar-today-date {
+    display: inline-block;
+    transform: scale(1.1);
+    transform-origin: center center;
+  }
+
   .today-neon {
+    --today-green: #047857;
+    --today-gold: #a16207;
+    --today-purple: #7c3aed;
+
     clip-path: inset(0 100% 0 0);
-    animation: pawth-today-typewriter 12s linear infinite;
+    animation:
+      pawth-today-typewriter 12s linear infinite,
+      pawth-today-colors 36s steps(1, end) infinite;
+  }
+
+  :root[data-theme='dark'] .today-neon {
+    --today-green: #6ee7b7;
+    --today-gold: #fcd34d;
+    --today-purple: #c4b5fd;
   }
 
   .today-neon-char {
@@ -484,6 +501,33 @@
     75%,
     100% {
       clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  @keyframes pawth-today-colors {
+    0%,
+    100% {
+      color: var(--today-green);
+      text-shadow:
+        0 0 4px rgba(52, 211, 153, 0.95),
+        0 0 10px rgba(16, 185, 129, 0.8),
+        0 0 18px rgba(16, 185, 129, 0.4);
+    }
+
+    33% {
+      color: var(--today-gold);
+      text-shadow:
+        0 0 4px rgba(252, 211, 77, 0.95),
+        0 0 10px rgba(245, 158, 11, 0.8),
+        0 0 18px rgba(245, 158, 11, 0.4);
+    }
+
+    66% {
+      color: var(--today-purple);
+      text-shadow:
+        0 0 4px rgba(196, 181, 253, 0.95),
+        0 0 10px rgba(167, 139, 250, 0.8),
+        0 0 18px rgba(139, 92, 246, 0.4);
     }
   }
 
