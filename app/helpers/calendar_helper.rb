@@ -59,7 +59,7 @@ module CalendarHelper
              grad: true
     else
       render partial,
-             klass: "text-muted opacity-50 #{mark_size}",
+             klass: "text-muted opacity-40 in-data-[theme=dark]:opacity-35 #{mark_size}",
              grad: false
     end
   end
