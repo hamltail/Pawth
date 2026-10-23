@@ -20,7 +20,7 @@ module CalendarHelper
   end
 
   def day_cell_classes(date)
-    base = 'relative flex h-16 flex-col items-center'
+    base = 'calendar-day-cell relative flex aspect-square min-h-0 min-w-0 flex-col items-center lg:aspect-auto lg:h-16'
 
     case date.wday
     when 6 then "#{base} calendar-saturday"
@@ -46,10 +46,11 @@ module CalendarHelper
 
   def calendar_mark_for(date, post, icon: :paw)
     partial = calendar_mark_partial(icon)
+    mark_size = 'size-[min(64%,3.5rem)]! lg:size-14! shrink-0'
 
     if post
       render partial,
-             klass: 'cursor-pointer calendar-mark--posted',
+             klass: "cursor-pointer calendar-mark--posted #{mark_size}",
              dataset: {
                date:,
                content: post.content,
@@ -58,7 +59,7 @@ module CalendarHelper
              grad: true
     else
       render partial,
-             klass: 'text-muted opacity-50',
+             klass: "text-muted opacity-50 #{mark_size}",
              grad: false
     end
   end
@@ -73,8 +74,13 @@ module CalendarHelper
   end
 
   def today_badge(text = t('.today'))
-    content_tag :div,
-                class: 'today-badge pointer-events-none select-none absolute top-11 left-1/2 -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]' do
+    badge_classes = 'today-badge pointer-events-none select-none absolute ' \
+                    'bottom-[-0.25rem] lg:bottom-auto lg:top-11 left-1/2 ' \
+                    '-translate-x-1/2 flex gap-[2px] font-bold ' \
+                    'text-[8px] leading-none tracking-tight ' \
+                    'lg:text-[12px] lg:tracking-widest'
+
+    content_tag :div, class: badge_classes do
       safe_join(text.chars.each_with_index.map { |ch, i|
         content_tag(:span, ch, class: 'today-char', data: { idx: i })
       })

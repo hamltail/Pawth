@@ -1,4 +1,5 @@
-.mb-2.md:mb-8.select-none.text-primary#calendar{
+#calendar{
+  class: 'mb-2 select-none text-primary lg:mb-8',
   data: {
     controller: 'calendar',
     action: 'mouseover->calendar#handleMouseover mouseout->calendar#handleMouseout click->calendar#handleClick pointerdown->calendar#handlePointerDown pointerup->calendar#handlePointerUp pointercancel->calendar#handlePointerCancel'
@@ -6,19 +7,21 @@
 }
   - meta = calendar_meta(calendar_days)
 
-  %div{ class: 'max-w-[22rem] md:max-w-xl mx-auto' }
-    .flex.items-center.justify-center.mb-5.md:mb-8
+  %div{
+    class: 'calendar-shell mx-auto w-full max-w-[clamp(14rem,calc(58.333dvh_-_8rem),34rem)] lg:max-w-[34rem]'
+  }
+    .flex.items-center.justify-center.mb-3.lg:mb-8
       = link_to activity_path(username: user.username, year: prev_month.year, month: prev_month.month),
                 class: 'mx-2',
                 data: { calendar_target: 'prevLink' },
                 aria: { label: t('activities.calendar.prev_month') } do
         = render 'shared/icon_arrow', direction: 'left', klass: 'text-muted hover:text-primary transition-colors'
 
-      %h2.mx-3.md:mx-4.flex-1.flex.items-baseline.justify-center.gap-3.md:gap-5{ aria: { live: 'polite' } }
-        %span.calendar-month-glow.text-4xl.md:text-5xl.font-bold.text-primary
+      %h2.mx-3.lg:mx-4.flex-1.flex.items-baseline.justify-center.gap-3.lg:gap-5{ aria: { live: 'polite' } }
+        %span.calendar-month-glow.text-4xl.lg:text-5xl.font-bold.text-primary
           = meta[:month_number]
 
-        %span.text-base.md:text-lg.font-semibold.text-muted
+        %span.text-base.lg:text-lg.font-semibold.text-muted
           = meta[:month_year_label]
 
       = link_to activity_path(username: user.username, year: next_month.year, month: next_month.month),
@@ -27,12 +30,14 @@
                 aria: { label: t('activities.calendar.next_month') } do
         = render 'shared/icon_arrow', direction: 'right', klass: 'text-muted hover:text-primary transition-colors'
 
-    .grid.grid-cols-7.gap-1.md:gap-2.justify-center.mb-3.md:mb-4
+    .grid.grid-cols-7.gap-1.lg:gap-2.justify-center.mb-2.lg:mb-4
       - meta[:weekdays].each_with_index do |wd, index|
         - weekday_class = index == 5 ? 'calendar-saturday' : (index == 6 ? 'calendar-sunday' : 'text-secondary-text')
         %div{ class: "text-xs font-bold text-center #{weekday_class}" }= wd
 
-    .grid.grid-cols-7.gap-1.md:gap-2.justify-center{ class: 'auto-rows-[3.25rem] md:auto-rows-[4rem]' }
+    %div{
+      class: 'calendar-days-grid grid grid-cols-7 gap-x-1 gap-y-2 lg:gap-2 lg:auto-rows-[4rem]'
+    }
       - meta[:leading_empty].times do
         %div
 
@@ -41,7 +46,7 @@
         - date_class = calendar_day_color_class(date)
 
         %div{ class: day_cell_classes(date) }
-          %span{ class: "text-xs #{date_class}" }= date.day
+          %span{ class: "text-xs leading-none #{date_class}" }= date.day
           = calendar_mark_for(date, post, icon: user.profile.calendar_icon)
 
           - if calendar_today?(date)
