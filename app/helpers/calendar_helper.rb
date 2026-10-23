@@ -20,13 +20,20 @@ module CalendarHelper
   end
 
   def day_cell_classes(date)
-    base = 'relative flex h-16 flex-col items-center'
+    base = 'calendar-day-cell relative flex aspect-square min-h-0 min-w-0 flex-col items-center lg:aspect-auto lg:h-16'
 
     case date.wday
     when 6 then "#{base} calendar-saturday"
     when 0 then "#{base} calendar-sunday"
     else base
     end
+  end
+
+  def calendar_day_color_class(date, weekday_class: 'text-secondary-text')
+    return 'calendar-sunday' if date.sunday? || HolidayJp.holiday?(date)
+    return 'calendar-saturday' if date.saturday?
+
+    weekday_class
   end
 
   def post_for(date, posts_by_day)
@@ -39,15 +46,20 @@ module CalendarHelper
 
   def calendar_mark_for(date, post, icon: :paw)
     partial = calendar_mark_partial(icon)
+    mark_size = 'size-[min(64%,3.5rem)]! lg:size-14! shrink-0'
 
     if post
       render partial,
-             klass: 'cursor-pointer calendar-mark--posted',
-             dataset: { date:, content: post.content },
+             klass: "cursor-pointer calendar-mark--posted #{mark_size}",
+             dataset: {
+               date:,
+               content: post.content,
+               weekday_class: calendar_day_color_class(date, weekday_class: 'theme-link')
+             },
              grad: true
     else
       render partial,
-             klass: 'text-muted opacity-50',
+             klass: "text-muted opacity-40 in-data-[theme=dark]:opacity-35 #{mark_size}",
              grad: false
     end
   end
@@ -62,10 +74,20 @@ module CalendarHelper
   end
 
   def today_badge(text = t('.today'))
+    badge_classes = 'today-neon pointer-events-none select-none absolute ' \
+                    'top-[calc(1.25rem+min(32%,1.75rem))] lg:top-11 left-1/2 ' \
+                    '-translate-x-1/2 flex gap-[2px] font-bold ' \
+                    'text-[11px] leading-none tracking-tight ' \
+                    'lg:text-[12px] lg:tracking-widest ' \
+                    'text-emerald-700 in-data-[theme=dark]:text-emerald-300'
+
     content_tag :div,
-                class: 'today-badge pointer-events-none select-none absolute top-11 left-1/2 -translate-x-1/2 font-bold text-[12px] tracking-widest flex gap-[2px]' do
+                class: badge_classes,
+                style: 'text-shadow: 0 0 4px rgba(52,211,153,0.95), ' \
+                       '0 0 10px rgba(16,185,129,0.8), ' \
+                       '0 0 18px rgba(16,185,129,0.4);' do
       safe_join(text.chars.each_with_index.map { |ch, i|
-        content_tag(:span, ch, class: 'today-char', data: { idx: i })
+        content_tag(:span, ch, class: 'today-neon-char inline-block', data: { idx: i })
       })
     end
   end

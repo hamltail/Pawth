@@ -54,7 +54,9 @@ RSpec.describe DailyPost, type: :model do
       DailyPost.create!(content: 'first post', user: user, posted_on: date_today)
       second_post = DailyPost.new(content: 'second post', user: user, posted_on: date_today)
       expect(second_post).not_to be_valid
-      expect(second_post.errors[:base]).to include("今日はすでに日記をかいています。")
+      expect(second_post.errors[:base]).to include(
+        I18n.t('activerecord.errors.models.daily_post.attributes.base.already_posted_today')
+      )
     end
 
     it '別の日なら投稿できる' do

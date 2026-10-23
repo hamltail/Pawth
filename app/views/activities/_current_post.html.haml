@@ -1,57 +1,75 @@
 - if post.present?
   .relative.mb-6{
+    class: 'flex min-h-0 flex-1 flex-col min-[86rem]:block min-[86rem]:flex-none',
     data: {
       controller: 'post-navigator',
       action: 'pointerdown->post-navigator#handlePointerDown pointerup->post-navigator#handlePointerUp pointercancel->post-navigator#handlePointerCancel'
     }
   }
-    .flex.items-center{ class: 'gap-1 md:gap-2 min-[86rem]:items-start' }
-      %button.flex.shrink-0.items-center.justify-center.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
-        class: 'w-7 md:w-10 min-[86rem]:mt-[204px]',
-        type: 'button',
-        aria: { label: '前の日記' },
+    .daily-post-card{
+      class: 'relative flex min-h-52 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl bg-surface p-4 shadow-sm ring-1 ring-default-border md:min-h-64 md:p-5 min-[86rem]:h-auto min-[86rem]:min-h-[28rem] min-[86rem]:max-h-[calc(100dvh-21rem)] min-[86rem]:flex-none',
+      data: {
+        post_navigator_target: 'card'
+      }
+    }
+      %div{
+        class: 'flex shrink-0 items-center justify-between gap-2 border-b border-default-border pb-2 md:pb-3',
         data: {
-          post_navigator_target: 'prevButton',
-          action: 'click->post-navigator#previous'
+          controller: 'daily-post-date'
         }
       }
-        %div{ class: 'md:hidden' }
-          = render 'shared/icon_arrow', direction: 'left', klass: 'w-4 h-4'
-
-        %div{ class: 'hidden md:block' }
-          = render 'shared/icon_arrow', direction: 'left', klass: 'w-5 h-5'
-
-      .daily-post-card.relative.flex.flex-1.min-w-0.flex-col.overflow-hidden.rounded-2xl.p-5.bg-surface.shadow-sm.ring-1.ring-default-border{
-        class: 'h-72 md:h-64 min-[86rem]:h-auto min-[86rem]:min-h-[28rem] min-[86rem]:max-h-[calc(100dvh-21rem)]',
-        data: {
-          post_navigator_target: 'card'
-        }
-      }
-        .shrink-0
-          .inline-flex.items-center.gap-2.rounded-full.bg-surface-muted.px-3.py-1.font-semibold.text-secondary-text{
-            class: 'text-[10px] md:text-xs'
+        %button{
+          class: 'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-muted text-muted transition-colors hover:bg-brand/10 hover:text-brand disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-surface-muted disabled:hover:text-muted',
+          type: 'button',
+          aria: { label: '前の日記' },
+          data: {
+            post_navigator_target: 'prevButton',
+            action: 'click->post-navigator#previous'
           }
-            %span#daily-post-date= post.posted_on
-
-        #daily-post-content.daily-post-scroll.mt-3.min-h-0.flex-1.overflow-y-auto.leading-relaxed.text-primary.whitespace-pre-wrap.break-words{
-          class: 'text-sm md:text-base'
-        }= h(post.content)
-
-      %button.flex.shrink-0.items-center.justify-center.h-10.text-muted.hover:text-primary.disabled:opacity-25.disabled:cursor-not-allowed.disabled:hover:text-muted.transition-colors{
-        class: 'w-7 md:w-10 min-[86rem]:mt-[204px]',
-        type: 'button',
-        aria: { label: '次の日記' },
-        data: {
-          post_navigator_target: 'nextButton',
-          action: 'click->post-navigator#next'
         }
-      }
-        %div{ class: 'md:hidden' }
-          = render 'shared/icon_arrow', direction: 'right', klass: 'w-4 h-4'
+          = render 'shared/icon_arrow', direction: 'left', klass: 'scale-75'
 
-        %div{ class: 'hidden md:block' }
-          = render 'shared/icon_arrow', direction: 'right', klass: 'w-5 h-5'
+        %div{ class: 'min-w-0 flex-1 text-center' }
+          %span#daily-post-date{
+            class: 'sr-only',
+            aria: { hidden: 'true' },
+            data: { daily_post_date_target: 'raw' }
+          }= post.posted_on.iso8601
+
+          %div{
+            class: 'text-[9px] md:text-xs font-semibold tracking-widest text-muted',
+            data: { daily_post_date_target: 'month' }
+          }= post.posted_on.strftime('%B %Y').upcase
+
+          %div{ class: 'mt-0.5 md:mt-1 flex items-baseline justify-center gap-1 md:gap-2' }
+            %time.calendar-month-glow{
+              class: 'text-2xl md:text-3xl font-bold text-primary',
+              datetime: post.posted_on.iso8601,
+              data: { daily_post_date_target: 'day' }
+            }= post.posted_on.day
+
+            %span{
+              class: "text-xs md:text-sm font-bold #{calendar_day_color_class(post.posted_on, weekday_class: 'theme-link')}",
+              data: { daily_post_date_target: 'weekday' }
+            }= post.posted_on.strftime('%a').upcase
+
+        %button{
+          class: 'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-muted text-muted transition-colors hover:bg-brand/10 hover:text-brand disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-surface-muted disabled:hover:text-muted',
+          type: 'button',
+          aria: { label: '次の日記' },
+          data: {
+            post_navigator_target: 'nextButton',
+            action: 'click->post-navigator#next'
+          }
+        }
+          = render 'shared/icon_arrow', direction: 'right', klass: 'scale-75'
+
+      #daily-post-content{
+        class: 'daily-post-scroll mt-3 min-h-0 flex-1 overflow-y-auto whitespace-pre-wrap break-words text-sm leading-relaxed text-primary md:mt-4 md:text-base'
+      }= h(post.content)
 
 - else
-  .mb-6.rounded-2xl.p-6.bg-surface-muted.text-muted.text-center.ring-1.ring-default-border
+  %div{
+    class: 'mb-6 rounded-2xl bg-surface-muted p-6 text-center text-muted ring-1 ring-default-border'
+  }
     = t('activities.current_post.empty')

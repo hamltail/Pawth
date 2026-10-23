@@ -253,11 +253,41 @@ export default class extends Controller {
     const page = card.cloneNode(true);
     const isNext = direction === 'next';
 
+    // 複製カードはページめくり演出専用
+    page.setAttribute('aria-hidden', 'true');
+    page.inert = true;
+
     page.removeAttribute('data-post-navigator-target');
     page.removeAttribute('id');
 
     page.querySelectorAll('[id]').forEach((element) => {
       element.removeAttribute('id');
+    });
+
+    // 複製内のStimulus Controllerを起動させない
+    page.querySelectorAll('[data-controller]').forEach((element) => {
+      element.removeAttribute('data-controller');
+    });
+
+    // 複製内のイベントハンドラを除去
+    page.querySelectorAll('[data-action]').forEach((element) => {
+      element.removeAttribute('data-action');
+    });
+
+    // ボタンを装飾用spanに置き換える
+    // SVGなどの子要素はそのまま移動して見た目を維持する
+    page.querySelectorAll('button').forEach((button) => {
+      const decoration = document.createElement('span');
+
+      decoration.className = button.className;
+      decoration.setAttribute('aria-hidden', 'true');
+
+      if (button.disabled) {
+        decoration.style.opacity = '0.25';
+      }
+
+      decoration.append(...button.childNodes);
+      button.replaceWith(decoration);
     });
 
     page.classList.add('pointer-events-none');

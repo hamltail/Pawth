@@ -1,7 +1,7 @@
 - page_title = t('.page_title', name: @user.display_name_or_username)
 - content_for :wide_calendar_layout, 'true'
 
-.bg-page.min-h-screen.flex.flex-col.px-4{ class: 'py-4 md:px-8 md:py-8' }
+.bg-page.min-h-dvh.flex.flex-col.px-4{ class: 'py-4 md:px-8 md:py-8 min-[86rem]:min-h-screen' }
   .text-center{ class: 'mb-6 md:mb-12' }
     %p.font-bold.tracking-widest.text-pawth-pink{ class: 'mb-1 text-[10px] md:mb-2 md:text-xs' }
       YOUR DAILY PAWTH
@@ -16,8 +16,10 @@
       %h1.page-title-glow.font-bold.text-primary{ class: 'text-lg md:text-2xl' }
         = page_title
 
-  %div{ class: 'flex flex-col min-[86rem]:grid min-[86rem]:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] min-[86rem]:gap-8 min-[86rem]:items-start' }
-    %div
+  %div{
+    class: 'flex min-h-0 flex-1 flex-col min-[86rem]:grid min-[86rem]:flex-none min-[86rem]:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] min-[86rem]:gap-8 min-[86rem]:items-start'
+  }
+    %div.shrink-0
       = turbo_frame_tag 'calendar', data: { turbo_temporary: true } do
         = render 'calendar',
           user: @user,
@@ -26,14 +28,19 @@
           prev_month: @prev_month,
           next_month: @next_month
 
-    %div{ class: 'mb-0 md:mb-8 min-[86rem]:mb-0 mx-auto w-full max-w-[52rem] min-[86rem]:max-w-none' }
+    %div{
+      class: 'mx-auto mb-0 flex min-h-0 w-full max-w-[52rem] flex-1 flex-col md:mb-8 min-[86rem]:mb-0 min-[86rem]:block min-[86rem]:flex-none min-[86rem]:max-w-none'
+    }
       - if user_signed_in? && current_user == @user
-        .flex.justify-center.mb-6
+        %div{
+          class: 'group fixed right-8 top-8 z-40 flex justify-center min-[86rem]:static min-[86rem]:z-auto min-[86rem]:mb-6 [&_.new-post-action]:size-11 [&_.new-post-action]:justify-center [&_.new-post-action]:gap-0 [&_.new-post-action]:p-0 min-[86rem]:[&_.new-post-action]:h-auto min-[86rem]:[&_.new-post-action]:w-auto min-[86rem]:[&_.new-post-action]:gap-2 min-[86rem]:[&_.new-post-action]:px-4 min-[86rem]:[&_.new-post-action]:py-2 [&_.new-post-label]:sr-only min-[86rem]:[&_.new-post-label]:not-sr-only'
+        }
           #new-post-button
             = render 'activities/new_post_button', posted_today: current_user.posted_today?
-          = turbo_frame_tag 'modal'
 
-      = turbo_frame_tag 'current_post' do
+        = turbo_frame_tag 'modal'
+
+      = turbo_frame_tag 'current_post', class: 'flex min-h-0 flex-1 flex-col min-[86rem]:block' do
         - if @can_view_posts
           = render 'activities/current_post', post: @current_post
         - else

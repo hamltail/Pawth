@@ -28,7 +28,9 @@ RSpec.describe 'DailyPosts', type: :request do
     }.not_to change(DailyPost, :count)
 
     expect(response).to have_http_status(:unprocessable_entity)
-    expect(response.body).to include('今日はすでに日記をかいています。')
+    expect(response.body).to include(
+      I18n.t('activerecord.errors.models.daily_post.attributes.base.already_posted_today')
+    )
   end
 
   it '他人の user_id を指定しても、現在のユーザーとしてしか作成されない' do
