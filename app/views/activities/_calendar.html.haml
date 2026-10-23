@@ -45,12 +45,22 @@
         - post = post_for(date, posts_by_day)
         - is_today = calendar_today?(date)
         - date_class = calendar_day_color_class(date)
-        - date_class = 'calendar-today-date font-extrabold text-emerald-700 in-data-[theme=dark]:text-emerald-300' if is_today
+
+        - if is_today
+          - if date_class == 'calendar-sunday'
+            - today_glow = 'text-shadow: 0 0 4px rgba(248,113,113,0.95), 0 0 10px rgba(239,68,68,0.8), 0 0 18px rgba(220,38,38,0.4);'
+          - elsif date_class == 'calendar-saturday'
+            - today_glow = 'text-shadow: 0 0 4px rgba(96,165,250,0.95), 0 0 10px rgba(59,130,246,0.8), 0 0 18px rgba(37,99,235,0.4);'
+          - else
+            - date_class = 'text-emerald-700 in-data-[theme=dark]:text-emerald-300'
+            - today_glow = 'text-shadow: 0 0 4px rgba(52,211,153,0.95), 0 0 10px rgba(16,185,129,0.8), 0 0 18px rgba(16,185,129,0.4);'
+
+          - date_class = "calendar-today-date font-extrabold #{date_class}"
 
         %div{ class: day_cell_classes(date) }
           %span{
             class: "text-xs leading-none #{date_class}",
-            style: (is_today ? 'text-shadow: 0 0 4px rgba(52,211,153,0.95), 0 0 10px rgba(16,185,129,0.8), 0 0 18px rgba(16,185,129,0.4);' : nil),
+            style: (is_today ? today_glow : nil),
             aria: (is_today ? { current: 'date' } : {})
           }= date.day
 
