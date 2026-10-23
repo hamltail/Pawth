@@ -465,6 +465,7 @@
   }
 
   .today-neon {
+    --today-reveal-padding: 0px;
     --today-green: #047857;
     --today-gold: #a16207;
     --today-purple: #7c3aed;
@@ -486,7 +487,8 @@
     #calendar
     .calendar-day-cell:has(> .calendar-mark--posted)
     > .today-neon {
-    padding-inline: 0.375rem;
+    --today-reveal-padding: 0.375rem;
+    padding-inline: var(--today-reveal-padding);
     background-color: rgba(17, 19, 24, 0.8);
   }
 
@@ -499,11 +501,19 @@
 
   @keyframes pawth-today-typewriter {
     0% {
-      clip-path: inset(0 100% 0 0);
+      clip-path: inset(
+        0 calc(100% - var(--today-reveal-padding)) 0 var(--today-reveal-padding)
+      );
       animation-timing-function: steps(5, end);
     }
 
-    20%,
+    20% {
+      clip-path: inset(
+        0 var(--today-reveal-padding) 0 var(--today-reveal-padding)
+      );
+    }
+
+    20.01%,
     74% {
       clip-path: inset(0 0 0 0);
     }
