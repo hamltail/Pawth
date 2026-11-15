@@ -5,13 +5,41 @@ class DailyPostsController < ApplicationController
   before_action :set_daily_post, only: %i[edit update destroy]
 
   def index
-    posts = current_user.daily_posts
-                        .search_text(params[:q])
-                        .by_year(params[:year])
-                        .by_month(params[:month])
-                        .recent_first
+    @pagy, @daily_posts = pagy(filtered_posts.recent_first, limit: 10)
+  end
 
-    @pagy, @daily_posts = pagy(posts, limit: 10)
+  def export
+    response.headers['Cache-Control'] = 'private, no-store'
+
+    posts = filtered_posts
+
+    if params[:preview] == '1'
+      render json: { count: posts.count }
+      return
+    end
+
+    records = posts.recent_first.pluck(:posted_on, :content).map do |date, content|
+      {
+        posted_on: date.iso8601,
+        content: content
+      }
+    end
+
+    return head :unprocessable_entity if records.empty?
+
+    exported_at = Time.current
+
+    payload = {
+      exported_at: exported_at.iso8601,
+      filters: timeline_filter_params.to_h,
+      count: records.length,
+      records: records
+    }
+
+    send_data JSON.pretty_generate(payload),
+              filename: "pawth-#{exported_at.strftime('%Y%m%d%H%M')}.json",
+              type: 'application/json; charset=utf-8',
+              disposition: 'attachment'
   end
 
   def new
@@ -57,6 +85,13 @@ class DailyPostsController < ApplicationController
   end
 
   private
+
+  def filtered_posts
+    current_user.daily_posts
+                .search_text(params[:q])
+                .by_year(params[:year])
+                .by_month(params[:month])
+  end
 
   def set_daily_post
     @daily_post = current_user.daily_posts.find_by!(id: params[:id])

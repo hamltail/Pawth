@@ -43,6 +43,27 @@
 
         = f.submit t('.submit_search'), class: 'h-12 min-w-20 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-light cursor-pointer'
 
+        %button.inline-flex.h-12.items-center.justify-center.gap-2.rounded-full.border.border-default-border.bg-surface.px-5.font-semibold.text-primary.transition-colors.hover:bg-surface-muted.disabled:cursor-not-allowed.disabled:opacity-50{
+          type: 'button',
+          data: {
+            controller: 'timeline-export',
+            action: 'click->timeline-export#download',
+            timeline_export_url_value: export_daily_posts_path
+          }
+        }
+          %svg.w-5.h-5{
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            'stroke-width': '1.8',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round',
+            aria: { hidden: 'true' }
+          }
+            %path{ d: 'M12 3v12m0 0 4-4m-4 4-4-4' }
+            %path{ d: 'M5 17v3h14v-3' }
+          %span= t('.export')
+
   - if @daily_posts.any?
     %div{ data: { controller: 'infinite-scroll' } }
       %ul.posts#posts.m-0.list-none.p-0{ data: { infinite_scroll_target: 'posts' } }

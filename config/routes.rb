@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only: %i[edit update]
-  resources :daily_posts, only: %i[index new create edit update destroy]
+
+  resources :daily_posts, only: %i[index new create edit update destroy] do
+    get :export, on: :collection
+  end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
