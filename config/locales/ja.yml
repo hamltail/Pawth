@@ -76,6 +76,7 @@ ja:
       year_prompt: '年'
       month_prompt: '月'
       submit_search: '検索'
+      export: 'エクスポート'
       page_label: 'ページ %{page} / %{pages}'
     new:
       title: '今日の1歩は？'
