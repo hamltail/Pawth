@@ -112,4 +112,4 @@ Please do not reproduce, redistribute, or use any part of this project for comme
 
 ## Author
 
-- h-waji (hamltail)
+- hamltail
